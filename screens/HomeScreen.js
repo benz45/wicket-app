@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useMemo, useEffect, useRef} from 'react';
 import {ScrollView} from 'react-native';
 import {
   Button,
@@ -59,7 +59,7 @@ const HomeScreen = ({jumpTo}) => {
     reference.onDisconnect().remove();
   }, [netInfo]);
 
-  useEffect(() => {
+  useMemo(() => {
     const _setPrev = async () => {
       await action_checkConnection().then((res) => {
         const arrState = res.states;
@@ -68,11 +68,11 @@ const HomeScreen = ({jumpTo}) => {
     };
     _setPrev();
     const _loopCheckConnection = () => {
-      setTimeout(async () => {
-        await action_checkConnection().then((res) => {
-          const arrStates = Object.values(res.states);
+      setTimeout(() => {
+        action_checkConnection().then(async (res) => {
+          const arrStates = await Object.values(res.states);
 
-          const offline = arrStates.filter((elem) => {
+          const offline = await arrStates.filter((elem) => {
             for (let i of prevState.current) {
               if (elem.state == i.state) {
                 return elem.no;
@@ -81,7 +81,7 @@ const HomeScreen = ({jumpTo}) => {
           });
 
           // find array if connnection app.
-          const newArrThatConnectApp = offline.filter((elem) => {
+          const newArrThatConnectApp = await offline.filter((elem) => {
             for (let i of realtimeDatabase) {
               if (elem.no == i.no) {
                 return elem.no;
@@ -89,10 +89,11 @@ const HomeScreen = ({jumpTo}) => {
             }
           });
 
-          newArrThatConnectApp.map((elem) =>
+          await newArrThatConnectApp.map((elem) =>
             action_setConnection(elem.no, false),
           );
           prevState.current = arrStates;
+
           _loopCheckConnection();
         });
       }, 20000);
@@ -124,7 +125,7 @@ const HomeScreen = ({jumpTo}) => {
               style={{
                 fontSize: 23,
               }}>
-              rn - wicket
+              House-name
             </Text>
           </View>
           <View
@@ -240,7 +241,16 @@ const HomeScreen = ({jumpTo}) => {
           ))}
         </ScrollView>
       )}
-      {!lengthData && <NoData jumpTo={jumpTo} />}
+      {!lengthData && (
+        <NoData
+          icon="database-plus"
+          header="Woo! "
+          description="No data yet. Please increase the data."
+          btnNavigate="Stack_addProduct"
+          headerSize={60}
+          btnTitle="ADD PRODUCT"
+        />
+      )}
     </View>
   );
 };

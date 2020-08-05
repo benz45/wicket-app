@@ -4,6 +4,9 @@ import storage from '@react-native-firebase/storage';
 import * as actions from './index';
 import Toast from '../toast-paper';
 import PushNotification from 'react-native-push-notification';
+
+const db = database();
+
 /**********************************************************************/
 // Auth
 
@@ -106,7 +109,6 @@ export const action_addDoor = async (
   dateString,
 ) => {
   try {
-    const db = await database();
     db.ref(`door/status/${key}`).set({key, status});
     db.ref(`door/images/${key}`).set({key, image: imageLink});
     db.ref(`door/names/${key}`).set({key, name});
@@ -116,6 +118,7 @@ export const action_addDoor = async (
       description: desc,
       status: status,
       image: imageLink,
+      latestStatusBy: displayName,
       latestStatus: dateString,
       createdDate: dateString,
       arduinoConnection: 3,
@@ -151,21 +154,22 @@ export const action_uploadImageDoor = async (uri, key) => {
 // Update.
 
 // Press update value door status.
-export const action_updateDoorStatus = (no, status) => {
+export const action_updateDoorStatus = (no, status, displayName) => {
   // New date
   const newDate = new Date(Date.now());
   const dateString = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()} | ${newDate.getHours()}:${newDate.getMinutes()}`;
   try {
     return async (dispatch) => {
       dispatch(actions.FETCHING_REALTIMEDB_DOOR_UPDATE());
-      const db = await database();
       db.ref(`door/status/${no}`)
         .update({
+          latestStatusBy: displayName,
           latestStatus: dateString,
           status: status,
         })
         .then(() => {
           db.ref(`door/datas/${no}`).update({
+            latestStatusBy: displayName,
             latestStatus: dateString,
             status: status,
           });
@@ -199,16 +203,21 @@ export const action_view_updateDoorStatus = () => {
   }
 };
 
-// View value befor update door status.
-export const result_updateDoorStatus = async () => {
-  const db = await database();
+// View value befor update door status. call by authenticated file.
+export const result_updateDoorStatus = async (settingStatusValue) => {
   try {
     await db.ref('door/status').on('child_changed', (response) => {
-      const {key, status} = response.val();
+      const {key, status, latestStatusBy} = response.val();
       db.ref(`door/datas/${key}`).once('value', (snapshot) => {
         const {name} = snapshot.val();
-        let res = `${name} being ${status ? 'open' : 'close'}`;
-        Toast(res);
+        let res = `${name} being ${
+          status ? 'open' : 'close'
+        } by ${latestStatusBy}`;
+        if (settingStatusValue === true) {
+          PushNotification.localNotification({
+            message: res,
+          });
+        }
       });
     });
   } catch (error) {
@@ -219,7 +228,6 @@ export const result_updateDoorStatus = async () => {
 // Edit name & dexcription
 export const editProduct = async (no, name, description) => {
   try {
-    const db = await database();
     db.ref(`door/names/${no}`)
       .update({
         name,
@@ -240,13 +248,33 @@ export const editProduct = async (no, name, description) => {
   }
 };
 
+export const SetAllStatus = (value) => {
+  try {
+    db.ref(`connections/datas`).once('value', (snapshot) => {
+      Object.values(snapshot.val()).map((elem) => {
+        const {appConnection, arduinoConnection, no} = elem;
+        if (appConnection && arduinoConnection) {
+          db.ref(`door/datas/${no}`)
+            .update({
+              status: value,
+            })
+            .then(() => {
+              db.ref(`door/status/${no}`).update({
+                status: value,
+              });
+            });
+        }
+      });
+    });
+  } catch (error) {
+    console.log('SetAllStatus', error.message);
+  }
+};
+
 export const setStatusAll = async (arrId, boolean) => {
   try {
     for (let no of arrId) {
       await database().ref(`door/status/${no}`).update({
-        status: boolean,
-      });
-      await database().ref(`door/datas/${no}`).update({
         status: boolean,
       });
     }
@@ -260,7 +288,6 @@ export const setStatusAll = async (arrId, boolean) => {
 
 export const action_removeDoor = async (key) => {
   try {
-    const db = await database();
     const doorPath = db.ref(`door`);
 
     await doorPath.child(`/status/${key}`).remove();
@@ -384,7 +411,7 @@ export const action_checkConnection = (id) => {
   return new Promise((res, rej) => {
     database()
       .ref(`connections`)
-      .on('value', (snapshot) => {
+      .once('value', (snapshot) => {
         if (!!!snapshot.val()) {
           rej({message: 'error'});
         }
@@ -395,7 +422,6 @@ export const action_checkConnection = (id) => {
 
 export const action_setConnection = async (key, value) => {
   try {
-    const db = await database();
     const connections = db.ref(`connections/datas/${key}/`);
     connections
       .update({

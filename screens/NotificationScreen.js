@@ -1,6 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, ScrollView} from 'react-native';
-import {List, Card, Colors, Avatar, Switch} from 'react-native-paper';
+import {TouchableOpacity, ScrollView} from 'react-native';
+import {List, Card, Colors, Avatar} from 'react-native-paper';
+
+// Component
+import Nodata from '../components/noData';
+
+// Styled
+import {View, Text} from '../styles/styled';
 
 // Cloud messaging
 import PushNotification from 'react-native-push-notification/';
@@ -11,9 +17,12 @@ import {action_deleteNavigation} from '../src/actions/actions_notification';
 
 const SettingsNavigation = () => {
   const dispatch = useDispatch();
-  const {notificationData} = useSelector(
-    (reducer) => reducer.NotificationReducer,
-  );
+  const {
+    notificationData,
+    colors: {accent},
+  } = useSelector((reducer) => {
+    return {...reducer.NotificationReducer, ...reducer.ThemeReducer.theme};
+  });
 
   // State
   const [longPress, setLongPress] = useState(false);
@@ -24,9 +33,13 @@ const SettingsNavigation = () => {
     dispatch(action_deleteNavigation(res));
   };
 
-  const _rightIcon = (id) => {
+  const _rightIcon = (id, repeatType) => {
     return !longPress ? (
-      <Switch style={{alignSelf: 'center', right: 10}} />
+      <View justifyContent="center">
+        <Text fs={20} size={2} color={accent} fw="bold" pr={20}>
+          {repeatType === null ? 'Once' : 'Dialy'}
+        </Text>
+      </View>
     ) : (
       <TouchableOpacity
         onPress={() => _removeNotification(id)}
@@ -40,10 +53,20 @@ const SettingsNavigation = () => {
       </TouchableOpacity>
     );
   };
-
   return (
     <View style={{flex: 1}}>
       <ScrollView style={{paddingHorizontal: 10}}>
+        {!!!notificationData.length && (
+          <Nodata
+            icon="bell-plus-outline"
+            header="ADD NOW "
+            btnIcon="subdirectory-arrow-right"
+            btnIconSize={60}
+            btnIconColor={accent}
+            headerSize={47}
+            description="No data yet. Please increase the data."
+          />
+        )}
         <TouchableOpacity
           onPress={() => setLongPress(false)}
           activeOpacity={1}
@@ -58,7 +81,7 @@ const SettingsNavigation = () => {
                   title={elem.time}
                   titleStyle={{fontSize: 23}}
                   description={elem.message}
-                  right={() => _rightIcon(elem.id)}
+                  right={() => _rightIcon(elem.id, elem.repeatType)}
                 />
               </Card>
             </TouchableOpacity>

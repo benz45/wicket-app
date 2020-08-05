@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // Navigations
@@ -16,20 +16,21 @@ import {useSelector} from 'react-redux';
 const Stack = createStackNavigator();
 
 const Authenticated = () => {
-  const {isUser} = useSelector(
-    (reducer) => reducer.FirebaseReducer.currentUser,
-  );
+  const {isUser, settingStatus} = useSelector((reducer) => {
+    return {
+      ...reducer.FirebaseReducer.currentUser,
+      ...reducer.NotificationReducer,
+    };
+  });
 
-  result_updateDoorStatus();
+  useEffect(() => {
+    result_updateDoorStatus(settingStatus);
+  }, [settingStatus]);
   return (
     <>
       {isUser ? (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="MainPage" component={MainPage} />
-          {/* <Stack.Screen
-            name="Register-ComplateScreen"
-            component={RegisterComplateScreen}
-          /> */}
         </Stack.Navigator>
       ) : null}
     </>

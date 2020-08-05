@@ -69,6 +69,7 @@ const atts = (props) => {
     ${props.pb | props.pv}px 
     ${props.pl | props.ph}px`,
     'font-size': props.fs,
+    'font-weight': props.fw,
     'background-color': props.bg,
     'flex-direction': props.fd,
     'justify-content': props.jc,

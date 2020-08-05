@@ -26,14 +26,21 @@ import AddNotificationScreen from '../screens/AddNotificationScreen';
 
 const hocView = (Components) => (props) => {
   const {navigate} = useNavigation();
+
+  const {notificationData} = useSelector(
+    (reducer) => reducer.NotificationReducer,
+  );
+
   return (
     <View style={{flex: 1, marginHorizontal: 30, marginVertical: 20}}>
       <Components {...props} />
-      <FAB
-        style={{position: 'absolute', alignSelf: 'center', bottom: 20}}
-        icon="plus"
-        onPress={() => navigate('addNotifications')}
-      />
+      {!!notificationData.length && (
+        <FAB
+          style={{position: 'absolute', alignSelf: 'center', bottom: 20}}
+          icon="plus"
+          onPress={() => navigate('addNotifications')}
+        />
+      )}
     </View>
   );
 };

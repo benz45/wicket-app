@@ -1472,10 +1472,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-5.9.4.tgz#a05a9403f8ee09c7d7f7c2dda850b79cac376691"
   integrity sha512-mb664NOqPvyUZ4TznzdYEfdS3OhSXWGbZprgsDZn4THw2X/4wcBFcBUeWuMzeQ56KhY0rm/YBBlZWHrSf3C/Aw==
 
-"@react-native-community/push-notification-ios@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/push-notification-ios/-/push-notification-ios-1.2.0.tgz#3353598450a39c42d079603aad2d1c0f9c2c1729"
-  integrity sha512-B5qPb9P/6vvxGGQDePlK/q6NxoZPWSVFtKCQ9jlboP7gNZmf3AAyBhTzrb++s2NSXXogjkGi6vt9df1ipZiawQ==
+"@react-native-community/push-notification-ios@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/push-notification-ios/-/push-notification-ios-1.4.0.tgz#e1781e60fb8a2569547e3f1613c62e1c3b46960c"
+  integrity sha512-YnfxtAuHkiuvprh1d9npGZVwOrso6sys8+w8XY6RQAs8kD2LHZg0C8rA5gfX4jW/GrQV7m14Y6ngciE6Rpd91w==
   dependencies:
     invariant "^2.2.4"
 
@@ -6721,12 +6721,12 @@ react-native-parsed-text@EvanBacon/react-native-parsed-text:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-push-notification@^3.5.2:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.5.2.tgz#5f6226d12a00c25c15279325b57c5fbddd5b1c82"
-  integrity sha512-eh9l7WeL7Lxq17ntsafCrNQF6aW8XS6b7PG/s1Y8amAqpDt8GJ8hz125z566N1jsj3PDh9pfd4SjNS+tLaV47A==
+react-native-push-notification@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-5.0.1.tgz#d7d563c8ed7e56335b311702a93aa6f4a9ced97a"
+  integrity sha512-3xRGLgJfUo8tUPFokA3TVC4jE4uo2uVUnxmtQ1pscNn6BjZnx2+kLdsJK4kDRyjxc/CpTEMfUyZ5pkMsqIgdYw==
   dependencies:
-    "@react-native-community/push-notification-ios" "^1.2.0"
+    "@react-native-community/push-notification-ios" "^1.4.0"
 
 react-native-reanimated@^1.8.0:
   version "1.8.0"

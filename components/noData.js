@@ -17,25 +17,42 @@ import {Button} from '../components/CustomBtn';
 // Styles
 import styles from '../styles/styles';
 
-const noData = ({jumpTo}) => {
+const noData = ({
+  icon,
+  header,
+  description,
+  btnNavigate,
+  btnTitle,
+  btnIcon,
+  btnIconSize,
+  btnIconColor,
+  headerSize,
+}) => {
   const {navigate} = useNavigation();
   return (
     <View style={styles.ActivityIndicator}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={{color: Colors.grey600, fontSize: 60}}>Woo! </Text>
+        <Text style={{color: Colors.grey600, fontSize: headerSize}}>
+          {header}
+        </Text>
         <IconButton
-          icon="database-plus"
+          icon={icon}
           color={Colors.grey600}
-          size={60}
+          size={headerSize}
           style={{marginLeft: -23}}
         />
       </View>
       <Paragraph style={{color: Colors.grey600, marginBottom: 15}}>
-        No data yet. Please increase the data.
+        {description}
       </Paragraph>
-      <Button mode="outlined" onPress={() => navigate('Stack_addProduct')}>
-        Add Produce
-      </Button>
+      {btnIcon && (
+        <IconButton icon={btnIcon} color={btnIconColor} size={btnIconSize} />
+      )}
+      {btnTitle && (
+        <Button mode="outlined" onPress={() => navigate(btnNavigate)}>
+          {btnTitle}
+        </Button>
+      )}
     </View>
   );
 };

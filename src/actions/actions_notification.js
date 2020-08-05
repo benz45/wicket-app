@@ -1,5 +1,11 @@
 // Type
-import {setNavigation, deleteNavigation, settingNotification, settingStatus, settingMessage} from './index';
+import {
+  setNavigation,
+  deleteNavigation,
+  settingNotification,
+  settingStatus,
+  settingMessage,
+} from './index';
 
 export const action_setNavigation = (data) => {
   return (dispatch) => {
@@ -16,18 +22,18 @@ export const action_deleteNavigation = (data) => {
 // ********************************************************
 // Switch settings
 
-export const action_settingNotification =(data) => {
+export const action_settingNotification = (data) => {
   return (dispatch) => {
     dispatch(settingNotification(data));
   };
-}
-export const action_settingStatus =(data) => {
+};
+export const action_settingStatus = (data) => {
   return (dispatch) => {
     dispatch(settingStatus(data));
   };
-}
-export const action_settingMessage =(data) => {
+};
+export const action_settingMessage = (data) => {
   return (dispatch) => {
     dispatch(settingMessage(data));
   };
-}
+};

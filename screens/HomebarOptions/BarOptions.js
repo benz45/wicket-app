@@ -8,18 +8,14 @@ import database from '@react-native-firebase/database';
 import {useSelector} from 'react-redux';
 
 // Action
-import {setStatusAll} from '../../src/actions/actions_firebase';
+import {setStatusAll, SetAllStatus} from '../../src/actions/actions_firebase';
 
 const barOptions = () => {
   const lengthStatus = useRef(0);
-  const arrId = useRef([]);
   const [isStatus, setStatus] = useState('closeAll');
   const {realtimeDatabase: wicketData, lengthData} = useSelector(
     (store) => store.FirebaseReducer,
   );
-
-  //Map id to array from wicketdata.
-  arrId.current = wicketData.map((elem) => elem.no);
 
   // Set value status radio status from wicketdata (globel value) .
   useEffect(() => {
@@ -37,13 +33,13 @@ const barOptions = () => {
   // Set status open all.
   const _setOpenAll = () => {
     setStatus('openAll');
-    setStatusAll(arrId.current, true);
+    SetAllStatus(true);
   };
 
   // Set status close all.
   const _setCloseAll = () => {
     setStatus('closeAll');
-    setStatusAll(arrId.current, false);
+    SetAllStatus(false);
   };
 
   return (

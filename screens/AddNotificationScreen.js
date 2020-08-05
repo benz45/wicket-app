@@ -31,6 +31,7 @@ import Button from '../components/CustomButton';
 
 // Navigations
 import {useNavigation, TabActions} from '@react-navigation/native';
+import {SetAllStatus} from '../src/actions/actions_firebase';
 
 const AddNotificationScreen = () => {
   const navigation = useNavigation();
@@ -47,7 +48,7 @@ const AddNotificationScreen = () => {
   const [dialogSuccessful, setDialogSuccessful] = useState(false);
   const [date, setDate] = useState(new Date(Date.now()));
   const [description, setDescription] = useState('');
-  const [repeat, setRepeat] = useState('Once');
+  const [repeat, setRepeat] = useState('Dialy');
 
   // Validate minutes
   const minutes = date.getMinutes().toString();
@@ -85,7 +86,7 @@ const AddNotificationScreen = () => {
   // Clear State
   const _clearState = () => {
     setDescription('');
-    setRepeat('Once');
+    setRepeat('Dialy');
   };
 
   // JumpTo
@@ -104,7 +105,9 @@ const AddNotificationScreen = () => {
       title: 'Wicket',
       date: date,
       message: description,
-      repeatType: repeat === 'Once' ? null : 'day',
+      repeatType: repeat === 'Dialy' ? 'day' : null,
+      actions: ['Close all', 'Open all'],
+      invokeApp: false,
     };
     dispatch(action_setNavigation(data));
 
@@ -112,6 +115,15 @@ const AddNotificationScreen = () => {
     _showDialogSuccessful();
     _clearState();
   };
+  PushNotification.configure({
+    onAction: function (notification) {
+      console.log('ACTION:', notification.action);
+      console.log('NOTIFICATION:', notification);
+      notification.action === 'Open all'
+        ? SetAllStatus(true)
+        : SetAllStatus(false);
+    },
+  });
 
   return (
     <View
@@ -143,7 +155,9 @@ const AddNotificationScreen = () => {
             <TouchableOpacity
               onPress={_showDialog}
               style={{flexDirection: 'row'}}>
-              <List.Subheader style={{color: accent}}>{repeat}</List.Subheader>
+              <List.Subheader style={{color: accent}}>
+                {repeat == 'Dialy' ? 'Daily' : 'Once'}
+              </List.Subheader>
               <IconButton
                 icon="chevron-right"
                 style={{marginHorizontal: -17}}
