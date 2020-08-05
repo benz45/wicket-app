@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="SplashScreen_SplashTheme">
+        <item name="colorPrimaryDark">#111111</item>
+    </style>
+</resources>

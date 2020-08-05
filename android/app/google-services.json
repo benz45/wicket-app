@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "27545963730",
+    "firebase_url": "https://rn-wicket.firebaseio.com",
+    "project_id": "rn-wicket",
+    "storage_bucket": "rn-wicket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27545963730:android:c74811d834e8bc3963b10b",
+        "android_client_info": {
+          "package_name": "com.wicket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27545963730-mktpb8el27iue4h03ianq1npm6jdr4j1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKOBD1JErBgyEfRM5FW-7AiMFlUAO2PHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27545963730-mktpb8el27iue4h03ianq1npm6jdr4j1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
