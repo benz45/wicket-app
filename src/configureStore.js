@@ -1,5 +1,5 @@
 import {createStore, applyMiddleware} from 'redux';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import thunk from 'redux-thunk';
 
 import {persistStore, persistReducer} from 'redux-persist';
@@ -18,6 +18,7 @@ const persistConfig = {
     'settingMessage',
     'messages',
     'connections',
+    'allNotification',
   ],
 };
 

@@ -5,8 +5,17 @@ import {
   settingNotification,
   settingStatus,
   settingMessage,
+  setAllNotificationtoStore
 } from './index';
 
+// ********************************************************
+// Notification all
+export const action_setAllNotification = (data)=> {
+  return (dispatch) => {
+    dispatch(setAllNotificationtoStore(data));
+  }
+}
+// ********************************************************
 export const action_setNavigation = (data) => {
   return (dispatch) => {
     dispatch(setNavigation(data));

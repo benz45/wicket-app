@@ -85,6 +85,13 @@ export const settingMessage = (data) => ({
   type: Type.SETTING_MESSAGE,
   payload: data,
 });
+export const setAllNotificationtoStore = (data) => ({
+  type: Type.SETALLNOTIFICATION_TOSTORE,
+  payload: {
+    type: data.type,
+    data
+  }
+});
 /**************************************************************************/
 
 // Messages

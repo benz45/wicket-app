@@ -1,61 +1,69 @@
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, ScrollView} from 'react-native';
-import {List, Card, Colors, Avatar} from 'react-native-paper';
 
 // Component
 import Nodata from '../components/noData';
 
 // Styled
-import {View, Text} from '../styles/styled';
+import * as Styled from '../styles/screens/Styled_NotificationScreen';
 
 // Cloud messaging
 import PushNotification from 'react-native-push-notification/';
 
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
-import {action_deleteNavigation} from '../src/actions/actions_notification';
+import {
+  action_deleteNavigation,
+  action_setNavigation,
+} from '../src/actions/actions_notification';
 
-const SettingsNavigation = () => {
+const Notification_Screen = () => {
   const dispatch = useDispatch();
   const {
     notificationData,
-    colors: {accent},
+    colors: {accent, primary},
   } = useSelector((reducer) => {
     return {...reducer.NotificationReducer, ...reducer.ThemeReducer.theme};
   });
 
-  // State
+  useEffect(() => {
+    if (notificationData.length) {
+      const validationDate = notificationData.map((elem) => {
+        if (elem.fireDate < new Date(Date.now())) {
+          elem.fireDate = new Date(
+            new Date(elem.fireDate).getTime() + 60 * 60 * 24 * 1000,
+          );
+        }
+        return elem;
+      });
+      console.log(validationDate);
+      // dispatch(action_setNavigation(validationDate));s
+    }
+  }, []);
+
+  // State long press.
   const [longPress, setLongPress] = useState(false);
 
+  // Remove data notification.
   const _removeNotification = (id) => {
     PushNotification.cancelLocalNotifications({id});
     const res = notificationData.filter((x) => x.id !== id);
     dispatch(action_deleteNavigation(res));
   };
 
-  const _rightIcon = (id, repeatType) => {
-    return !longPress ? (
-      <View justifyContent="center">
-        <Text fs={20} size={2} color={accent} fw="bold" pr={20}>
-          {repeatType === null ? 'Once' : 'Dialy'}
-        </Text>
-      </View>
-    ) : (
-      <TouchableOpacity
-        onPress={() => _removeNotification(id)}
-        style={{alignSelf: 'center'}}>
-        <Avatar.Icon
-          style={{right: 10, backgroundColor: '#660000'}}
-          icon="delete-empty"
-          size={39}
-          color={Colors.red500}
-        />
-      </TouchableOpacity>
-    );
+  // Replace date to string from notificationDate.
+  const _replace_dateInCard = (dateTime) => {
+    const date = new Date(dateTime);
+    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
   };
+
+  // Replace and validate repeat to string from notificationDate.
+  const _replace_repeatIncard = (repeatType) => {
+    return repeatType === null ? 'Once' : 'Dialy';
+  };
+
   return (
-    <View style={{flex: 1}}>
-      <ScrollView style={{paddingHorizontal: 10}}>
+    <Styled.Container onPress={() => setLongPress(false)}>
+      <Styled.ScrollView>
         {!!!notificationData.length && (
           <Nodata
             icon="bell-plus-outline"
@@ -67,29 +75,40 @@ const SettingsNavigation = () => {
             description="No data yet. Please increase the data."
           />
         )}
-        <TouchableOpacity
-          onPress={() => setLongPress(false)}
-          activeOpacity={1}
-          style={{paddingVertical: 20, flex: 1}}>
-          {notificationData.map((elem) => (
-            <TouchableOpacity
-              onLongPress={() => setLongPress(true)}
-              delayLongPress={500}
-              activeOpacity={0.7}>
-              <Card style={{marginVertical: 10, paddingVertical: 7}}>
-                <List.Item
-                  title={elem.time}
-                  titleStyle={{fontSize: 23}}
-                  description={elem.message}
-                  right={() => _rightIcon(elem.id, elem.repeatType)}
-                />
-              </Card>
-            </TouchableOpacity>
-          ))}
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
+
+        {notificationData.map((elem) => (
+          <Styled.CardContainerLongPress
+            onLongPress={() => setLongPress((prev) => !prev)}>
+            <Styled.Card>
+              <Styled.InCard>
+                <Styled.CardDetail>
+                  <Styled.DateText color={primary}>
+                    {_replace_dateInCard(elem.fireDate)}
+                  </Styled.DateText>
+                  <Styled.TimeText>{elem.time}</Styled.TimeText>
+                  <Styled.DescriptionText color={accent}>
+                    {elem.message}
+                  </Styled.DescriptionText>
+                </Styled.CardDetail>
+                <Styled.CardRepeat>
+                  {!longPress ? (
+                    <Styled.RepeatNormalText color={accent}>
+                      {_replace_repeatIncard(elem.repeatType)}
+                    </Styled.RepeatNormalText>
+                  ) : (
+                    <Styled.RepeatLongText
+                      onPress={() => _removeNotification(elem.id)}>
+                      <Styled.Trash />
+                    </Styled.RepeatLongText>
+                  )}
+                </Styled.CardRepeat>
+              </Styled.InCard>
+            </Styled.Card>
+          </Styled.CardContainerLongPress>
+        ))}
+      </Styled.ScrollView>
+    </Styled.Container>
   );
 };
 
-export default SettingsNavigation;
+export default Notification_Screen;

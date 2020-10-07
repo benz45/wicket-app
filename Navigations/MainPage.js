@@ -3,7 +3,6 @@ import React, {useEffect} from 'react';
 // Navigations
 import {createStackNavigator} from '@react-navigation/stack';
 import Settings from '../Navigations/Settings';
-import AddProduct from '../Navigations/AddProduct';
 import DetailProduct from '../Navigations/DetailProduct';
 import AppBar from './AppBar';
 import Notifications from './Notifications';
@@ -56,11 +55,6 @@ const MainScreen = () => {
         name="Stack_detailProductScreen"
         component={DetailProduct}
         options={{title: ''}}
-      />
-      <Stack.Screen
-        name="Stack_addProduct"
-        component={AddProduct}
-        options={{title: 'Back'}}
       />
     </Stack.Navigator>
   );

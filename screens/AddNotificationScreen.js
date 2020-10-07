@@ -31,34 +31,29 @@ import Button from '../components/CustomButton';
 
 // Navigations
 import {useNavigation, TabActions} from '@react-navigation/native';
-import {SetAllStatus} from '../src/actions/actions_firebase';
+// import {SetAllStatus} from '../src/actions/actions_firebase';
 
 const AddNotificationScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {primary, accent} = useSelector(
-    (reducer) => reducer.ThemeReducer.theme.colors,
-  );
-  const {settingNotification, notificationData} = useSelector(
-    (reducer) => reducer.NotificationReducer,
-  );
+  const {accent} = useSelector((reducer) => reducer.ThemeReducer.theme.colors);
 
   const [showTime, setShowTime] = useState(false);
   const [dialog, setDialog] = useState(false);
   const [dialogSuccessful, setDialogSuccessful] = useState(false);
+  const [dialogWarning, setDialogWarning] = useState(false);
   const [date, setDate] = useState(new Date(Date.now()));
   const [description, setDescription] = useState('');
   const [repeat, setRepeat] = useState('Dialy');
 
   // Validate minutes
+  const hour = date.getHours().toString();
+  const resHour = hour.length == 1 ? `0${hour}` : hour;
   const minutes = date.getMinutes().toString();
   const resMinutes = minutes.length == 1 ? `0${minutes}` : minutes;
 
-  const hour = date.getHours().toString();
-  const resHour = hour.length == 1 ? `0${hour}` : hour;
-
   // Data time change
-  const onChange = (_, selectedDate) => {
+  const _onChange = (_, selectedDate) => {
     const currentDate = selectedDate || date;
     setShowTime(false);
     setDate(currentDate);
@@ -76,6 +71,13 @@ const AddNotificationScreen = () => {
   // Dialog successful.
   const _showDialogSuccessful = () => setDialogSuccessful(true);
   const _hideDialogSuccessful = () => setDialogSuccessful(false);
+
+  // Dialog Warning.
+  const _showDialogWarning = () => setDialogWarning(true);
+  const _hideDialogWarning = async () => {
+    await setDialogWarning(false);
+    await setDialogSuccessful(true);
+  };
 
   // Radio check
   const radioChange = (value) => {
@@ -95,35 +97,46 @@ const AddNotificationScreen = () => {
     navigation.dispatch(TabActions.jumpTo('notifications'));
   };
 
+  // Used for dispatch, and push notification and clear state description reqeat.
+  // Will be used after varidate date in _addNotification function.
+  const _dispatch_addNotification = (objData) => {
+    PushNotification.localNotificationSchedule(objData);
+
+    // const test = (objData.date = `${objData.date}`);
+    console.log(new Date(new Date(objData.fireDate)));
+
+    dispatch(action_setNavigation(objData));
+    _clearState();
+  };
+
   const _addNotification = () => {
-    // Data to rudux
+    // Make data dispatch to store NotificationReducer and push notification.
     const data = {
+      foreground: true,
       id: `${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getMilliseconds()}`,
       time: `${resHour} : ${resMinutes} ${date.getHours() >= 12 ? 'PM' : 'AM'}`,
       largeIcon: 'ic_launcher_transform',
       smallIcon: 'ic_launcher_transform',
       title: 'Wicket',
-      date: date,
+      //TODO If date many over to do add time next a day.
+      date:
+        date >= new Date(Date.now())
+          ? date
+          : new Date(new Date(date).getTime() + 60 * 60 * 24 * 1000),
       message: description,
       repeatType: repeat === 'Dialy' ? 'day' : null,
       actions: ['Close all', 'Open all'],
       invokeApp: false,
     };
-    dispatch(action_setNavigation(data));
 
-    PushNotification.localNotificationSchedule(data);
-    _showDialogSuccessful();
-    _clearState();
+    if (date >= new Date(Date.now())) {
+      _dispatch_addNotification(data);
+      _showDialogSuccessful();
+    } else {
+      _dispatch_addNotification(data);
+      _showDialogWarning();
+    }
   };
-  PushNotification.configure({
-    onAction: function (notification) {
-      console.log('ACTION:', notification.action);
-      console.log('NOTIFICATION:', notification);
-      notification.action === 'Open all'
-        ? SetAllStatus(true)
-        : SetAllStatus(false);
-    },
-  });
 
   return (
     <View
@@ -132,7 +145,8 @@ const AddNotificationScreen = () => {
         marginHorizontal: 40,
         justifyContent: 'center',
       }}>
-      <View style={{alignItems: 'center', marginVertical: 15}}>
+      {/* Time selector */}
+      <View style={{alignItems: 'center', marginVertical: 20}}>
         <TouchableOpacity onPress={_onShowTime}>
           <Text
             style={{
@@ -141,39 +155,59 @@ const AddNotificationScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <TextInput
-        value={description}
-        label="Title"
-        onChange={(e) => setDescription(e.nativeEvent.text)}
-      />
-      <View style={{marginVertical: 30}}>
-        <Subheading style={{fontSize: 12, color: primary}}>OTHER</Subheading>
-        <Divider />
-        <List.Item
-          title="Repeat"
-          right={() => (
-            <TouchableOpacity
-              onPress={_showDialog}
-              style={{flexDirection: 'row'}}>
-              <List.Subheader style={{color: accent}}>
-                {repeat == 'Dialy' ? 'Daily' : 'Once'}
-              </List.Subheader>
-              <IconButton
-                icon="chevron-right"
-                style={{marginHorizontal: -17}}
-                color={accent}
-              />
-            </TouchableOpacity>
-          )}
+      <View style={{marginVertical: 25}}>
+        {/* Input for descriptions. */}
+        <TextInput
+          style={{marginBottom: 24}}
+          value={description}
+          label="Title"
+          mode="outlined"
+          onChange={(e) => setDescription(e.nativeEvent.text)}
         />
-        <Button
-          mode="contained"
-          style={{marginVertical: 24}}
-          onPress={_addNotification}>
-          Add Notification
-        </Button>
 
-        {/* Dialog Successful */}
+        <Divider />
+
+        {/* Selector a repeat. */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <Text>Repeat</Text>
+          <TouchableOpacity
+            onPress={_showDialog}
+            style={{flexDirection: 'row'}}>
+            <List.Subheader style={{color: accent}}>
+              {repeat == 'Dialy' ? 'Daily' : 'Once'}
+            </List.Subheader>
+            <IconButton
+              icon="chevron-right"
+              style={{marginHorizontal: -17}}
+              color={accent}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Validation button add notification. */}
+        {description ? (
+          <Button
+            mode="contained"
+            style={{marginVertical: 24}}
+            onPress={_addNotification}>
+            Add Notification
+          </Button>
+        ) : (
+          <Button
+            mode="contained"
+            disabled={true}
+            style={{marginVertical: 24}}
+            onPress={_addNotification}>
+            Add Notification
+          </Button>
+        )}
+
+        {/*Dialog Successful */}
         <Portal>
           <Dialog
             visible={dialogSuccessful}
@@ -199,7 +233,32 @@ const AddNotificationScreen = () => {
           </Dialog>
         </Portal>
 
-        {/* Dialog Repeat */}
+        {/*Dialog warning */}
+        <Portal>
+          <Dialog
+            visible={dialogWarning}
+            onDismiss={_hideDialogWarning}
+            style={{bottom: 0}}>
+            <Dialog.Content>
+              <View style={{alignItems: 'center'}}>
+                <IconButton
+                  icon="progress-clock"
+                  color={Colors.yellow400}
+                  size={50}
+                />
+                <H2>Warning</H2>
+                <H4 style={{color: '#757575'}}>
+                  Lorem ipsum odor amet, consectetuer.
+                </H4>
+              </View>
+            </Dialog.Content>
+            <Dialog.Actions style={{justifyContent: 'flex-end'}}>
+              <Button onPress={_hideDialogWarning}>Next</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+
+        {/* Dialog Repeat. */}
         <Portal>
           <Dialog visible={dialog} onDismiss={_hideDialog} style={{bottom: 0}}>
             <Dialog.Content>
@@ -211,15 +270,17 @@ const AddNotificationScreen = () => {
           </Dialog>
         </Portal>
       </View>
+
+      {/* Open native dateTime picker. */}
       {showTime && (
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
           mode="time"
           is24Hour={true}
-          display="default"
+          display="spinner"
           textColor="red"
-          onChange={onChange}
+          onChange={_onChange}
         />
       )}
     </View>

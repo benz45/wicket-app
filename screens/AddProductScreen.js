@@ -282,9 +282,7 @@ const AddProductScreen = ({jumpTo}) => {
         </View>
         {/* </Card.Content>
         </Card> */}
-        <Text style={{color: accent, marginVertical: 10}}>More details</Text>
-        {/* <Card>
-          <Card.Content style={{marginHorizontal: 8, marginTop: 15}}> */}
+        {/* <Text style={{color: accent, marginVertical: 10}}>More details</Text>
         <View style={{marginHorizontal: 8, marginTop: 0}}>
           <Input
             value={name}
@@ -296,8 +294,6 @@ const AddProductScreen = ({jumpTo}) => {
           <Input
             value={desc}
             label="Description"
-            // mode="outlined"
-            // style={{backgroundColor: '#212121'}}
             onChange={(e) => setDesc(e.nativeEvent.text)}
           />
           <View
@@ -317,14 +313,14 @@ const AddProductScreen = ({jumpTo}) => {
               onValueChange={() => setStatus(!status)}
             />
           </View>
-        </View>
-        {/* </Card.Content>
-        </Card> */}
+        </View> */}
+
+
         <Button
           mode="contained"
           loading={busy}
           onPress={() => _submit()}
-          style={{marginVertical: 18}}>
+          style={{marginVertical: 9}}>
           {busy ? 'Loading' : 'Submit'}
         </Button>
         <Portal>

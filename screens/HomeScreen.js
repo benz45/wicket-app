@@ -1,5 +1,5 @@
 import React, {useMemo, useEffect, useRef} from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, TouchableOpacity} from 'react-native';
 import {
   Button,
   Card,
@@ -27,7 +27,6 @@ import {useSelector} from 'react-redux';
 import {
   action_checkConnection,
   action_setConnection,
-  action_connectionChanged,
 } from '../src/actions/actions_firebase';
 
 // Styled
@@ -114,7 +113,7 @@ const HomeScreen = ({jumpTo}) => {
   };
 
   return (
-    <View flex={1} pb={80}>
+    <View flex={1}>
       <View ph={30}>
         <View flexDirection="row">
           <View
@@ -242,14 +241,16 @@ const HomeScreen = ({jumpTo}) => {
         </ScrollView>
       )}
       {!lengthData && (
-        <NoData
-          icon="database-plus"
-          header="Woo! "
-          description="No data yet. Please increase the data."
-          btnNavigate="Stack_addProduct"
-          headerSize={60}
-          btnTitle="ADD PRODUCT"
-        />
+        <View flex={1} mt={-110}>
+          <NoData
+            icon="database-plus"
+            header="Woo! "
+            description="No data yet. Please increase the data."
+            headerSize={60}
+            btnJumpto={() => jumpTo('product')}
+            btnTitle="ADD PRODUCT"
+          />
+        </View>
       )}
     </View>
   );

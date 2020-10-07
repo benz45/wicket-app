@@ -9,7 +9,7 @@ import {
 } from 'react-native-paper';
 
 // Navigations
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, TabActions} from '@react-navigation/native';
 
 // Component
 import {Button} from '../components/CustomBtn';
@@ -25,13 +25,15 @@ const noData = ({
   btnTitle,
   btnIcon,
   btnIconSize,
+  btnJumpto,
   btnIconColor,
   headerSize,
 }) => {
-  const {navigate} = useNavigation();
+  const {navigate, } = useNavigation();
+  
   return (
-    <View style={styles.ActivityIndicator}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View style={styles.ActivityIndicator }>
+      <View style={{flexDirection: 'row', alignItems: 'center', }}>
         <Text style={{color: Colors.grey600, fontSize: headerSize}}>
           {header}
         </Text>
@@ -49,7 +51,7 @@ const noData = ({
         <IconButton icon={btnIcon} color={btnIconColor} size={btnIconSize} />
       )}
       {btnTitle && (
-        <Button mode="outlined" onPress={() => navigate(btnNavigate)}>
+        <Button mode="outlined" onPress={btnJumpto && btnJumpto}>
           {btnTitle}
         </Button>
       )}

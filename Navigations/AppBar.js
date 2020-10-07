@@ -11,8 +11,11 @@ import Stack_Setting from './Settings';
 // Screens
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-// import AddProductScreen from '../Navigations/AddProduct';
+
+// AddProductScreen have a two screen is add picture and key, add name and descriptions.
 import AddProductScreen from '../screens/AddProductScreen';
+
+
 import MessageScreen from '../screens/MessageScreen';
 import NotificationList from '../screens/NotificationList';
 
@@ -24,7 +27,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {setMessages} from '../src/actions/';
 
 // HOC
-import {HOCheader, HOCform} from '../src/hoc';
+import {HOCheader} from '../src/hoc';
 
 const home = HOCheader(HomeScreen);
 const message = MessageScreen;

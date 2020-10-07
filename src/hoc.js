@@ -90,7 +90,6 @@ export const HOCheader = (Component) => (props) => {
             alignItems: 'center',
           }}>
           <IconButton icon="bell" color={Colors.grey500} />
-          {/* <IconButton icon="dots-vertical" color={Colors.grey500} /> */}
           <Avatar.Image
             size={38}
             source={{
@@ -136,19 +135,6 @@ export const hocSettings = (Components) => (props) => {
       style={{
         marginHorizontal: 20,
         marginVertical: 20,
-      }}>
-      <Components {...props} />
-    </View>
-  );
-};
-export const hocAddProduct = (Components) => (props) => {
-  return (
-    <View
-      style={{
-        marginHorizontal: 40,
-        marginVertical: 20,
-        flex: 1,
-        justifyContent: 'center',
       }}>
       <Components {...props} />
     </View>

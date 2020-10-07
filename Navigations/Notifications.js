@@ -2,6 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import {List, Text, Switch, FAB, IconButton} from 'react-native-paper';
 
+// Styled
+import * as Styled from '../styles/Navigations/Styled_Notifications_Navigations';
+
 // Cloud messaging
 import PushNotification from 'react-native-push-notification/';
 
@@ -18,43 +21,19 @@ import {useNavigation} from '@react-navigation/native';
 
 // Navigation
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
 
 // Screens
 import NotificationScreen from '../screens/NotificationScreen';
 import AddNotificationScreen from '../screens/AddNotificationScreen';
 
-const hocView = (Components) => (props) => {
-  const {navigate} = useNavigation();
-
-  const {notificationData} = useSelector(
-    (reducer) => reducer.NotificationReducer,
-  );
-
-  return (
-    <View style={{flex: 1, marginHorizontal: 30, marginVertical: 20}}>
-      <Components {...props} />
-      {!!notificationData.length && (
-        <FAB
-          style={{position: 'absolute', alignSelf: 'center', bottom: 20}}
-          icon="plus"
-          onPress={() => navigate('addNotifications')}
-        />
-      )}
-    </View>
-  );
-};
-
 const TabTop = createMaterialTopTabNavigator();
-const Setting_Notification = () => {
+
+const Notification_Navigator = () => {
   const dispatch = useDispatch();
   const {colors} = useSelector((reducer) => reducer.ThemeReducer.theme);
-  const {
-    notificationData,
-    settingNotification,
-    settingStatus,
-    settingMessage,
-  } = useSelector((reducer) => reducer.NotificationReducer);
+  const {settingNotification, settingStatus, settingMessage} = useSelector(
+    (reducer) => reducer.NotificationReducer,
+  );
   const [handlePress, setHandlePress] = useState(false);
   const [notification, setNotification] = useState(settingNotification);
   const [status, setStatus] = useState(settingStatus);
@@ -84,6 +63,7 @@ const Setting_Notification = () => {
   }, [settingNotification]);
   return (
     <>
+      {/* List switch setting notifications. */}
       <List.Section>
         <List.Accordion
           title="Settings"
@@ -92,20 +72,14 @@ const Setting_Notification = () => {
             fontSize: 13,
             color: colors.primary,
           }}
-          left={() => {
-            return (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <IconButton
-                  icon="bell-circle"
-                  size={30}
-                  color={colors.accent}
-                />
-                <Text style={{fontSize: 20, color: colors.accent}}>
-                  Natifications
-                </Text>
-              </View>
-            );
-          }}
+          left={() => (
+            <Styled.NotificationTextContainer>
+              <Styled.NotificationIcon color={colors.accent} />
+              <Styled.NotificationText color={colors.accent}>
+                Natifications
+              </Styled.NotificationText>
+            </Styled.NotificationTextContainer>
+          )}
           expanded={handlePress}
           onPress={() => _handlePress()}>
           <List.Item
@@ -139,13 +113,11 @@ const Setting_Notification = () => {
           />
         </List.Accordion>
       </List.Section>
-      {/* <Divider style={{marginBottom: 15}} /> */}
+
+      {/* Top tabs notification. */}
       <TabTop.Navigator
         tabBarOptions={{indicatorStyle: {backgroundColor: colors.accent}}}>
-        <TabTop.Screen
-          name="notifications"
-          component={hocView(NotificationScreen)}
-        />
+        <TabTop.Screen name="notifications" component={NotificationScreen} />
         <TabTop.Screen
           name="addNotifications"
           component={AddNotificationScreen}
@@ -155,33 +127,4 @@ const Setting_Notification = () => {
   );
 };
 
-export default Setting_Notification;
-
-// const Stack = createStackNavigator();
-// const Setting_Notification = () => {
-//   const icons = (props, value) => {
-
-//     return (
-//       <Icons name={props} onPress={()=> console.log("icons -> value", value)} size={25} style={{marginHorizontal: 15}} />
-//     );
-//   };
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         name="notifications"
-//         component={hocView(NotificationScreen)}
-//         options={{title: 'Notification'}}
-//       />
-//       <Stack.Screen
-//         options={{
-//           headerLeft: (value) => icons('window-close', value),
-//           headerRight: (value) => icons('check', value),
-//           headerTitleAlign: 'center',
-//           title: 'Add Navigation',
-//         }}
-//         name="addNotifications"
-//         component={AddNotificationScreen}
-//       />
-//     </Stack.Navigator>
-//   );
-// };
+export default Notification_Navigator;
