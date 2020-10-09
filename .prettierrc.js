@@ -5,7 +5,4 @@ module.exports = {
   trailingComma: 'all',
   semi: true,
   endOfLine: 'auto',
-  // "prettier/prettier": ["error", {
-  //   "endOfLine": "auto"
-  // }],
 };

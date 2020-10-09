@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {BackHandler} from 'react-native';
 
 // Component
 import Nodata from '../components/noData';
@@ -9,36 +10,61 @@ import * as Styled from '../styles/screens/Styled_NotificationScreen';
 // Cloud messaging
 import PushNotification from 'react-native-push-notification/';
 
+// React Novigations
+import {useIsFocused, CommonActions} from '@react-navigation/native';
+
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  action_deleteNavigation,
-  action_setNavigation,
-} from '../src/actions/actions_notification';
+import {action_deleteNavigation} from '../src/actions/actions_notification';
+import {VALIDATION_DATE_NOTIFICATION} from '../src/actionsType';
 
-const Notification_Screen = () => {
+const Notification_Screen = ({navigation, route}) => {
   const dispatch = useDispatch();
-  const {
-    notificationData,
-    colors: {accent, primary},
-  } = useSelector((reducer) => {
+  const {notificationData, colors} = useSelector((reducer) => {
     return {...reducer.NotificationReducer, ...reducer.ThemeReducer.theme};
   });
+  //Focused page.
+  const isFocused = useIsFocused();
 
+  // Back handle button.
+  const backAction = () => {
+    if (isFocused) {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'notifications'}],
+        }),
+      );
+    }
+    navigation.goBack();
+    return true;
+  };
+  const backHandler = BackHandler.addEventListener(
+    'hardwareBackPress',
+    backAction,
+  );
+
+  // Update a date if original date < date now and dispatch to store.
   useEffect(() => {
     if (notificationData.length) {
       const validationDate = notificationData.map((elem) => {
         if (elem.fireDate < new Date(Date.now())) {
-          elem.fireDate = new Date(
-            new Date(elem.fireDate).getTime() + 60 * 60 * 24 * 1000,
-          );
+          const date = new Date(elem.fireDate).getTime() + 60 * 60 * 24 * 1000;
+          elem.fireDate = date;
         }
         return elem;
       });
-      console.log(validationDate);
-      // dispatch(action_setNavigation(validationDate));s
+
+      dispatch({
+        type: VALIDATION_DATE_NOTIFICATION,
+        payload: validationDate,
+      });
     }
+
+    return () => backHandler.remove();
   }, []);
+
+  useEffect(() => {}, []);
 
   // State long press.
   const [longPress, setLongPress] = useState(false);
@@ -61,8 +87,16 @@ const Notification_Screen = () => {
     return repeatType === null ? 'Once' : 'Dialy';
   };
 
+  // Turn off icon trash.
+  const _cancel_removeNotification = () => setLongPress(false);
+
+  // If notificationData is not yet a data to do set turn off icon trash.
+  useEffect(() => {
+    if (!notificationData.length) _cancel_removeNotification();
+  }, [notificationData]);
+
   return (
-    <Styled.Container onPress={() => setLongPress(false)}>
+    <Styled.Container onPress={_cancel_removeNotification}>
       <Styled.ScrollView>
         {!!!notificationData.length && (
           <Nodata
@@ -70,7 +104,7 @@ const Notification_Screen = () => {
             header="ADD NOW "
             btnIcon="subdirectory-arrow-right"
             btnIconSize={60}
-            btnIconColor={accent}
+            btnIconColor={colors.accent}
             headerSize={47}
             description="No data yet. Please increase the data."
           />
@@ -78,27 +112,30 @@ const Notification_Screen = () => {
 
         {notificationData.map((elem) => (
           <Styled.CardContainerLongPress
+            onPress={_cancel_removeNotification}
             onLongPress={() => setLongPress((prev) => !prev)}>
             <Styled.Card>
               <Styled.InCard>
                 <Styled.CardDetail>
-                  <Styled.DateText color={primary}>
+                  <Styled.DateText color={colors.primary}>
                     {_replace_dateInCard(elem.fireDate)}
                   </Styled.DateText>
-                  <Styled.TimeText>{elem.time}</Styled.TimeText>
-                  <Styled.DescriptionText color={accent}>
+                  <Styled.TimeText color={colors.text}>
+                    {elem.time}
+                  </Styled.TimeText>
+                  <Styled.DescriptionText color={colors.accent}>
                     {elem.message}
                   </Styled.DescriptionText>
                 </Styled.CardDetail>
                 <Styled.CardRepeat>
                   {!longPress ? (
-                    <Styled.RepeatNormalText color={accent}>
+                    <Styled.RepeatNormalText color={colors.accent}>
                       {_replace_repeatIncard(elem.repeatType)}
                     </Styled.RepeatNormalText>
                   ) : (
                     <Styled.RepeatLongText
                       onPress={() => _removeNotification(elem.id)}>
-                      <Styled.Trash />
+                      <Styled.Trash color={colors.error} />
                     </Styled.RepeatLongText>
                   )}
                 </Styled.CardRepeat>
