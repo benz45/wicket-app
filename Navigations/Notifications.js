@@ -70,9 +70,10 @@ const Notification_Navigator = () => {
           titleStyle={{
             alignSelf: 'flex-end',
             fontSize: 13,
-            color: colors.primary,
+            color: colors.text,
           }}
           left={() => (
+            // Head logo notifications
             <Styled.NotificationTextContainer>
               <Styled.NotificationIcon color={colors.accent} />
               <Styled.NotificationText color={colors.accent}>
@@ -116,11 +117,19 @@ const Notification_Navigator = () => {
 
       {/* Top tabs notification. */}
       <TabTop.Navigator
-        tabBarOptions={{indicatorStyle: {backgroundColor: colors.accent}}}>
-        <TabTop.Screen name="notifications" component={NotificationScreen} />
+        tabBarOptions={{
+          indicatorStyle: {backgroundColor: colors.accent},
+          labelStyle: {textTransform: 'none'},
+        }}>
+        <TabTop.Screen
+          name="notifications"
+          component={NotificationScreen}
+          options={{title: 'Notifications'}}
+        />
         <TabTop.Screen
           name="addNotifications"
           component={AddNotificationScreen}
+          options={{title: 'Add notifications'}}
         />
       </TabTop.Navigator>
     </>

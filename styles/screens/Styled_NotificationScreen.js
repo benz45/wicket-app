@@ -47,8 +47,9 @@ export const CardRepeat = styled(View)`
 `;
 
 export const TimeText = styled(Text)`
-  font-size: 25px;
+  font-size: 26px;
   margin-bottom: 8px;
+  color: ${(props) => `${props.color}`};
 `;
 export const DateText = styled(Text)`
   font-size: 15px;
@@ -72,8 +73,7 @@ export const RepeatLongText = styled(TouchableOpacity)`
 
 export const Trash = styled(Avatar.Icon).attrs({
   icon: 'delete-empty',
-  size: 39,
-  color: Colors.red500,
+  size: 43,
 })`
   right: 10px;
   background-color: #660000;

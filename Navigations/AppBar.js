@@ -15,7 +15,6 @@ import ProfileScreen from '../screens/ProfileScreen';
 // AddProductScreen have a two screen is add picture and key, add name and descriptions.
 import AddProductScreen from '../screens/AddProductScreen';
 
-
 import MessageScreen from '../screens/MessageScreen';
 import NotificationList from '../screens/NotificationList';
 

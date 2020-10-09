@@ -1,4 +1,3 @@
-
 // Type
 import {
   SET_NAVIGATION,
@@ -6,7 +5,8 @@ import {
   SETTING_NOTIFICATION,
   SETTING_STATUS,
   SETTING_MESSAGE,
-  SETALLNOTIFICATION_TOSTORE
+  SETALLNOTIFICATION_TOSTORE,
+  VALIDATION_DATE_NOTIFICATION,
 } from '../actionsType';
 
 const initialState = {
@@ -22,29 +22,41 @@ export default (state = initialState, {type, payload}) => {
   const lengthAllNotification = state.allNotification.length;
 
   // Fucntion insert property id, type in payload before add to store.
-  const _insertPropInPayload = ({type : typeNotification, data : dataNotification}) => {
-    const {notification, from, sentTime, data, collapseKey} = dataNotification.snapshot;
+  const _insertPropInPayload = ({
+    type: typeNotification,
+    data: dataNotification,
+  }) => {
+    const {
+      notification,
+      from,
+      sentTime,
+      data,
+      collapseKey,
+    } = dataNotification.snapshot;
     const insert_dataNotification = {
       id: `${typeNotification + new Date().getTime()}`,
       type: typeNotification,
       informations: {notification, from, sentTime, data, collapseKey},
     };
 
-    return {...state, allNotification: 
-      // Check length data. If not yet data to do insert first data.
-      // If data have to do insert new data and prev all data.
-      !!!lengthAllNotification 
-      ? [insert_dataNotification]
-      : [insert_dataNotification, ...state.allNotification]
-    
-    }
-  }
+    return {
+      ...state,
+      allNotification:
+        // Check length data. If not yet data to do insert first data.
+        // If data have to do insert new data and prev all data.
+        !!!lengthAllNotification
+          ? [insert_dataNotification]
+          : [insert_dataNotification, ...state.allNotification],
+    };
+  };
 
   switch (type) {
     case SET_NAVIGATION:
       return Object.assign({}, state, {
         notificationData: [...state.notificationData, payload],
       });
+    case VALIDATION_DATE_NOTIFICATION:
+      return {...state, notificationData: payload};
     case DELETE_NAVIGATION:
       return {...state, notificationData: payload};
     case SETTING_NOTIFICATION:
@@ -53,7 +65,7 @@ export default (state = initialState, {type, payload}) => {
       return {...state, settingStatus: payload};
     case SETTING_MESSAGE:
       return {...state, settingMessage: payload};
-    case SETALLNOTIFICATION_TOSTORE:    
+    case SETALLNOTIFICATION_TOSTORE:
       return _insertPropInPayload(payload);
     default:
       return state;
