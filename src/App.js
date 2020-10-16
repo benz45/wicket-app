@@ -2,8 +2,11 @@ import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 
+// Styled
+import {ThemeProvider} from 'styled-components';
+
 // Firebase message
-import messaging from '@react-native-firebase/messaging'
+import messaging from '@react-native-firebase/messaging';
 
 // Splash screen
 import SplashScreen from 'react-native-splash-screen';
@@ -52,19 +55,23 @@ const App = () => {
 
   useEffect(() => {
     // Foreground all message.
-    const subscribe_message = messaging().onMessage(async snapshot => {
+    const subscribe_message = messaging().onMessage(async (snapshot) => {
       try {
-        if(!!snapshot) dispatch(action_setAllNotification({snapshot, type: "GLOBAL"}));
+        if (!!snapshot)
+          dispatch(action_setAllNotification({snapshot, type: 'GLOBAL'}));
       } catch (err) {
-        console.error(err.message)
+        console.error(err.message);
       }
-    })
+    });
     subscribe_message;
-    
+
     // Background all message.
-    const unsubscribe_message = messaging().setBackgroundMessageHandler(async snapshot => {
-      if(!!snapshot) dispatch(action_setAllNotification({snapshot, type: "GLOBAL"}));
-    })
+    const unsubscribe_message = messaging().setBackgroundMessageHandler(
+      async (snapshot) => {
+        if (!!snapshot)
+          dispatch(action_setAllNotification({snapshot, type: 'GLOBAL'}));
+      },
+    );
 
     // Load data current user from firebase.
     const loadCurrentUser = async () => {
@@ -72,18 +79,20 @@ const App = () => {
     };
     loadCurrentUser();
 
-    return unsubscribe_message
+    return unsubscribe_message;
   }, []);
 
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer theme={theme}>
-        <StatusBar barStyle={mode} backgroundColor={backgroundColor} />
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Auth" component={Auth} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <ThemeProvider theme={theme}>
+      <PaperProvider theme={theme}>
+        <NavigationContainer theme={theme}>
+          <StatusBar barStyle={mode} backgroundColor={backgroundColor} />
+          <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Auth" component={Auth} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </ThemeProvider>
   );
 };
 

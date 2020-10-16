@@ -2,10 +2,7 @@ import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // Navigations
-import RegisterComplateScreen from '../screens/RegisterComplateScreen';
-
-// Component
-import MainPage from '../Navigations/MainPage';
+import Navigation_HomeStack from '../Navigations/Navigation_HomeStack';
 
 // Actions`
 import {result_updateDoorStatus} from '../src/actions/actions_firebase';
@@ -26,15 +23,15 @@ const Authenticated = () => {
   useEffect(() => {
     result_updateDoorStatus(settingStatus);
   }, [settingStatus]);
-  return (
-    <>
-      {isUser ? (
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="MainPage" component={MainPage} />
-        </Stack.Navigator>
-      ) : null}
-    </>
-  );
+
+  return isUser ? (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen
+        name="Navigation_HomeStack"
+        component={Navigation_HomeStack}
+      />
+    </Stack.Navigator>
+  ) : null;
 };
 
 export default Authenticated;

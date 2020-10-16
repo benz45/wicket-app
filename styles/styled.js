@@ -90,3 +90,15 @@ export const View = styled.View`
 export const Text = styled(TextPaper)`
   ${atts}
 `;
+
+export const HeadText = styled(TextPaper)`
+  font-size: ${(props) => `${props.theme.font.head.size}px`};
+  letter-spacing: ${(props) => `${props.theme.font.head.letterSpacing}px`};
+  font-weight: ${(props) => `${props.theme.font.head.fontWeight}`};
+`;
+
+export const SubHeadText = styled(TextPaper)`
+  font-size: ${(props) => `${props.theme.font.body.size}px`};
+  letter-spacing: ${(props) => `${props.theme.font.body.letterSpacing}px`};
+  font-weight: ${(props) => `${props.theme.font.body.fontWeight}`};
+`;

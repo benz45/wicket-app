@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import {View, Text, ScrollView as Scroll, TouchableOpacity} from 'react-native';
 
+// Component
+import NoData from '../../components/noData';
+
 // React native paper
-import {Card as CardPaper, Avatar, Colors} from 'react-native-paper';
+import {Card as CardPaper, Avatar} from 'react-native-paper';
+import styles from '../styles';
 
 export const Container = styled(TouchableOpacity).attrs({
   activeOpacity: 0.7,
@@ -49,22 +53,22 @@ export const CardRepeat = styled(View)`
 export const TimeText = styled(Text)`
   font-size: 26px;
   margin-bottom: 8px;
-  color: ${(props) => `${props.color}`};
+  color: ${(props) => `${props.theme.colors.text}`};
 `;
 export const DateText = styled(Text)`
   font-size: 15px;
-  color: ${(props) => `${props.color}`};
+  color: ${(props) => `${props.theme.colors.primary}`};
 `;
 
 export const DescriptionText = styled(Text)`
   font-size: 20px;
-  color: ${(props) => `${props.color}`};
+  color: ${(props) => `${props.theme.colors.accent}`};
 `;
 
 export const RepeatNormalText = styled(Text)`
   font-size: 20px;
   font-weight: bold;
-  color: ${(props) => `${props.color}`};
+  color: ${(props) => `${props.theme.colors.accent}`};
 `;
 
 export const RepeatLongText = styled(TouchableOpacity)`
@@ -78,3 +82,13 @@ export const Trash = styled(Avatar.Icon).attrs({
   right: 10px;
   background-color: #660000;
 `;
+
+export const NoHaveDataNotification = styled(NoData).attrs((props) => ({
+  icon: 'bell-plus-outline',
+  header: 'ADD NOW ',
+  btnIcon: 'subdirectory-arrow-right',
+  btnIconSize: 60,
+  btnIconColor: props.theme.colors.accent,
+  headerSize: 47,
+  description: 'No data yet. Please increase the data.',
+}))``;
