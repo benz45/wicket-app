@@ -16,16 +16,7 @@ import {
 import {Button} from '../../../components/CustomBtn';
 import {HeadText, SubHeadText} from '../../styled';
 
-export const Container = styled(View)`
-  flex: 1;
-  padding: 0px 42px;
-  justify-content: center;
-`;
-
-export const ContainerImagePicker = styled(View)`
-  align-items: center;
-  margin-bottom: 22px;
-`;
+export const AvatarIamge = styled(Avatar.Image).attrs({size: 160})``;
 
 export const BorderCameraIcon = styled(Surface)`
   background-color: ${(props) => props.theme.colors.background};
@@ -38,37 +29,26 @@ export const BorderCameraIcon = styled(Surface)`
   justify-content: center;
 `;
 
-export const IconCamera = styled(IconButton).attrs((props) => ({
-  icon: 'camera',
-  color: props.theme.colors.accent,
-  size: 35,
-}))``;
-
-export const AvatarIamge = styled(Avatar.Image).attrs({size: 160})``;
-
-export const MoreDetailText = styled(Text)`
-  color: ${(props) => props.theme.colors.accent};
-  margin: 10px 0px;
-`;
+export const BtnGoHome = styled(Button)``;
 
 export const ContainerTextInput = styled(View)``;
-
-export const TextInputName = styled(TextInput).attrs({
-  label: 'Name',
-  mode: 'outlined',
-})`
-  margin-bottom: 12px;
-`;
-
-export const TextInputDescription = styled(TextInputName).attrs({
-  label: 'Description',
-})``;
 
 //! Default status_______________________________________________________________
 export const ContainerDefaultSwitch = styled(View)`
   flex-direction: row;
   align-items: center;
   margin-bottom: 24px;
+`;
+
+export const Container = styled(View)`
+  flex: 1;
+  padding: 0px 42px;
+  justify-content: center;
+`;
+
+export const ContainerImagePicker = styled(View)`
+  align-items: center;
+  margin-bottom: 22px;
 `;
 
 export const DefaultSwitchText = styled(Text)``;
@@ -81,22 +61,14 @@ export const DefaultSwitchCaption = styled(Caption)`
   color: ${(props) => `${props.theme.colors.accent}`};
   font-weight: bold;
 `;
-
-//! Submit button_______________________________________________________________
-export const SubmitButton = styled(Button).attrs({
-  mode: 'contained',
-})``;
-
 //! Dialog camera_______________________________________________________________
 export const DialogContent = styled(Dialog.Content)`
   flex-direction: row;
   justify-content: center;
 `;
-
 export const DialogIconContent = styled(View)`
   align-items: center;
 `;
-
 export const DialogIconCamera = styled(IconButton).attrs((props) => ({
   color: props.theme.colors.accent,
   size: 36,
@@ -106,9 +78,41 @@ export const DialogIconCamera = styled(IconButton).attrs((props) => ({
   border-color: ${(props) => props.theme.colors.accent};
   border-width: 2px;
 `;
-
 export const DialogIconGallery = styled(DialogIconCamera).attrs({
   icon: 'image-size-select-actual',
+})``;
+export const DialogSuccessfulContainer = styled(View)`
+  align-items: center;
+`;
+export const DialogActions = styled(Dialog.Actions)`
+  justify-content: flex-end;
+`;
+
+export const IconCamera = styled(IconButton).attrs((props) => ({
+  icon: 'camera',
+  color: props.theme.colors.accent,
+  size: 35,
+}))``;
+
+export const MoreDetailText = styled(Text)`
+  color: ${(props) => props.theme.colors.accent};
+  margin: 10px 0px;
+`;
+
+//! Submit button_______________________________________________________________
+export const SubmitButton = styled(Button).attrs({
+  mode: 'contained',
+})``;
+
+export const TextInputName = styled(TextInput).attrs({
+  label: 'Name',
+  mode: 'outlined',
+})`
+  margin-bottom: 12px;
+`;
+
+export const TextInputDescription = styled(TextInputName).attrs({
+  label: 'Description',
 })``;
 
 export const ProductKeyText = styled(MoreDetailText)`
@@ -121,9 +125,6 @@ export const ShowProductKeyText = styled(ProductKeyText)`
 `;
 
 //! Dialog Insert successful_______________________________________________________________
-export const DialogSuccessfulContainer = styled(View)`
-  align-items: center;
-`;
 
 export const IconCheck = styled(IconButton).attrs((props) => ({
   icon: 'checkbox-marked-circle-outline',
@@ -135,8 +136,4 @@ export const HeadTextOne = styled(HeadText)``;
 
 export const HeadTextTwo = styled(SubHeadText)`
   color: ${(props) => `${props.theme.colors.primary}`};
-`;
-
-export const DialogActions = styled(Dialog.Actions)`
-  justify-content: space-between;
 `;

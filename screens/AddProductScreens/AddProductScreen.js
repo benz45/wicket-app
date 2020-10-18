@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import {Keyboard} from 'react-native';
+import React from 'react';
 
 // Styled
 import * as Styled from '../../styles/screens/AddProductScreens/Styled_AddProductScreen';
@@ -7,57 +6,27 @@ import * as Styled from '../../styles/screens/AddProductScreens/Styled_AddProduc
 // Navigation
 import {useNavigation} from '@react-navigation/native';
 
-// Redux
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  SET_PRODUCTKEY_TOSTORE,
-  SET_BUSY_ON,
-  SET_BUSY_OFF,
-  RESET_ISKEY,
-} from '../../src/actionsType';
-import {action_setIskeyToStore} from '../../src/actions/actions_addProduct';
+// Custom hook.
+import useReducerAddProduct from './useDispatch_Add_Product';
 
-const AddProductScreen = () => {
-  const dispatch = useDispatch();
+const AddProductScreen = ({jumpTo}) => {
   const {navigate} = useNavigation();
-  const {busy, key, isKey} = useSelector(({AddProductReducer: res}) => res);
+  // Custom hook.
+  const {
+    state: {key, isKey},
+    _resetKey,
+    _setKey,
+    _disableBtn,
+    _loading,
+  } = useReducerAddProduct();
 
   // Button submit.
-  const _submit = async () => {
-    dispatch({
-      type: SET_BUSY_ON,
-    });
-    navigate('Stack_AddProduct_NameAndDescription');
-    Keyboard.dismiss();
-    dispatch({
-      type: SET_BUSY_OFF,
-    });
+  const _submit = () => {
+    const paramKey = key;
+    navigate('Stack_AddProduct_NameAndDescription', {paramKey});
+    _resetKey();
+    jumpTo('home');
   };
-
-  // Set key from text input.
-  const _setKey = (paramKey) => {
-    dispatch({
-      type: SET_PRODUCTKEY_TOSTORE,
-      payload: paramKey,
-    });
-  };
-
-  // Validation disable button submit.
-  const _validateButtonDisable = () => {
-    return key.length === 6 && isKey.visible === true && isKey.type === 'info'
-      ? false
-      : true;
-  };
-
-  //Check used a key. If key.length = 6. if not to do reset isKey.
-  useEffect(() => {
-    if (key.length === 6) {
-      Keyboard.dismiss();
-      dispatch(action_setIskeyToStore(key));
-    } else {
-      dispatch({type: RESET_ISKEY});
-    }
-  }, [key]);
 
   return (
     <Styled.Container>
@@ -78,6 +47,7 @@ const AddProductScreen = () => {
           value={key}
           onChange={(e) => _setKey(e.nativeEvent.text)}
         />
+
         {/* Helper text. */}
         <Styled.HelperText type={isKey.type} visible={isKey.visible}>
           {isKey.message}
@@ -85,10 +55,10 @@ const AddProductScreen = () => {
       </Styled.InputKeyContainer>
 
       <Styled.SubmitButton
-        disabled={_validateButtonDisable()}
-        loading={busy}
-        onPress={() => _submit()}>
-        {busy ? 'Loading' : 'Verify'}
+        disabled={_disableBtn}
+        loading={_loading()}
+        onPress={_submit}>
+        Verify
       </Styled.SubmitButton>
     </Styled.Container>
   );

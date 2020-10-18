@@ -6,7 +6,6 @@ import NoData from '../../components/noData';
 
 // React native paper
 import {Card as CardPaper, Avatar} from 'react-native-paper';
-import styles from '../styles';
 
 export const Container = styled(TouchableOpacity).attrs({
   activeOpacity: 0.7,
