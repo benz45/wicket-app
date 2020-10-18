@@ -6,7 +6,7 @@ import Settings from './Settings';
 import DetailProduct from './DetailProduct';
 import Navigation_HomeDrawer from './Navigation_HomeDrawer';
 import Notifications from './Notifications';
-import AddProduct_NameAndDescription from './Navigation_AddProduct';
+import AddProduct_NameAndDescriptionScreen from '../screens/AddProductScreens/AddProduct_NameAndDescriptionScreen';
 
 // Actions
 import {
@@ -60,7 +60,7 @@ const Navigation_HomeStack = () => {
       />
       <Stack.Screen
         name="Stack_AddProduct_NameAndDescription"
-        component={AddProduct_NameAndDescription}
+        component={AddProduct_NameAndDescriptionScreen}
         options={{title: 'Create new wicket'}}
       />
     </Stack.Navigator>
