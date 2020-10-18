@@ -4,22 +4,15 @@ import {BottomNavigation} from 'react-native-paper';
 import database from '@react-native-firebase/database';
 import PushNotification from 'react-native-push-notification';
 
-// Navigations
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import Stack_Setting from './Settings';
-
 // Screens
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
 // AddProductScreen have a two screen is add picture and key, add name and descriptions.
-import AddProductScreen from '../screens/AddProductScreen';
+import Navigation_AddProduct from '../screens/AddProductScreens/AddProductScreen';
 
 import MessageScreen from '../screens/MessageScreen';
 import NotificationList from '../screens/NotificationList';
-
-// Components
-import CustomDrawer from '../components/CustomDrawer';
 
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
@@ -30,10 +23,9 @@ import {HOCheader} from '../src/hoc';
 
 const home = HOCheader(HomeScreen);
 const message = MessageScreen;
-const add = HOCheader(AddProductScreen);
+const addProduct = Navigation_AddProduct;
 const notificationList = HOCheader(NotificationList);
 const profile = ProfileScreen;
-const PaperDrawer = createDrawerNavigator();
 
 const data = {
   index: 0,
@@ -61,7 +53,7 @@ const data = {
   ],
 };
 
-const HomeTab = () => {
+const HomeBottomNavigationBar = () => {
   const dispatch = useDispatch();
   const mount = useRef(true);
   const mountSettingMessage = useRef(true);
@@ -95,7 +87,7 @@ const HomeTab = () => {
   const _renderScene = BottomNavigation.SceneMap({
     home: home,
     message: message,
-    product: add,
+    product: addProduct,
     notificationList: notificationList,
     profile: profile,
   });
@@ -162,26 +154,4 @@ const HomeTab = () => {
   );
 };
 
-const AppBar = () => {
-  return (
-    <PaperDrawer.Navigator
-      initialRouteName="Stack_HomeTab"
-      drawerPosition="left"
-      drawerType="back"
-      drawerContentOptions={{activeTintColor: '#767676'}}
-      drawerContent={(val) => <CustomDrawer {...val} />}>
-      <PaperDrawer.Screen
-        name="Stack_HomeTab"
-        component={HomeTab}
-        options={{title: 'Home'}}
-      />
-      <PaperDrawer.Screen
-        name="Stack_Settings"
-        component={Stack_Setting}
-        options={{title: 'Settings'}}
-      />
-    </PaperDrawer.Navigator>
-  );
-};
-
-export default AppBar;
+export default HomeBottomNavigationBar;

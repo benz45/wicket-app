@@ -1,4 +1,3 @@
-import React from 'react';
 import {setThemeToStore} from './index';
 import Theme from './actions_theme';
 

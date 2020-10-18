@@ -98,17 +98,7 @@ const Notification_Screen = ({navigation, route}) => {
   return (
     <Styled.Container onPress={_cancel_removeNotification}>
       <Styled.ScrollView>
-        {!!!notificationData.length && (
-          <Nodata
-            icon="bell-plus-outline"
-            header="ADD NOW "
-            btnIcon="subdirectory-arrow-right"
-            btnIconSize={60}
-            btnIconColor={colors.accent}
-            headerSize={47}
-            description="No data yet. Please increase the data."
-          />
-        )}
+        {!!!notificationData.length && <Styled.NoHaveDataNotification />}
 
         {notificationData.map((elem) => (
           <Styled.CardContainerLongPress
@@ -117,19 +107,17 @@ const Notification_Screen = ({navigation, route}) => {
             <Styled.Card>
               <Styled.InCard>
                 <Styled.CardDetail>
-                  <Styled.DateText color={colors.primary}>
+                  <Styled.DateText>
                     {_replace_dateInCard(elem.fireDate)}
                   </Styled.DateText>
-                  <Styled.TimeText color={colors.text}>
-                    {elem.time}
-                  </Styled.TimeText>
-                  <Styled.DescriptionText color={colors.accent}>
+                  <Styled.TimeText>{elem.time}</Styled.TimeText>
+                  <Styled.DescriptionText>
                     {elem.message}
                   </Styled.DescriptionText>
                 </Styled.CardDetail>
                 <Styled.CardRepeat>
                   {!longPress ? (
-                    <Styled.RepeatNormalText color={colors.accent}>
+                    <Styled.RepeatNormalText>
                       {_replace_repeatIncard(elem.repeatType)}
                     </Styled.RepeatNormalText>
                   ) : (

@@ -2,10 +2,11 @@ import React, {useEffect} from 'react';
 
 // Navigations
 import {createStackNavigator} from '@react-navigation/stack';
-import Settings from '../Navigations/Settings';
-import DetailProduct from '../Navigations/DetailProduct';
-import AppBar from './AppBar';
+import Settings from './Settings';
+import DetailProduct from './DetailProduct';
+import Navigation_HomeDrawer from './Navigation_HomeDrawer';
 import Notifications from './Notifications';
+import AddProduct_NameAndDescription from './Navigation_AddProduct';
 
 // Actions
 import {
@@ -18,7 +19,8 @@ import {useDispatch} from 'react-redux';
 import AnalysisScreen from '../screens/AnalysisScreen';
 
 const Stack = createStackNavigator();
-const MainScreen = () => {
+
+const Navigation_HomeStack = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,8 +34,8 @@ const MainScreen = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Stack_AppBar"
-        component={AppBar}
+        name="Stack_HomeDrawer"
+        component={Navigation_HomeDrawer}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -56,8 +58,13 @@ const MainScreen = () => {
         component={DetailProduct}
         options={{title: ''}}
       />
+      <Stack.Screen
+        name="Stack_AddProduct_NameAndDescription"
+        component={AddProduct_NameAndDescription}
+        options={{title: 'Create new wicket'}}
+      />
     </Stack.Navigator>
   );
 };
 
-export default MainScreen;
+export default Navigation_HomeStack;
