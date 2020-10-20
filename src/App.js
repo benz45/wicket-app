@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, View, Text} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 
 // Styled
