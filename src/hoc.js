@@ -7,6 +7,7 @@ import {Colors, Avatar, IconButton} from 'react-native-paper';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 import {FloatingAction} from 'react-native-floating-action';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 // Redux
 import {useSelector} from 'react-redux';
@@ -81,51 +82,53 @@ export const HOCheader = (Component) => (props) => {
       : null;
   };
   return (
-    <View style={{flex: 1}}>
-      <View style={styles.HomeScreen_Header}>
-        <IconOpenDrawer />
+    <SafeAreaView style={{flex: 1}}>
+      <View style={{flex: 1}}>
+        <View style={styles.HomeScreen_Header}>
+          <IconOpenDrawer />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <IconButton icon="bell" color={Colors.grey500} />
+            <Avatar.Image
+              size={38}
+              source={{
+                uri: user.photoURL,
+              }}
+              style={{
+                marginLeft: 10,
+              }}
+            />
+          </View>
+        </View>
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
+            flex: 1,
           }}>
-          <IconButton icon="bell" color={Colors.grey500} />
-          <Avatar.Image
-            size={38}
-            source={{
-              uri: user.photoURL,
-            }}
-            style={{
-              marginLeft: 10,
-            }}
-          />
+          <Component {...props} />
         </View>
+        {props.route.key === 'home' && (
+          <FloatingAction
+            color={accent}
+            overlayColor="rgba(18, 18, 18, 0.73)"
+            shadow={{
+              shadowOpacity: 0,
+            }}
+            showBackground={true}
+            style={{
+              position: 'absolute',
+              margin: 16,
+              left: 0,
+              bottom: 0,
+            }}
+            actions={actions}
+            onPressItem={(res) => linkTo(res)}
+          />
+        )}
       </View>
-      <View
-        style={{
-          flex: 1,
-        }}>
-        <Component {...props} />
-      </View>
-      {props.route.key === 'home' && (
-        <FloatingAction
-          color={accent}
-          overlayColor="rgba(18, 18, 18, 0.73)"
-          shadow={{
-            shadowOpacity: 0,
-          }}
-          showBackground={true}
-          style={{
-            position: 'absolute',
-            margin: 16,
-            left: 0,
-            bottom: 0,
-          }}
-          actions={actions}
-          onPressItem={(res) => linkTo(res)}
-        />
-      )}
-    </View>
+    </SafeAreaView>
   );
 };
 

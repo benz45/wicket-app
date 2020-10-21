@@ -10,7 +10,7 @@ import useCustomHookLoginScreen from '../LoginScreen/useCustomHookLoginScreen';
 
 const LoginScreen = () => {
   const {
-    state,
+    state: {username, password, busy, error},
     _setUsername,
     _setPassword,
     _Submit,
@@ -20,17 +20,20 @@ const LoginScreen = () => {
   return (
     <Styled.Container>
       <WelcomeLogo />
-      <Styled.ContanerInput />
-      <Styled.UsernameInput
-        value={state.username}
-        onChange={(e) => _setUsername(e.nativeEvent.text)}
-      />
-      <Styled.PasswordInput
-        value={state.password}
-        onChange={(e) => _setPassword(e.nativeEvent.text)}
-      />
+      <Styled.ContanerInput>
+        <Styled.UsernameInput
+          error={error.username && !!error.username}
+          value={username}
+          onChange={(e) => _setUsername(e.nativeEvent.text)}
+        />
+        <Styled.PasswordInput
+          error={error.password && !!error.password}
+          value={password}
+          onChange={(e) => _setPassword(e.nativeEvent.text)}
+        />
+      </Styled.ContanerInput>
       <Styled.ContanerButton>
-        <Styled.ButtonLogin loading={state.busy} onPress={_Submit}>
+        <Styled.ButtonLogin loading={busy} onPress={_Submit}>
           SignIn
         </Styled.ButtonLogin>
         <Styled.ButtonRegister onPress={_navigateToRegister()}>

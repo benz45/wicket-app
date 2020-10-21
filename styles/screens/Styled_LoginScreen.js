@@ -4,6 +4,7 @@ import {View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 
 import {Button} from '../../components/CustomBtn';
+
 export const Container = styled(View)`
   flex: 1;
   justify-content: center;

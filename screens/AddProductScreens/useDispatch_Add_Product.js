@@ -43,7 +43,7 @@ const options = {
   quality: 0.5,
 };
 
-// *Initial state
+// ?Initial state
 const initialState = {
   isKey: {
     visible: false,

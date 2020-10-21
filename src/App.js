@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {StatusBar, View, Text} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 // Styled
 import {ThemeProvider} from 'styled-components';
@@ -85,12 +86,14 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <PaperProvider theme={theme}>
-        <NavigationContainer theme={theme}>
-          <StatusBar barStyle={mode} backgroundColor={backgroundColor} />
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Auth" component={Auth} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <SafeAreaProvider>
+          <NavigationContainer theme={theme}>
+            <StatusBar barStyle={mode} backgroundColor={backgroundColor} />
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen name="Auth" component={Auth} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
       </PaperProvider>
     </ThemeProvider>
   );
