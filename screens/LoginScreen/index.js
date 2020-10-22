@@ -6,7 +6,7 @@ import * as Styled from '../../styles/screens/Styled_LoginScreen';
 // Components
 import {WelcomeLogo} from '../../components/logos/welcomeLogo';
 
-import useCustomHookLoginScreen from '../LoginScreen/useCustomHookLoginScreen';
+import useCustomHook_LoginScreen from '../LoginScreen/useCustomHook_LoginScreen';
 
 const LoginScreen = () => {
   const {
@@ -15,7 +15,7 @@ const LoginScreen = () => {
     _setPassword,
     _Submit,
     _navigateToRegister,
-  } = useCustomHookLoginScreen();
+  } = useCustomHook_LoginScreen();
 
   return (
     <Styled.Container>

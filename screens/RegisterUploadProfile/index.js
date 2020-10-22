@@ -11,23 +11,20 @@ import {
   IconButton,
   Text,
 } from 'react-native-paper';
-import Styled from 'styled-components';
+import * as Styled from '../../styles/screens/Styled_RegisterUploadProfile';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
 // Redux
 import {useSelector} from 'react-redux';
 
 // Action
-import {action_userUpdate} from '../src/actions/actions_firebase';
-
-// Component
-import Button from '../components/CustomButton';
+import {action_userUpdate} from '../../src/actions/actions_firebase';
 
 // ImagePicker
 import ImagePicker from 'react-native-image-picker';
 
 // Toast
-import Toast from '../src/toast-paper';
+import Toast from '../../src/toast-paper';
 
 const RegisterUploadProfile = () => {
   const {navigate} = useNavigation();
@@ -37,7 +34,7 @@ const RegisterUploadProfile = () => {
   const [hasErrors, setHasErrors] = useState(false);
   const [userGetImage, setUserGetImage] = useState(false);
   const [dialogImagePicker, setDialogImagePicker] = useState(false);
-  const [isImage, setImage] = useState(require('../assets/profile.png'));
+  const [isImage, setImage] = useState(require('../../assets/profile.png'));
   const [name, setName] = useState('');
   const {accent, text} = useSelector(
     (reducer) => reducer.ThemeReducer.theme.colors,
@@ -123,48 +120,27 @@ const RegisterUploadProfile = () => {
   }, [name]);
 
   return (
-    <>
-      <View style={{alignItems: 'center'}}>
-        <View style={{width: 120, flexDirection: 'row-reverse'}}>
-          <TouchableOpacity style={{alignItems: 'center'}} onPress={_getImage}>
-            <Avatar.Image source={isImage} size={120} />
-            <Avatar.Icon
-              icon="plus"
-              color={text}
-              size={30}
-              style={{
-                position: 'absolute',
-                alignSelf: 'flex-end',
-                backgroundColor: accent,
-              }}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={{alignItems: 'center', marginTop: 20}}>
-        <Subheading>Create Photo</Subheading>
-        <Caption>You can upload JPG or PNG files</Caption>
-      </View>
-      <TextInput
+    <React.Fragment>
+      <Styled.ContainerAvatar>
+        <Styled.TouchableAvatar onPress={_getImage}>
+          <Styled.AvatarImage source={isImage} />
+          <Styled.AvatarIcon />
+        </Styled.TouchableAvatar>
+      </Styled.ContainerAvatar>
+      <Styled.ContainerSubhead>
+        <Styled.Subhead>Create Photo</Styled.Subhead>
+        <Styled.Caption>You can upload JPG or PNG files</Styled.Caption>
+      </Styled.ContainerSubhead>
+      <Styled.NameText
         value={name}
-        label="Name"
-        style={{marginTop: 16}}
         error={hasErrors}
         onChange={(e) => setName(e.nativeEvent.text)}
       />
-      <HelperText type="error" visible={hasErrors}>
-        Not specified!
-      </HelperText>
-      <Button
-        style={{marginTop: 10}}
-        mode="contained"
-        loading={busy}
-        onPress={_uploadImage}>
+      <Styled.HelperText visible={hasErrors}>Not specified!</Styled.HelperText>
+      <Styled.BtnUpload loading={busy} onPress={_uploadImage}>
         Upload
-      </Button>
-      <Button style={{marginTop: 10}} onPress={_onPressSkip}>
-        Skip
-      </Button>
+      </Styled.BtnUpload>
+      <Styled.BtnSkip onPress={_onPressSkip}>Skip</Styled.BtnSkip>
       <Portal>
         <Dialog visible={dialogImagePicker} onDismiss={hideDialogImagePicker}>
           <Dialog.Title>Directly Launch</Dialog.Title>
@@ -203,7 +179,7 @@ const RegisterUploadProfile = () => {
           </Dialog.Content>
         </Dialog>
       </Portal>
-    </>
+    </React.Fragment>
   );
 };
 
