@@ -38,21 +38,6 @@ const ProfileScreen = () => {
           <Title style={{marginVertical: 18, fontSize: 26}}>
             {user.displayName}
           </Title>
-
-          {/* EditProfile */}
-          {/* <View style={{flexDirection: 'row', marginBottom: 14}}>
-            <Button
-              mode="contained"
-              style={{flex: 1, justifyContent: 'center', marginRight: 10}}
-              uppercase={false}>
-              Edit Profile
-            </Button>
-            <Button
-              mode="outlined"
-              style={{justifyContent: 'center'}}
-              children={<Icons name="dots-horizontal" size={16} />}></Button>
-          </View> */}
-
         </View>
         <Card style={{roundness}}>
           <Card.Content>

@@ -1,8 +1,10 @@
 import React, {useReducer} from 'react';
-import {Text} from 'react-native';
+import {Platform} from 'react-native';
 
 // Image picker
 import ImagePicker from 'react-native-image-picker';
+
+import Toast from '../../toast-paper';
 
 // Styled
 import * as Styled from '../../../styles/custom_hook/Styled_useSelectImage';
@@ -26,6 +28,8 @@ const options = {
 
 // ?Initial state
 const initialState = {
+  uri: '',
+  image: '',
   dialogImagePicker: false,
 };
 
@@ -67,9 +71,17 @@ export default function indexUseSelectImage() {
     } else if (response.customButton) {
       console.log('User tapped custom button: ', response.customButton);
     } else {
-      const uri = response.path;
+      // Image set base64.
       const source = {uri: `data:image/jpeg;base64,${response.data}`};
-      dispatch({type: SET_IMAGE, payload: {uri, source}});
+
+      // Platform.
+      if (Platform.OS === 'ios') {
+        const iOS_uri = response.uri;
+        dispatch({type: SET_IMAGE, payload: {uri: iOS_uri, source}});
+      } else if (Platform.OS === 'android') {
+        const android_uri = response.path;
+        dispatch({type: SET_IMAGE, payload: {uri: android_uri, source}});
+      }
     }
   };
 
@@ -93,22 +105,24 @@ export default function indexUseSelectImage() {
     ImagePicker.launchImageLibrary(options, _imageResponse);
   };
 
-  const _components = (
-    <Styled.DialogContainer
-      visible={state.dialogImagePicker}
-      onDismiss={_hideDialogImagePicker}>
-      <Styled.DialogTitle>Directly Launch</Styled.DialogTitle>
-      <Styled.DialogContent>
-        <Styled.DialogIconContent>
-          <Styled.DialogIconCamera onPress={_getImageFromCamera} />
-          <Styled.DialogText>Camera</Styled.DialogText>
-        </Styled.DialogIconContent>
-        <Styled.DialogIconContent>
-          <Styled.DialogIconGallery onPress={_getImageFromGallery} />
-          <Styled.DialogText>Gallery</Styled.DialogText>
-        </Styled.DialogIconContent>
-      </Styled.DialogContent>
-    </Styled.DialogContainer>
+  const _components = () => (
+    <Styled.Portal>
+      <Styled.DialogContainer
+        visible={state.dialogImagePicker}
+        onDismiss={_hideDialogImagePicker}>
+        <Styled.DialogTitle>Directly Launch</Styled.DialogTitle>
+        <Styled.DialogContent>
+          <Styled.DialogIconContent>
+            <Styled.DialogIconCamera onPress={_getImageFromCamera} />
+            <Styled.DialogText>Camera</Styled.DialogText>
+          </Styled.DialogIconContent>
+          <Styled.DialogIconContent>
+            <Styled.DialogIconGallery onPress={_getImageFromGallery} />
+            <Styled.DialogText>Gallery</Styled.DialogText>
+          </Styled.DialogIconContent>
+        </Styled.DialogContent>
+      </Styled.DialogContainer>
+    </Styled.Portal>
   );
 
   return {state, _components, _onShowDialogImagePicker, _hideDialogImagePicker};

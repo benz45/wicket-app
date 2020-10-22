@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 import {View} from 'react-native';
-import {Portal, Dialog, IconButton} from 'react-native-paper';
-import {Text} from 'react-native-paper/lib/typescript/src/components/Avatar/Avatar';
+import {
+  Portal as PortalPaper,
+  Dialog,
+  IconButton,
+  Text,
+} from 'react-native-paper';
 
+export const Portal = styled(PortalPaper)``;
 export const DialogContainer = styled(Dialog)``;
 
 export const DialogTitle = styled(Dialog.Title)``;
