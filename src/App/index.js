@@ -1,5 +1,5 @@
-import React from 'react';
-import {StatusBar} from 'react-native';
+import React, {useEffect} from 'react';
+import {StatusBar, Appearance} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
@@ -27,6 +27,12 @@ const App = () => {
     },
   } = useSelector((res) => res.ThemeReducer);
 
+  useEffect(() => {
+    const defaultTheme = Appearance.addChangeListener(({colorScheme}) => {
+      console.log(colorScheme);
+    });
+    return () => defaultTheme.remove();
+  }, []);
   // Log show data.
   // const {currentUser, realtimeDatabase} = useSelector(
   //   (res) => res.FirebaseReducer,

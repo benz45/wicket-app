@@ -16,13 +16,20 @@ const Navigation_HomeDrawer = () => {
       initialRouteName="Drawer_HomeBottomNavigationBar"
       drawerPosition="left"
       drawerType="back"
-      drawerContentOptions={{activeTintColor: '#767676'}}
+      drawerContentOptions={{
+        activeTintColor: '#767676',
+      }}
       drawerContent={(val) => <CustomDrawer {...val} />}>
       <PaperDrawer.Screen
         name="Drawer_HomeBottomNavigationBar"
         component={HomeBottomNavigationBar}
+        options={{title: 'Home'}}
       />
-      <PaperDrawer.Screen name="Drawer_Settings" component={Stack_Setting} />
+      <PaperDrawer.Screen
+        name="Drawer_Settings"
+        component={Stack_Setting}
+        options={{title: 'Settings'}}
+      />
     </PaperDrawer.Navigator>
   );
 };
