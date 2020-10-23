@@ -7,17 +7,16 @@ import {PersistGate} from 'redux-persist/integration/react';
 import configureStore from './src/configureStore';
 
 // PushNotification
-var PushNotification = require("react-native-push-notification");
+var PushNotification = require('react-native-push-notification');
 
 // Redux action.
 import {SetAllStatus} from './src/actions/actions_firebase';
-
 
 const {store, persistor} = configureStore();
 const reduxApp = () => {
   PushNotification.configure({
     onNotification: (snapshot) => {
-      console.log("Notification:", snapshot)
+      console.log('Notification:', snapshot);
     },
     onAction: function (notification) {
       console.log('ACTION:', notification.action);
@@ -35,6 +34,6 @@ const reduxApp = () => {
       </PersistGate>
     </Provider>
   );
-}
+};
 
 AppRegistry.registerComponent(appName, () => reduxApp);

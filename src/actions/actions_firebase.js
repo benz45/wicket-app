@@ -328,8 +328,8 @@ export const loginUser = async (username, password) => {
   return result;
 };
 
-export const logoutUser = () => {
-  auth().signOut();
+export const logoutUser = async () => {
+  await auth().signOut();
 };
 
 /**********************************************************************/
