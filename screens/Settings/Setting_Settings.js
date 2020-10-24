@@ -20,7 +20,6 @@ const HOClist = (value) => {
 const Setting_Settings = () => {
   return (
     <View>
-      <Searchbar style={{margin: 15}}/>
       <HOClist
         navg="settings_aboutApp"
         title="About app"

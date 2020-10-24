@@ -31,7 +31,7 @@ const DetailProductScreen = () => {
   return (
     <View>
       {newData.map((elem) => (
-        <Card>
+        <Card key={elem.no}>
           <Card.Cover
             source={{uri: elem.image}}
             style={{alignSelf: 'stretch'}}

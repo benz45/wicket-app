@@ -47,19 +47,19 @@ export const FETCHING_REALTIMEDB_DOOR_UPDATE_FAILRUE = (error) => ({
 /**************************************************************************/
 
 // Load theme from cache to store.
-export const CacheTheme_fetching = () => ({
-  type: Type.CACHETHEME_FETCHING,
-});
-export const setThemeToStore = (theme, ValueTypeBoolean) => ({
-  type: Type.SETTHEME_TO_STORE,
-  loadTheme: theme,
-  isCache: ValueTypeBoolean,
-});
-export const getThemeFromCache_success = (cacheTheme, ValueTypeBoolean) => ({
-  type: Type.GETTHEME_FROM_CACHE_SUCCESS,
-  loadTheme: cacheTheme,
-  isCache: ValueTypeBoolean,
-});
+// export const CacheTheme_fetching = () => ({
+//   type: Type.CACHETHEME_FETCHING,
+// });
+// export const setThemeToStore = (theme, ValueTypeBoolean) => ({
+//   type: Type.SETTHEME_TO_STORE,
+//   loadTheme: theme,
+//   isCache: ValueTypeBoolean,
+// });
+// export const getThemeFromCache_success = (cacheTheme, ValueTypeBoolean) => ({
+//   type: Type.GETTHEME_FROM_CACHE_SUCCESS,
+//   loadTheme: cacheTheme,
+//   isCache: ValueTypeBoolean,
+// });
 
 /**************************************************************************/
 
@@ -89,8 +89,8 @@ export const setAllNotificationtoStore = (data) => ({
   type: Type.SETALLNOTIFICATION_TOSTORE,
   payload: {
     type: data.type,
-    data
-  }
+    data,
+  },
 });
 /**************************************************************************/
 

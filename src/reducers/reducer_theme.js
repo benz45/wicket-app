@@ -3,28 +3,29 @@ import * as Type from '../actionsType';
 import dataTheme from '../actions/actions_theme';
 
 const initialState = {
-  isFetching: true,
-  isCacheTheme: false,
-  theme: dataTheme.dark,
+  sysDefault: true,
+  darkMode: false,
+  theme: dataTheme.light,
 };
 
-export default (state = initialState, {type, loadTheme, isCache}) => {
+export default (state = initialState, {type, payload}) => {
   switch (type) {
-    case Type.SETTHEME_TO_STORE:
-      return {...state, theme: loadTheme, isCacheTheme: isCache};
-
-    case Type.CACHETHEME_FETCHING:
-      return {...state}
-
-    case Type.GETTHEME_FROM_CACHE_SUCCESS:
-      return Object.assign({
+    case Type.SET_THEME:
+      return {
         ...state,
-        theme: loadTheme,
-        isCacheTheme: isCache,
-        isFetching: false,
-      });
+        theme: payload === 'dark' ? dataTheme.dark : dataTheme.light,
+      };
+    case Type.SET_THEME_SYSDEFAULT:
+      return {...state, sysDefault: !state.sysDefault};
+    case Type.SET_THEME_DARKMODE:
+      return {
+        ...state,
+        sysDefault: false,
+        darkMode: payload,
+        theme: payload ? dataTheme.dark : dataTheme.light,
+      };
+
     default:
       return state;
   }
 };
-
