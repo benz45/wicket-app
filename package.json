@@ -32,7 +32,6 @@
     "react": "16.14.0",
     "react-native": "0.63.3",
     "react-native-cache": "^2.0.1",
-    "react-native-chart-kit": "^6.6.1",
     "react-native-device-info": "^6.2.1",
     "react-native-eject": "^0.1.2",
     "react-native-floating-action": "^1.21.0",

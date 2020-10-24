@@ -15,9 +15,6 @@ import {
 } from '../src/actions/actions_firebase';
 import {useDispatch} from 'react-redux';
 
-// Screen
-import AnalysisScreen from '../screens/AnalysisScreen';
-
 const Stack = createStackNavigator();
 
 const Navigation_HomeStack = () => {
@@ -48,11 +45,7 @@ const Navigation_HomeStack = () => {
         component={Settings}
         options={({route}) => ({title: route.params.title})}
       />
-      <Stack.Screen
-        name="Stack_analysis"
-        component={AnalysisScreen}
-        options={{title: 'Analysis', headerShown: false}}
-      />
+
       <Stack.Screen
         name="Stack_detailProductScreen"
         component={DetailProduct}

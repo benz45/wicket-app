@@ -141,10 +141,10 @@ const HomeBottomNavigationBar = () => {
         mount.current = false;
       });
   }, []);
-
   return (
     <BottomNavigation
-      barStyle={{backgroundColor: tabBackground}}
+      // Custom height bar.
+      barStyle={{height: 70, backgroundColor: tabBackground}}
       navigationState={state}
       onIndexChange={_handleIndexChange}
       renderScene={_renderScene}

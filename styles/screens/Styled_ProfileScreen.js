@@ -26,8 +26,8 @@ export const Title = styled(TitlePaper)`
 `;
 
 export const BtnLogout = styled(Button).attrs((props) => ({
-  mode: 'outlined',
-  color: props.theme.colors.accent,
+  mode: 'flet',
+  color: props.theme.colors.primary,
   dark: true,
 }))`
   margin-top: 16px;

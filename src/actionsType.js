@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 // Fetch Data. (first)
 export const FETCHING_REALTIMEDB_DOOR = 'FETCHING_REALTIMEDB_DOOR';
 export const FETCHING_REALTIMEDB_DOOR_SUCCESS =

@@ -7,7 +7,7 @@ const Toast = (message) => {
     backgroundColor: '#111111',
     action: {
       text: 'UNDO',
-      textColor: '#B388FF',
+      textColor: '#2196F3',
     },
   });
 };

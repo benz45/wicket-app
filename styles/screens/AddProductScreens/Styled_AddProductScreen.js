@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {View} from 'react-native';
 import {
   Text,
   TextInput,
-  IconButton,
   HelperText as HelperTextPaper,
 } from 'react-native-paper';
 
@@ -20,10 +19,10 @@ export const Container = styled(View)`
 export const HeadIconContainer = styled(View)`
   align-items: center;
 `;
-export const HeadIcon = styled(IconButton).attrs((props) => ({
-  icon: 'shape-rectangle-plus',
-  size: 88,
-  color: props.theme.colors.accent,
+export const HeadIcon = styled(Icon).attrs((props) => ({
+  name: 'shape-rectangle-plus',
+  size: 92,
+  color: props.theme.colors.primary,
 }))`
   align-items: center;
 `;
@@ -37,15 +36,15 @@ export const HeadText = styled(Text)`
 `;
 
 export const DetailText = styled(Text)`
-  padding-bottom: 12px;
-  color: ${(props) => `${props.theme.colors.primary}`};
+  margin-bottom: 26px;
+  color: ${(props) => `${props.theme.colors.subText}`};
   text-align: center;
 `;
 
 export const ProductKeyText = styled(Text)`
-  color: ${(props) => `${props.theme.colors.accent}`};
+  color: ${(props) => `${props.theme.colors.text}`};
   font-size: 16px;
-  margin: 12px 0px;
+  margin: 4px 0px;
 `;
 
 export const InputKeyContainer = styled(View)``;
