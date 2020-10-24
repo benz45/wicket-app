@@ -52,6 +52,7 @@ export const ThemeContainer = styled(View)`
 export const ThemeInfo = styled(View)``;
 export const ThemeText = styled(Text)``;
 export const ThemeCaption = styled(Caption)``;
-export const SwitchTheme = styled(Switch)`
+
+export const SwitchTheme = styled(View)`
   right: -40px;
 `;
