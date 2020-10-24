@@ -141,7 +141,7 @@ const AddNotificationScreen = () => {
   return (
     <View
       style={{
-        marginVertical: 40,
+        flex: 1,
         marginHorizontal: 40,
         justifyContent: 'center',
       }}>

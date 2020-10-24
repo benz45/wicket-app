@@ -1,7 +1,8 @@
 import {useEffect, useReducer} from 'react';
-import {Keyboard} from 'react-native';
+import {Keyboard, Platform} from 'react-native';
+
 // Image picker
-import ImagePicker from 'react-native-image-picker';
+import useSelectImage from '../../src/customHook/useSelectImage';
 
 // Components
 import Toast from '../../src/toast-paper';
@@ -31,17 +32,6 @@ export const SETKEY = 'SETKEY';
 export const SETNAME = 'SETNAME';
 export const SETDESC = 'SETDESC';
 export const SETSTATUS = 'SETSTATUS';
-
-// TODO: Image picker
-const options = {
-  title: 'Select image',
-  storageOptions: {
-    path: 'images',
-  },
-  maxWidth: 640,
-  maxHeight: 480,
-  quality: 0.5,
-};
 
 // ?Initial state
 const initialState = {
@@ -76,16 +66,6 @@ const reducer = (state, {type, payload}) => {
     case HIDE_DIALOG:
       return Object.assign({}, state, {
         dialog: false,
-      });
-    case SET_URI:
-      return Object.assign({}, state, {
-        uri: payload,
-      });
-    case SET_IMAGE:
-      return Object.assign({}, state, {
-        uri: payload.uri,
-        image: payload.source,
-        userGetImage: true,
       });
     case USER_NOT_GETIMAGE:
       return Object.assign({}, state, {userGetImage: false});
@@ -155,6 +135,13 @@ const reducer = (state, {type, payload}) => {
 const useReducerAddProduct = (key = '', displayName = '') => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // Custom hook image picker.
+  const {
+    state: stateImage,
+    _onShowDialogImagePicker,
+    _components: DialogSelectImage,
+  } = useSelectImage();
+
   // Check used product key from database.
   const checkProductKey = async (key) => {
     Keyboard.dismiss();
@@ -188,23 +175,6 @@ const useReducerAddProduct = (key = '', displayName = '') => {
     }
   }, [state.key]);
 
-  // Response image picker.
-  const _imageResponse = (response) => {
-    if (response.didCancel) {
-      if (!!!state.userGetImage) {
-        dispatch({type: USER_NOT_GETIMAGE});
-      }
-    } else if (response.error) {
-      Toast(response.error);
-    } else if (response.customButton) {
-      console.log('User tapped custom button: ', response.customButton);
-    } else {
-      const uri = response.path;
-      const source = {uri: `data:image/jpeg;base64,${response.data}`};
-      dispatch({type: SET_IMAGE, payload: {uri, source}});
-    }
-  };
-
   //Basic dispatch.
   const _setKey = (text) => dispatch({type: SETKEY, payload: text});
   const _setName = (value) => dispatch({type: SETNAME, payload: value});
@@ -215,26 +185,6 @@ const useReducerAddProduct = (key = '', displayName = '') => {
   // Show & Hide dialog if add a product successful.
   const _showDialog = () => dispatch({type: SHOW_DIALOG});
   const _hideDialog = () => dispatch({type: HIDE_DIALOG});
-
-  // Show dialog image picker.
-  const _onShowDialogImagePicker = () =>
-    dispatch({type: SHOW_DIALOG_IMAGEPICKER});
-
-  // Hide dialog image picker.
-  const _hideDialogImagePicker = () =>
-    dispatch({type: HIDE_DIALOG_IMAGEPICKER});
-
-  // Action get image from carema.
-  const _getImageFromCamera = () => {
-    _hideDialogImagePicker();
-    ImagePicker.launchCamera(options, _imageResponse);
-  };
-
-  // Action get image from gallery
-  const _getImageFromGallery = () => {
-    _hideDialogImagePicker();
-    ImagePicker.launchImageLibrary(options, _imageResponse);
-  };
 
   // Action confirm add product.
   const _confirmAddProduct = async () => {
@@ -247,7 +197,7 @@ const useReducerAddProduct = (key = '', displayName = '') => {
     ) {
       dispatch({type: RESET_ISKEY});
       return Toast('You not specified.');
-    } else if (!state.userGetImage) {
+    } else if (!stateImage.userGetImage) {
       dispatch({type: RESET_ISKEY});
       return Toast('Please image entered .');
     }
@@ -257,7 +207,7 @@ const useReducerAddProduct = (key = '', displayName = '') => {
     const dateString = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()} | ${newDate.getHours()}:${newDate.getMinutes()}`;
 
     // Upload image to firebase storage and get link.
-    const imageLink = await action_uploadImageDoor(state.uri, key);
+    const imageLink = await action_uploadImageDoor(stateImage.uri, key);
 
     // Create new door.
     await action_addDoor(
@@ -286,6 +236,7 @@ const useReducerAddProduct = (key = '', displayName = '') => {
 
   return {
     state,
+    stateImage,
     dispatch,
     _setKey,
     _setName,
@@ -294,12 +245,10 @@ const useReducerAddProduct = (key = '', displayName = '') => {
     _resetKey,
     _disableBtn,
     _loading,
-    _getImageFromCamera,
-    _getImageFromGallery,
+    DialogSelectImage,
+    _onShowDialogImagePicker,
     _showDialog,
     _hideDialog,
-    _hideDialogImagePicker,
-    _onShowDialogImagePicker,
     _confirmAddProduct,
   };
 };

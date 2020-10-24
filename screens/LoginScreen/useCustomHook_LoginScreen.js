@@ -35,15 +35,17 @@ const reducer = (state, {type, payload}) => {
     case LOGIN:
       return Object.assign({}, state, {busy: payload});
     case ERROR_USERNAME:
-      return Object.assign({}, state, {error: {username: true}});
+      return Object.assign({}, state, {busy: false, error: {username: true}});
     case ERROR_PASSWORD:
-      return Object.assign({}, state, {error: {password: true}});
+      return Object.assign({}, state, {busy: false, error: {password: true}});
     case ERROR_ALLINPUT:
       return Object.assign({}, state, {
+        busy: false,
         error: {username: true, password: true},
       });
     case ERROR_RESET:
       return Object.assign({}, state, {
+        busy: false,
         error: {username: false, password: false},
       });
 
@@ -60,6 +62,7 @@ export default function useCustomHookLoginScreen() {
 
   // user on press login button.
   const _Submit = async () => {
+    dispatch({type: LOGIN, payload: true});
     Keyboard.dismiss();
 
     // Validate data input.
@@ -77,8 +80,10 @@ export default function useCustomHookLoginScreen() {
     // After validated success to do request data to firebase authentication.
     let result = await loginUser(state.username, state.password);
     if (!result) {
+      dispatch({type: LOGIN, payload: false});
       Toast('There is no user record corresponding to this identifier.');
     } else {
+      dispatch({type: LOGIN, payload: false});
       dispatchRedux(action_loadCurrentUser_firebase());
       navigate('Authenticated');
     }

@@ -10,7 +10,6 @@ import {
   Paragraph,
 } from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
-import Toast from '../src/toast-paper';
 
 // Redux
 import {useSelector} from 'react-redux';
@@ -21,7 +20,7 @@ import {
   action_childRemove_firebase,
 } from '../src/actions/actions_firebase';
 
-export const MenuDoor = (props) => {
+export const MenuDoor = ({no, createdBy, name}) => {
   const {user} = useSelector((store) => store.FirebaseReducer.currentUser);
   const {navigate} = useNavigation();
   const [isShowMenu, setShowMenu] = useState(false);
@@ -34,12 +33,12 @@ export const MenuDoor = (props) => {
 
   const _detail = () => {
     _CloseMenu();
-    navigate('Stack_detailProductScreen', {...props});
+    navigate('Stack_detailProductScreen', {no});
   };
 
   // Remove door.
   const _removeDoor = async () => {
-    await action_removeDoor(props.no);
+    await action_removeDoor(no);
   };
 
   // Cheack child remove.
@@ -57,7 +56,7 @@ export const MenuDoor = (props) => {
         />
       }>
       <Menu.Item icon="feature-search" title="Details" onPress={_detail} />
-      {props.createdBy == user.displayName && (
+      {createdBy == user.displayName && (
         <>
           <Divider />
           <Menu.Item icon="delete" title="Delete" onPress={_OpenDialog} />
@@ -67,7 +66,7 @@ export const MenuDoor = (props) => {
         <Dialog visible={isShowDialog}>
           <Dialog.Title>Delete</Dialog.Title>
           <Dialog.Content>
-            <Paragraph>Do you want to delete "{props.name}" ?</Paragraph>
+            <Paragraph>Do you want to delete "{name}" ?</Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
             <Button color={Colors.red400} onPress={_CloseDialog}>

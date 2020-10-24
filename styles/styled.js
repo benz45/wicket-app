@@ -11,10 +11,6 @@ export const Container = styled.View`
   padding: 30px 30px 30px 30px;
 `;
 
-export const ContainerDetail = styled(Container)`
-  justify-content: flex-start;
-`;
-
 export const H1 = styled(TextPaper)`
   font-size: 22px;
   text-align: center;

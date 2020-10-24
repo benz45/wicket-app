@@ -21,9 +21,7 @@ const StatusSwitch = (props) => {
     isEnable.current = props.status;
   }, [props.status]);
 
-  return (
-    <Switch {...props} onValueChange={toggleSwitch} value={isEnable.current} />
-  );
+  return <Switch onValueChange={toggleSwitch} value={isEnable.current} />;
 };
 
 export default StatusSwitch;

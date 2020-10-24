@@ -37,6 +37,7 @@ export const ContainerTextInput = styled(View)``;
 export const ContainerDefaultSwitch = styled(View)`
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 24px;
 `;
 
@@ -53,9 +54,7 @@ export const ContainerImagePicker = styled(View)`
 
 export const DefaultSwitchText = styled(Text)``;
 
-export const DefaultSwitch = styled(Switch)`
-  flex: 1;
-`;
+export const DefaultSwitch = styled(Switch)``;
 
 export const DefaultSwitchCaption = styled(Caption)`
   color: ${(props) => `${props.theme.colors.accent}`};

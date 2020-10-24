@@ -36,8 +36,7 @@ const AddProductScreen = ({jumpTo}) => {
       <Styled.HeadText>Create new wicket</Styled.HeadText>
       <Styled.DetailText>
         Many of our components require the use of JavaScript to function.
-        Specifically, they require jQuery. require the use of JavaScript to
-        function. Specifically
+        Specifically, they require.
       </Styled.DetailText>
 
       <Styled.ProductKeyText>Product key</Styled.ProductKeyText>

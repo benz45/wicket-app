@@ -1,13 +1,12 @@
 import React from 'react';
-import {Container, ContainerDetail} from '../styles/styled';
-import {View, Image, ScrollView} from 'react-native';
+import {Container} from '../styles/styled';
+import {View, ScrollView} from 'react-native';
 
 // UI
 import {Colors, Avatar, IconButton} from 'react-native-paper';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 import {FloatingAction} from 'react-native-floating-action';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 // Redux
 import {useSelector} from 'react-redux';
@@ -20,7 +19,7 @@ const actions = [
     icon: icon('plus'),
     name: 'CreateNew',
     position: 1,
-    color: '#7e3ff2',
+    color: '#90CAF9',
     textBackground: '#f5f5f5',
   },
   {
@@ -28,7 +27,7 @@ const actions = [
     icon: icon('bell'),
     name: 'Notification',
     position: 2,
-    color: '#7e3ff2',
+    color: '#90CAF9',
     textBackground: '#f5f5f5',
   },
 ];
@@ -41,16 +40,6 @@ export const HOCform = (Component) => (props) => {
     <Container>
       <Component {...props} />
     </Container>
-  );
-};
-
-export const HOCdetail = (Component) => (props) => {
-  return (
-    <ScrollView>
-      <ContainerDetail>
-        <Component {...props} />
-      </ContainerDetail>
-    </ScrollView>
   );
 };
 
@@ -82,53 +71,51 @@ export const HOCheader = (Component) => (props) => {
       : null;
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1}}>
-        <View style={styles.HomeScreen_Header}>
-          <IconOpenDrawer />
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <IconButton icon="bell" color={Colors.grey500} />
-            <Avatar.Image
-              size={38}
-              source={{
-                uri: user.photoURL,
-              }}
-              style={{
-                marginLeft: 10,
-              }}
-            />
-          </View>
-        </View>
+    <View style={{flex: 1}}>
+      <View style={styles.HomeScreen_Header}>
+        <IconOpenDrawer />
         <View
           style={{
-            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
           }}>
-          <Component {...props} />
-        </View>
-        {props.route.key === 'home' && (
-          <FloatingAction
-            color={accent}
-            overlayColor="rgba(18, 18, 18, 0.73)"
-            shadow={{
-              shadowOpacity: 0,
+          <IconButton icon="bell" color={Colors.grey500} />
+          <Avatar.Image
+            size={38}
+            source={{
+              uri: user.photoURL,
             }}
-            showBackground={true}
             style={{
-              position: 'absolute',
-              margin: 16,
-              left: 0,
-              bottom: 0,
+              marginLeft: 10,
             }}
-            actions={actions}
-            onPressItem={(res) => linkTo(res)}
           />
-        )}
+        </View>
       </View>
-    </SafeAreaView>
+      <View
+        style={{
+          flex: 1,
+        }}>
+        <Component {...props} />
+      </View>
+      {props.route.key === 'home' && (
+        <FloatingAction
+          color={accent}
+          overlayColor="rgba(18, 18, 18, 0.33)"
+          shadow={{
+            shadowOpacity: 0,
+          }}
+          showBackground={true}
+          style={{
+            backgroundColor: '#000',
+            position: 'absolute',
+            left: 0,
+            bottom: 0,
+          }}
+          actions={actions}
+          onPressItem={(res) => linkTo(res)}
+        />
+      )}
+    </View>
   );
 };
 

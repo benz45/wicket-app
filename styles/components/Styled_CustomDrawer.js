@@ -27,8 +27,8 @@ export const HeadImage = styled(Image)`
 `;
 export const HeadText = styled(Text)`
   text-transform: uppercase;
-  font-size: 16px;
-  color: ${(props) => props.theme.colors.accent};
+  font-size: 18px;
+  color: ${(props) => props.theme.colors.primary};
 `;
 
 export const UserInfoComponent = styled(HeadComponent)``;

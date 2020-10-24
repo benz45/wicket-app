@@ -234,7 +234,8 @@ export const editProduct = async (no, name, description) => {
       })
       .then(() => {
         db.ref(`door/datas/${no}`).update({
-          description,
+          name: name,
+          description: description,
         });
       })
       .then(() => {
@@ -289,6 +290,9 @@ export const setStatusAll = async (arrId, boolean) => {
 export const action_removeDoor = async (key) => {
   try {
     const doorPath = db.ref(`door`);
+    await db.ref(`connections/datas/${key}`).update({
+      appConnection: false,
+    });
 
     await doorPath.child(`/status/${key}`).remove();
     await doorPath.child(`/connections/${key}`).remove();
@@ -299,9 +303,6 @@ export const action_removeDoor = async (key) => {
     await doorPath.child(`/status/${key}`).remove();
 
     await storage().ref().child(`door/${key}`).delete();
-    await db.ref(`connections/datas/${key}`).update({
-      appConnection: false,
-    });
   } catch (err) {
     console.log('action_removeDoor', err.message);
   }

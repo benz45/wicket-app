@@ -45,17 +45,10 @@ export const GenerateText = styled(View)`
   flex-direction: row;
 `;
 
-export const TextBackToLogin = styled(Text).attrs(
-  ({
-    theme: {
-      colors: {accent},
-    },
-  }) => ({
-    color: accent,
-  }),
-)`
+export const TextBackToLogin = styled(Text)`
   margin-top: 26px;
   text-align: center;
+  color: ${(props) => `${props.theme.colors.subText}`};
 `;
 
 export const Username = styled(TextInput).attrs({

@@ -11,6 +11,7 @@ export const HeadText = styled(TextPaper)`
 
 export const SubText = styled(TextPaper)`
   text-align: center;
+  color: ${(props) => `${props.theme.colors.subText}`};
 `;
 
 export const Logo = styled(Image)`

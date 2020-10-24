@@ -17,17 +17,17 @@ export const ContainerImage = styled(View)`
   align-items: center;
 `;
 
-export const Image = styled(Avatar.Image).attrs({size: 160})``;
+export const Image = styled(Avatar.Image).attrs({size: 100})``;
 
 export const Title = styled(TitlePaper)`
   text-align: center;
   font-size: 26px;
-  padding: 16px 0px;
+  padding: 22px 0px;
 `;
 
 export const BtnLogout = styled(Button).attrs((props) => ({
-  mode: 'outlined',
-  color: props.theme.colors.accent,
+  mode: 'flet',
+  color: props.theme.colors.primary,
   dark: true,
 }))`
   margin-top: 16px;

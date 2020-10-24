@@ -86,19 +86,20 @@ export const BtnDisconnected = styled(Icon).attrs(
   }) => ({
     name: 'alert-circle-outline',
     color: warning,
+    size: 18,
   }),
 )`
   padding-right: 8px;
 `;
 
-export const BtnNetworkDisconnected = styled(Button).attrs(
+export const BtnNetworkDisconnected = styled(Icon).attrs(
   ({
     theme: {
       colors: {error},
     },
-  }) => ({color: error}),
+  }) => ({color: error, name: 'alert-circle', size: 18}),
 )`
-  padding: 0px 20px;
+  padding-right: 8px;
 `;
 
 export const HeadLayer = styled(View)`
@@ -130,15 +131,9 @@ export const TextNetworkDisconnected = styled(Text)``;
 export const TextShowStatus = styled(Text)`
   color: ${({
     theme: {
-      colors: {accent},
+      colors: {primary},
     },
-  }) => `${accent}`};
-  border-bottom-color: ${({
-    theme: {
-      colors: {accent},
-    },
-  }) => `${accent}`};
-  border-bottom-width: 1px;
+  }) => `${primary}`};
 `;
 
 export const TextStatus = styled(Text)``;

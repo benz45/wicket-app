@@ -27,15 +27,14 @@ export default function AddProduct_NameAndDescription({
   // Custom hook.
   const {
     state,
+    stateImage,
     _setName,
     _setDesc,
     _setStatus,
     _hideDialog,
     _loading,
     _confirmAddProduct,
-    _getImageFromCamera,
-    _getImageFromGallery,
-    _hideDialogImagePicker,
+    DialogSelectImage,
     _onShowDialogImagePicker,
   } = useDispatch_Add_Product(key, displayName);
 
@@ -50,7 +49,7 @@ export default function AddProduct_NameAndDescription({
 
       {/* Image picker. Select and show image. */}
       <Styled.ContainerImagePicker>
-        {!state.image || typeof state.image == 'undefined' ? (
+        {!stateImage.image || typeof stateImage.image == 'undefined' ? (
           <TouchableOpacity onPress={_onShowDialogImagePicker}>
             <Styled.BorderCameraIcon>
               <Styled.IconCamera />
@@ -58,7 +57,7 @@ export default function AddProduct_NameAndDescription({
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={_onShowDialogImagePicker}>
-            <Styled.AvatarIamge source={state.image} />
+            <Styled.AvatarIamge source={stateImage.image} />
           </TouchableOpacity>
         )}
       </Styled.ContainerImagePicker>
@@ -94,24 +93,8 @@ export default function AddProduct_NameAndDescription({
       </Styled.SubmitButton>
 
       {/* All dialog. */}
+      <DialogSelectImage />
       <Portal>
-        {/* Dialog open camera and select image from gallery.  */}
-        <Dialog
-          visible={state.dialogImagePicker && state.dialogImagePicker}
-          onDismiss={_hideDialogImagePicker}>
-          <Dialog.Title>Directly Launch</Dialog.Title>
-          <Styled.DialogContent>
-            <Styled.DialogIconContent>
-              <Styled.DialogIconCamera onPress={_getImageFromCamera} />
-              <Text>Camera</Text>
-            </Styled.DialogIconContent>
-            <Styled.DialogIconContent>
-              <Styled.DialogIconGallery onPress={_getImageFromGallery} />
-              <Text>Gallery</Text>
-            </Styled.DialogIconContent>
-          </Styled.DialogContent>
-        </Dialog>
-
         {/* Dialog message insert data successful. */}
         <Dialog visible={state.dialog} onDismiss={_hideDialog}>
           <Dialog.Content>

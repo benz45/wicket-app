@@ -1,9 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {BackHandler} from 'react-native';
 
-// Component
-import Nodata from '../components/noData';
-
 // Styled
 import * as Styled from '../styles/screens/Styled_NotificationScreen';
 
@@ -97,10 +94,9 @@ const Notification_Screen = ({navigation, route}) => {
 
   return (
     <Styled.Container onPress={_cancel_removeNotification}>
-      <Styled.ScrollView>
-        {!!!notificationData.length && <Styled.NoHaveDataNotification />}
-
-        {notificationData.map((elem) => (
+      {!!!notificationData.length && <Styled.NoHaveDataNotification />}
+      {notificationData.map((elem) => (
+        <Styled.ScrollView>
           <Styled.CardContainerLongPress
             onPress={_cancel_removeNotification}
             onLongPress={() => setLongPress((prev) => !prev)}>
@@ -130,8 +126,8 @@ const Notification_Screen = ({navigation, route}) => {
               </Styled.InCard>
             </Styled.Card>
           </Styled.CardContainerLongPress>
-        ))}
-      </Styled.ScrollView>
+        </Styled.ScrollView>
+      ))}
     </Styled.Container>
   );
 };

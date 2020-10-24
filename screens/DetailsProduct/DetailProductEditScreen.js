@@ -1,95 +1,59 @@
-import React, {useState} from 'react';
-import {View} from 'react-native';
+import React from 'react';
 
-// Paper
-import {Text, Card, Title, TextInput} from 'react-native-paper';
+// Styled
+import * as Styled from '../../styles/screens/DetailsProduct/Styled_DetailProductEditScreen';
 
-// Redux
-import {useSelector} from 'react-redux';
-import Button from '../../components/CustomButton';
+import {Button} from '../../components/CustomBtn';
 
-// Action
-import {editProduct} from '../../src/actions/actions_firebase';
+// Custom Hook
 
-// Navigation
-import {useNavigation} from '@react-navigation/native';
+import useEditDetailProductList from '../../src/customHook/useEditDetailProductList';
 
-export default function DetailProductEditScreen({route: {params}}) {
-  const {accent} = useSelector((store) => store.ThemeReducer.theme.colors);
-  const {navigate} = useNavigation();
-  const [busy, setBusy] = useState(false);
-  const [changeButton, setChangeButton] = useState(false);
-  const [productKey, setProductKey] = useState(params.no);
-  const [name, setName] = useState(params.name);
-  const [description, setDescription] = useState(params.description);
-
-  const _submitEdit = async () => {
-    setBusy(true);
-    await editProduct(productKey, name, description).then(() => {
-      navigate('DetailProductScreen');
-      setBusy(false);
-    });
-  };
+export default function DetailProductEditScreen(props) {
+  const {
+    state,
+    stateImage,
+    _image,
+    _setName,
+    _setDescription,
+    _submitUpdateProduct,
+    _onShowDialogImagePicker,
+    DialogImagePicker,
+  } = useEditDetailProductList(props);
 
   return (
-    <View>
-      <Title style={{fontSize: 20, marginVertical: 10}}>Edtir Product</Title>
-      <Card>
-        <Card.Content style={{paddingHorizontal: 24}}>
-          <View style={{marginVertical: 8}}>
-            <View
-              style={{
-                marginVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <Text style={{color: accent}}>Product key</Text>
-              <Text
-                style={{
-                  color: accent,
-                  borderBottomColor: accent,
-                  borderBottomWidth: 1,
-                }}
-                onPress={() => setChangeButton(true)}>
-                Change
-              </Text>
-            </View>
-            {!changeButton ? (
-              <Title style={{fontSize: 26}}>{productKey}</Title>
-            ) : (
-              <TextInput
-                label="Input product key"
-                value={productKey}
-                mode="outlined"
-                onChange={(e) => setProductKey(e.nativeEvent.text)}
-              />
-            )}
-          </View>
-          <View style={{marginVertical: 8}}>
-            <Text style={{color: accent, marginVertical: 10}}>Name</Text>
-            <TextInput
-              label="Input name"
-              value={name}
-              onChange={(e) => setName(e.nativeEvent.text)}
-            />
-          </View>
-          <View style={{marginVertical: 8}}>
-            <Text style={{color: accent, marginVertical: 10}}>Description</Text>
-            <TextInput
-              label="Input description"
-              value={description}
-              onChange={(e) => setDescription(e.nativeEvent.text)}
-            />
-          </View>
-        </Card.Content>
-      </Card>
+    <Styled.MainContainer>
+      <Styled.ContainerImage onPress={() => _onShowDialogImagePicker()}>
+        <Styled.Image
+          source={{
+            uri: stateImage.userGetImage ? stateImage.uri : _image,
+          }}
+        />
+      </Styled.ContainerImage>
+      <Styled.ContainerLayer>
+        <Styled.ProductKeyText>Product key</Styled.ProductKeyText>
+        <Styled.ProductKeyTitle>{state.key}</Styled.ProductKeyTitle>
+      </Styled.ContainerLayer>
+      <Styled.ContainerLayer>
+        <Styled.NameInput
+          value={state.name}
+          onChange={(e) => _setName(e.nativeEvent.text)}
+        />
+      </Styled.ContainerLayer>
+      <Styled.ContainerLayer>
+        <Styled.DescriptionInput
+          value={state.description}
+          onChange={(e) => _setDescription(e.nativeEvent.text)}
+        />
+      </Styled.ContainerLayer>
       <Button
-        loading={busy}
+        loading={state.busy}
         mode="contained"
         style={{marginVertical: 24}}
-        onPress={_submitEdit}>
+        onPress={() => _submitUpdateProduct()}>
         Submit edit
       </Button>
-    </View>
+      <DialogImagePicker />
+    </Styled.MainContainer>
   );
 }

@@ -15,14 +15,10 @@ import {
 } from '../src/actions/actions_firebase';
 import {useDispatch} from 'react-redux';
 
-// Screen
-import AnalysisScreen from '../screens/AnalysisScreen';
-
 const Stack = createStackNavigator();
 
 const Navigation_HomeStack = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
     const loadData = async () => {
       await dispatch(action_realtimedb_door_firebase());
@@ -48,20 +44,18 @@ const Navigation_HomeStack = () => {
         component={Settings}
         options={({route}) => ({title: route.params.title})}
       />
-      <Stack.Screen
-        name="Stack_analysis"
-        component={AnalysisScreen}
-        options={{title: 'Analysis', headerShown: false}}
-      />
+
       <Stack.Screen
         name="Stack_detailProductScreen"
         component={DetailProduct}
-        options={{title: ''}}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="Stack_AddProduct_NameAndDescription"
         component={AddProduct_NameAndDescriptionScreen}
-        options={{title: 'Create new wicket'}}
+        options={{title: 'Create new wicket', headerTransparent: true}}
       />
     </Stack.Navigator>
   );

@@ -1,6 +1,6 @@
 import React, {useMemo, useEffect, useRef} from 'react';
 import {ScrollView} from 'react-native';
-import {Button, Text, IconButton, ActivityIndicator} from 'react-native-paper';
+import {Text} from 'react-native-paper';
 
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
@@ -60,7 +60,6 @@ const NetWorkDisconnection = () => (
 
 const HomeScreen = ({jumpTo}) => {
   const netInfo = useNetInfo();
-  const netConnection = netInfo.isConnected;
   const prevState = useRef([]);
   const {realtimeDatabase, lengthData} = useSelector((reducer) => {
     return {...reducer.FirebaseReducer, ...reducer.ThemeReducer.theme};
@@ -126,18 +125,6 @@ const HomeScreen = ({jumpTo}) => {
     _loopCheckConnection();
   }, []);
 
-  const subTitle = (id) => {
-    if (id && netConnection) {
-      return 'Connected';
-    } else if (!id && netConnection) {
-      return 'Module disconnected';
-    } else if (id == 3 && netConnection) {
-      return 'Loading...';
-    } else if (!netInfo.isConnected) {
-      return 'Network disconnected';
-    }
-  };
-
   return (
     <Styled.MainContainer>
       <Styled.ContainerHead>
@@ -153,11 +140,17 @@ const HomeScreen = ({jumpTo}) => {
         <ScrollView>
           {realtimeDatabase.map((elem) => (
             <Styled.ContainerCard key={elem.no}>
-              <Styled.Card key={elem.no}>
+              <Styled.Card>
                 <Styled.CardTitle
                   title={`${elem.name}`}
-                  subtitle={`${subTitle(elem.arduinoConnection)}`}
-                  right={() => <MenuDoor {...elem} />}
+                  subtitle={elem.description}
+                  right={() => (
+                    <MenuDoor
+                      createdBy={elem.createdBy}
+                      no={elem.no}
+                      name={elem.name}
+                    />
+                  )}
                 />
                 <Styled.CardContent>
                   <Styled.CardCover
