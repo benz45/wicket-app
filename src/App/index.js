@@ -43,7 +43,7 @@ const App = () => {
   useEffect(() => {
     if (sysDefault && colorScheme !== theme.theme) {
       dispatch({type: SET_THEME, payload: colorScheme});
-    } else if (!sysDefault && colorScheme !== theme.theme) {
+    } else if (!sysDefault) {
       dispatch({type: SET_THEME, payload: darkMode ? 'dark' : 'light'});
     }
   }, [sysDefault]);
