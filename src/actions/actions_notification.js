@@ -1,30 +1,30 @@
 // Type
 import {
-  setNavigation,
-  deleteNavigation,
+  setNotification,
+  deleteNotification,
   settingNotification,
   settingStatus,
   settingMessage,
-  setAllNotificationtoStore
+  setAllNotificationtoStore,
 } from './index';
 
 // ********************************************************
 // Notification all
-export const action_setAllNotification = (data)=> {
+export const action_setAllNotification = (data) => {
   return (dispatch) => {
     dispatch(setAllNotificationtoStore(data));
-  }
-}
+  };
+};
 // ********************************************************
-export const action_setNavigation = (data) => {
+export const action_setNotification = (data) => {
   return (dispatch) => {
-    dispatch(setNavigation(data));
+    dispatch(setNotification(data));
   };
 };
 
-export const action_deleteNavigation = (data) => {
+export const action_deleteNotification = (data) => {
   return (dispatch) => {
-    dispatch(deleteNavigation(data));
+    dispatch(deleteNotification(data));
   };
 };
 

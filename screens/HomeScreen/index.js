@@ -65,24 +65,6 @@ const HomeScreen = ({jumpTo}) => {
     return {...reducer.FirebaseReducer, ...reducer.ThemeReducer.theme};
   });
 
-  useEffect(() => {
-    // Assuming user is logged in
-    const {uid, photoURL, displayName, email} = auth().currentUser;
-
-    const reference = database().ref(`/online/user/${uid}`);
-
-    // Set the /users/:userId value to true
-    reference.set({
-      photoURL,
-      email,
-      displayName,
-      uid,
-    });
-
-    // Remove the node whenever the client disconnects.
-    reference.onDisconnect().remove();
-  }, [netInfo]);
-
   useMemo(() => {
     const _setPrev = async () => {
       await action_checkConnection().then((res) => {
@@ -124,6 +106,24 @@ const HomeScreen = ({jumpTo}) => {
     };
     _loopCheckConnection();
   }, []);
+
+  // useEffect(() => {
+  //   // Assuming user is logged in
+  //   const {uid, photoURL, displayName, email} = auth().currentUser;
+
+  //   const reference = database().ref(`/online/user/${uid}`);
+
+  //   // Set the /users/:userId value to true
+  //   reference.set({
+  //     photoURL,
+  //     email,
+  //     displayName,
+  //     uid,
+  //   });
+
+  //   // Remove the node whenever the client disconnects.
+  //   return reference.onDisconnect().remove();
+  // }, [netInfo]);
 
   return (
     <Styled.MainContainer>

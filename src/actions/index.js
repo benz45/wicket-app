@@ -46,13 +46,13 @@ export const FETCHING_REALTIMEDB_DOOR_UPDATE_FAILRUE = (error) => ({
 
 /**************************************************************************/
 
-// Navigation
-export const setNavigation = (data) => ({
-  type: Type.SET_NAVIGATION,
+// Notification
+export const setNotification = (data) => ({
+  type: Type.SET_NOTIFICATION,
   payload: data,
 });
-export const deleteNavigation = (data) => ({
-  type: Type.DELETE_NAVIGATION,
+export const deleteNotification = (data) => ({
+  type: Type.DELETE_NOTIFICATION,
   payload: data,
 });
 

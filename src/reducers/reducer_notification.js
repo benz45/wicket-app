@@ -1,7 +1,7 @@
 // Type
 import {
-  SET_NAVIGATION,
-  DELETE_NAVIGATION,
+  SET_NOTIFICATION,
+  DELETE_NOTIFICATION,
   SETTING_NOTIFICATION,
   SETTING_STATUS,
   SETTING_MESSAGE,
@@ -51,13 +51,13 @@ export default (state = initialState, {type, payload}) => {
   };
 
   switch (type) {
-    case SET_NAVIGATION:
+    case SET_NOTIFICATION:
       return Object.assign({}, state, {
         notificationData: [...state.notificationData, payload],
       });
     case VALIDATION_DATE_NOTIFICATION:
       return {...state, notificationData: payload};
-    case DELETE_NAVIGATION:
+    case DELETE_NOTIFICATION:
       return {...state, notificationData: payload};
     case SETTING_NOTIFICATION:
       return {...state, settingNotification: payload};
