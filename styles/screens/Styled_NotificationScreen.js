@@ -51,7 +51,7 @@ export const CardRepeat = styled(View)`
 
 export const TimeText = styled(Text)`
   font-size: 26px;
-  margin-bottom: 8px;
+  margin: 6px 0px;
   color: ${(props) => `${props.theme.colors.text}`};
 `;
 export const DateText = styled(Text)`
@@ -61,13 +61,13 @@ export const DateText = styled(Text)`
 
 export const DescriptionText = styled(Text)`
   font-size: 20px;
-  color: ${(props) => `${props.theme.colors.accent}`};
+  color: ${(props) => `${props.theme.colors.primary}`};
 `;
 
 export const RepeatNormalText = styled(Text)`
   font-size: 20px;
   font-weight: bold;
-  color: ${(props) => `${props.theme.colors.accent}`};
+  color: ${(props) => `${props.theme.colors.primary}`};
 `;
 
 export const RepeatLongText = styled(TouchableOpacity)`

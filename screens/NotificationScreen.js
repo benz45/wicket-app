@@ -74,7 +74,9 @@ const Notification_Screen = ({navigation, route}) => {
   // Replace date to string from notificationDate.
   const _replace_dateInCard = (dateTime) => {
     const newDate = new Date(dateTime);
-    return `${newDate.getUTCDate()}.${newDate.getUTCMonth()}.${newDate.getFullYear()}`;
+    return `${newDate.getUTCDate()}.${
+      newDate.getUTCMonth() + 1
+    }.${newDate.getFullYear()}`;
   };
 
   // Replace and validate repeat to string from notificationDate.
@@ -89,43 +91,45 @@ const Notification_Screen = ({navigation, route}) => {
   useEffect(() => {
     if (!notificationData.length) _cancel_removeNotification();
   }, [notificationData]);
-
+  // PushNotification.removeAllDeliveredNotifications();
   return (
     <Styled.Container onPress={_cancel_removeNotification}>
       {!!!notificationData.length && <Styled.NoHaveDataNotification />}
       <Styled.ScrollView>
-        {notificationData.map((elem) => (
-          <Styled.CardContainerLongPress
-            key={elem.id}
-            onPress={_cancel_removeNotification}
-            onLongPress={() => setLongPress((prev) => !prev)}>
-            <Styled.Card>
-              <Styled.InCard>
-                <Styled.CardDetail>
-                  <Styled.DateText>
-                    {_replace_dateInCard(elem.date)}
-                  </Styled.DateText>
-                  <Styled.TimeText>{elem.time}</Styled.TimeText>
-                  <Styled.DescriptionText>
-                    {elem.message}
-                  </Styled.DescriptionText>
-                </Styled.CardDetail>
-                <Styled.CardRepeat>
-                  {!longPress ? (
-                    <Styled.RepeatNormalText>
-                      {_replace_repeatIncard(elem.repeatType)}
-                    </Styled.RepeatNormalText>
-                  ) : (
-                    <Styled.RepeatLongText
-                      onPress={() => _removeNotification(elem.id)}>
-                      <Styled.Trash color={colors.error} />
-                    </Styled.RepeatLongText>
-                  )}
-                </Styled.CardRepeat>
-              </Styled.InCard>
-            </Styled.Card>
-          </Styled.CardContainerLongPress>
-        ))}
+        {notificationData.length
+          ? notificationData.map((elem) => (
+              <Styled.CardContainerLongPress
+                key={elem.id}
+                onPress={_cancel_removeNotification}
+                onLongPress={() => setLongPress((prev) => !prev)}>
+                <Styled.Card>
+                  <Styled.InCard>
+                    <Styled.CardDetail>
+                      <Styled.DateText>
+                        {_replace_dateInCard(elem.fireDate)}
+                      </Styled.DateText>
+                      <Styled.TimeText>{elem.time}</Styled.TimeText>
+                      <Styled.DescriptionText>
+                        {elem.message}
+                      </Styled.DescriptionText>
+                    </Styled.CardDetail>
+                    <Styled.CardRepeat>
+                      {!longPress ? (
+                        <Styled.RepeatNormalText>
+                          {_replace_repeatIncard(elem.repeatType)}
+                        </Styled.RepeatNormalText>
+                      ) : (
+                        <Styled.RepeatLongText
+                          onPress={() => _removeNotification(elem.id)}>
+                          <Styled.Trash color={colors.error} />
+                        </Styled.RepeatLongText>
+                      )}
+                    </Styled.CardRepeat>
+                  </Styled.InCard>
+                </Styled.Card>
+              </Styled.CardContainerLongPress>
+            ))
+          : null}
       </Styled.ScrollView>
     </Styled.Container>
   );
