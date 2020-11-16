@@ -12,7 +12,7 @@ import {useIsFocused, CommonActions} from '@react-navigation/native';
 
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
-import {action_deleteNavigation} from '../src/actions/actions_notification';
+import {action_deleteNotification} from '../src/actions/actions_notification';
 import {VALIDATION_DATE_NOTIFICATION} from '../src/actionsType';
 
 const Notification_Screen = ({navigation, route}) => {
@@ -61,22 +61,20 @@ const Notification_Screen = ({navigation, route}) => {
     return () => backHandler.remove();
   }, []);
 
-  useEffect(() => {}, []);
-
   // State long press.
   const [longPress, setLongPress] = useState(false);
 
   // Remove data notification.
-  const _removeNotification = (id) => {
-    PushNotification.cancelLocalNotifications({id});
-    const res = notificationData.filter((x) => x.id !== id);
-    dispatch(action_deleteNavigation(res));
+  const _removeNotification = (noti_id) => {
+    PushNotification.cancelLocalNotifications({id: noti_id});
+    const res = notificationData.filter((x) => x.id !== noti_id);
+    dispatch(action_deleteNotification(res));
   };
 
   // Replace date to string from notificationDate.
   const _replace_dateInCard = (dateTime) => {
-    const date = new Date(dateTime);
-    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+    const newDate = new Date(dateTime);
+    return `${newDate.getUTCDate()}.${newDate.getUTCMonth()}.${newDate.getFullYear()}`;
   };
 
   // Replace and validate repeat to string from notificationDate.
@@ -95,16 +93,17 @@ const Notification_Screen = ({navigation, route}) => {
   return (
     <Styled.Container onPress={_cancel_removeNotification}>
       {!!!notificationData.length && <Styled.NoHaveDataNotification />}
-      {notificationData.map((elem) => (
-        <Styled.ScrollView>
+      <Styled.ScrollView>
+        {notificationData.map((elem) => (
           <Styled.CardContainerLongPress
+            key={elem.id}
             onPress={_cancel_removeNotification}
             onLongPress={() => setLongPress((prev) => !prev)}>
             <Styled.Card>
               <Styled.InCard>
                 <Styled.CardDetail>
                   <Styled.DateText>
-                    {_replace_dateInCard(elem.fireDate)}
+                    {_replace_dateInCard(elem.date)}
                   </Styled.DateText>
                   <Styled.TimeText>{elem.time}</Styled.TimeText>
                   <Styled.DescriptionText>
@@ -126,8 +125,8 @@ const Notification_Screen = ({navigation, route}) => {
               </Styled.InCard>
             </Styled.Card>
           </Styled.CardContainerLongPress>
-        </Styled.ScrollView>
-      ))}
+        ))}
+      </Styled.ScrollView>
     </Styled.Container>
   );
 };

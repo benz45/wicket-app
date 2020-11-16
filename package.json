@@ -1,5 +1,5 @@
 {
-  "name": "wicket",
+  "name": "Wicket",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -15,7 +15,7 @@
     "@react-native-community/datetimepicker": "^3.0.4",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^5.9.7",
-    "@react-native-community/push-notification-ios": "^1.6.1",
+    "@react-native-community/push-notification-ios": "^1.7.1",
     "@react-native-firebase/app": "^8.4.6",
     "@react-native-firebase/auth": "^9.3.1",
     "@react-native-firebase/database": "^7.5.12",
@@ -37,7 +37,7 @@
     "react-native-gesture-handler": "^1.8.0",
     "react-native-gifted-chat": "^0.16.3",
     "react-native-image-picker": "^2.3.4",
-    "react-native-paper": "^4.2.0",
+    "react-native-paper": "^4.3.0",
     "react-native-push-notification": "^6.1.1",
     "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "^3.1.8",
