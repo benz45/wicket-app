@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {BottomNavigation} from 'react-native-paper';
+import {Platform} from 'react-native';
 
 import database from '@react-native-firebase/database';
 import PushNotification from 'react-native-push-notification';
@@ -27,37 +28,61 @@ const addProduct = Navigation_AddProduct;
 const notificationList = HOCheader(NotificationList);
 const profile = ProfileScreen;
 
-const data = {
-  index: 0,
-  routes: [
-    {
-      key: 'home',
-      title: 'Home',
-      icon: 'home',
-      badge: false,
-    },
-    {
-      key: 'message',
-      title: 'Message',
-      icon: 'facebook-messenger',
-      badge: false,
-    },
-    {key: 'product', title: 'Product', icon: 'plus-circle', badge: false},
-    {
-      key: 'notificationList',
-      title: 'Notification',
-      icon: 'bell',
-      badge: false,
-    },
-    {key: 'profile', title: 'Profile', icon: 'account', badge: false},
-  ],
+const tabsList = () => {
+  if (Platform.OS === 'android') {
+    return {
+      index: 0,
+      routes: [
+        {
+          key: 'home',
+          title: 'Home',
+          icon: 'home',
+          badge: false,
+        },
+        {
+          key: 'message',
+          title: 'Message',
+          icon: 'facebook-messenger',
+          badge: false,
+        },
+        {key: 'product', title: 'Product', icon: 'plus-circle', badge: false},
+        {
+          key: 'notificationList',
+          title: 'Notification',
+          icon: 'bell',
+          badge: false,
+        },
+        {key: 'profile', title: 'Profile', icon: 'account', badge: false},
+      ],
+    };
+  } else if (Platform.OS === 'ios') {
+    return {
+      index: 0,
+      routes: [
+        {
+          key: 'home',
+          title: 'Home',
+          icon: 'home',
+          badge: false,
+        },
+        {
+          key: 'message',
+          title: 'Message',
+          icon: 'facebook-messenger',
+          badge: false,
+        },
+        {key: 'product', title: 'Product', icon: 'plus-circle', badge: false},
+        {key: 'profile', title: 'Profile', icon: 'account', badge: false},
+      ],
+    };
+  }
 };
 
 const HomeBottomNavigationBar = () => {
   const dispatch = useDispatch();
   const mount = useRef(true);
   const mountSettingMessage = useRef(true);
-  const [state, setState] = useState(data);
+  const [state, setState] = useState(tabsList());
   const {
     tabBackground,
     tabColor,

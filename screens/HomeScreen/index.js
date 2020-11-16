@@ -65,22 +65,21 @@ const HomeScreen = ({jumpTo}) => {
     return {...reducer.FirebaseReducer, ...reducer.ThemeReducer.theme};
   });
 
+  // Check user online and set offline if user go out application.
   useEffect(() => {
-    // Assuming user is logged in
-    const {uid, photoURL, displayName, email} = auth().currentUser;
+    const userList = auth().currentUser;
 
-    const reference = database().ref(`/online/user/${uid}`);
-
-    // Set the /users/:userId value to true
+    // Set online user
+    const reference = database().ref(`/online/user/${userList.uid}`);
     reference.set({
-      photoURL,
-      email,
-      displayName,
-      uid,
+      photoURL: userList.photoURL,
+      email: userList.email,
+      displayName: userList.displayName,
+      uid: userList.uid,
     });
 
     // Remove the node whenever the client disconnects.
-    reference.onDisconnect().remove();
+    return () => reference.onDisconnect().remove();
   }, [netInfo]);
 
   useMemo(() => {
