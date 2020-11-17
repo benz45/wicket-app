@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container} from '../styles/styled';
+import {Container, ContainerDetail} from '../styles/styled';
 import {View, ScrollView} from 'react-native';
 
 // UI
