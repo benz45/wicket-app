@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container} from '../styles/styled';
-import {View, ScrollView} from 'react-native';
+import {View} from 'react-native';
 
 // UI
 import {Colors, Avatar, IconButton} from 'react-native-paper';
