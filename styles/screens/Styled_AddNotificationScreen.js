@@ -4,10 +4,6 @@ import {Text, TextInput as TextInputPaper} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Button} from '../../components/CustomBtn';
 
-const window = Dimensions.get('screen');
-
-console.log(window);
-
 export const MainContainer = styled(View)`
   padding: 80px 65px 0px 65px;
   justify-content: center;
