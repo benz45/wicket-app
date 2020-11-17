@@ -15,7 +15,7 @@ const validateTime = (timeValue) => {
 
 const initialState = {
   time: {
-    fullTime: currentTime,
+    fullTime: new Date(Date.now()),
     hour: `${validateTime(currentTime.getHours().toString())}`,
     minute: `${validateTime(currentTime.getMinutes().toString())}`,
   },
@@ -46,6 +46,10 @@ export default function useDateTimePicker() {
   // Data time change
   const _onChange = (_, timeValue) => {
     const resualtTime = timeValue || time;
+    if (Platform.OS === 'android') {
+      _submit();
+      dispatch({type: SET_TIME, payload: resualtTime});
+    }
     dispatch({type: SET_TIME, payload: resualtTime});
   };
 
@@ -64,6 +68,9 @@ export default function useDateTimePicker() {
           <React.Fragment>
             <Styled.DateTimePicker
               value={state.time.fullTime}
+              testID="dateTimePicker-iOS"
+              display="spinner"
+              mode="time"
               onChange={_onChange}
             />
             <Styled.btnSubmit
@@ -72,6 +79,21 @@ export default function useDateTimePicker() {
               }}>
               Submit
             </Styled.btnSubmit>
+          </React.Fragment>
+        )
+      );
+    } else if (Platform.OS === 'android') {
+      return (
+        state.isShown && (
+          <React.Fragment>
+            <Styled.DateTimePicker
+              value={state.time.fullTime}
+              testID="dateTimePicker-android"
+              display="default"
+              mode="time"
+              is24Hour={true}
+              onChange={_onChange}
+            />
           </React.Fragment>
         )
       );

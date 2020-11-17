@@ -22,7 +22,7 @@ const AddNotificationScreen = () => {
   const {_dialogComponent, _setDialog} = useDialog();
 
   const _submitAddNoti = () => {
-    _addNoti({fullTime: time.fullTime})
+    _addNoti({fullTime: time.fullTime, hour: time.hour, minute: time.minute})
       .then(() => {
         _setDialog().success({
           title: 'Insert success',
