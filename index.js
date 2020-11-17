@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppRegistry} from 'react-native';
+import {AppRegistry, Platform, LogBox} from 'react-native';
 import {name as appName} from './app.json';
 import {Provider} from 'react-redux';
 import App from './src/App';
@@ -21,7 +21,10 @@ const reduxApp = () => {
     },
     onNotification: (snapshot) => {
       console.log('onNotification Notification:', snapshot);
-      snapshot.finish(PushNotificationIOS.FetchResult.NoData);
+
+      if (Platform.OS === 'ios') {
+        snapshot.finish(PushNotificationIOS.FetchResult.NoData);
+      }
     },
     onAction: function (notification) {
       console.log('ACTION:', notification.action);
@@ -36,6 +39,7 @@ const reduxApp = () => {
       badge: true,
       sound: true,
     },
+    requestPermissions: true,
   });
 
   return (

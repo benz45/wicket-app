@@ -12,10 +12,6 @@ export const DateTimePicker = styled(DateTimePickerComponent).attrs(
       colors: {text},
     },
   }) => ({
-    testID: 'dateTimePicker',
-    display: 'spinner',
-    mode: 'time',
-    is24Hour: true,
     textColor: `${text}`,
   }),
 )``;

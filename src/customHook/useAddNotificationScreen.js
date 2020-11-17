@@ -1,9 +1,9 @@
-import React, {useReducer, useEffect} from 'react';
+import React, {useReducer} from 'react';
 import {Portal, Dialog, RadioButton} from 'react-native-paper';
 import {Platform} from 'react-native';
 
 // Push Notification
-import PushNotification from 'react-native-push-notification/';
+import PushNotification from 'react-native-push-notification';
 
 // Redux
 import {useDispatch} from 'react-redux';
@@ -65,27 +65,30 @@ export default function useAddNotificationScreen() {
    *
    * @example _addNoti({fullTime: time<Date>})
    */
-  const _addNoti = async ({fullTime}) => {
+  const _addNoti = async ({fullTime, hour, minute}) => {
     try {
       const OS = (value) => Platform.OS === value;
+      const date = new Date(Date.now());
       const objNoti = {
-        id: new Date(fullTime).getTime(),
+        id: `${date.getMilliseconds()}${date.getMinutes()}${date.getHours()}${date.getMonth()}`,
         foreground: true, // BOOLEAN: If the notification was received in foreground or not
-        title: 'Wicket',
+        userInteraction: true,
+        [Platform.OS === 'android' ? 'ticker' : 'title']: 'Wicket',
         message: state.name,
         date: fullTime,
+        time: `${hour} : ${minute} ${fullTime.getHours() >= 12 ? 'PM' : 'AM'}`,
         repeatType: state.repeat !== 'once' && state.repeat,
-        actions: OS('android') && ['Close all', 'Open all'], // Android only.
-        invokeApp: false, // Android only.
-        largeIcon: 'ic_launcher_transform', // Android only.
-        smallIcon: 'ic_launcher_transform', // Android only.
+        [OS('android') && 'actions']: ['Close all', 'Open all'], // Android only.
+        [OS('android') && 'invokeApp']: false, // Android only.
+        [OS('android') && 'largeIcon']: 'ic_launcher_transform', // Android only.
+        [OS('android') && 'smallIcon']: 'ic_launcher_transform', // Android only.
       };
-      await PushNotification.localNotificationSchedule(objNoti);
+      PushNotification.localNotificationSchedule(objNoti);
       dispatchRedux(action_setNotification(objNoti));
       dispatch({type: CLEAR});
       return;
     } catch (err) {
-      console.log('err' + err);
+      console.log('_addNoti err' + err);
     }
   };
 
