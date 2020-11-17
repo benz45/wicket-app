@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppRegistry, Platform} from 'react-native';
+import {AppRegistry, Platform, LogBox} from 'react-native';
 import {name as appName} from './app.json';
 import {Provider} from 'react-redux';
 import App from './src/App';

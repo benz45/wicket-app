@@ -49,6 +49,7 @@
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to change your profile picture</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>FontAwesome.ttf</string>
 		<string>Zocial.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Octicons.ttf</string>
