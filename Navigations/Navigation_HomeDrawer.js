@@ -4,6 +4,7 @@ import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import HomeBottomNavigationBar from './Navigation_HomeBottomNavigationBar';
 import Stack_Setting from './Settings';
+import Notifications from './Notifications';
 
 // Components
 import CustomDrawer from '../components/CustomDrawer';
@@ -24,6 +25,11 @@ const Navigation_HomeDrawer = () => {
         name="Drawer_HomeBottomNavigationBar"
         component={HomeBottomNavigationBar}
         options={{title: 'Home'}}
+      />
+      <PaperDrawer.Screen
+        name="Drawer_Notification"
+        component={Notifications}
+        options={{title: 'Notifications'}}
       />
       <PaperDrawer.Screen
         name="Drawer_Settings"
