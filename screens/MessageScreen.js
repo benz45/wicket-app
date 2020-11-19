@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import {GiftedChat} from 'react-native-gifted-chat';
 
 // Styled
@@ -6,10 +6,10 @@ import * as Styled from '../styles/screens/Styled_MessageScreen';
 
 // Redux
 import {useSelector} from 'react-redux';
-import {action_setMessages} from '../src/actions/actions_firebase';
 
 // Custom hook
 import useUserOnline from '../src/customHook/useUserOnline';
+import useMessageScreen from '../src/customHook/useMessageScreen';
 
 // Custom input.
 const customInputToolbar = (props) => {
@@ -32,35 +32,8 @@ const customComposer = (props) => {
 
 const MessageScreen = () => {
   const [stateUser] = useUserOnline();
-  const {user, messagesData} = useSelector((reducer) => {
-    return {
-      ...reducer.FirebaseReducer.currentUser,
-      ...reducer.ThemeReducer.theme,
-      ...reducer.NotificationReducer,
-      ...reducer.FirebaseReducer.messages,
-    };
-  });
-
-  // Send Messages
-  const onSend = useCallback((newMessages) => {
-    newMessages.reduce((accumulator, currentValue) => {
-      accumulator = currentValue;
-      accumulator.user.username = user.displayName;
-      accumulator.createdAt = accumulator.createdAt.toString();
-      accumulator.timestamp = Date.now();
-      action_setMessages(accumulator);
-    }, {});
-  }, []);
-
-  const sortMessages = () => {
-    if (messagesData) {
-      return messagesData.sort((a, b) => {
-        if (a.timestamp > b.timestamp) return -1;
-        if (b.timestamp > a.timestamp) return 1;
-        return 0;
-      });
-    } else [];
-  };
+  const {_onSend, _sortMessages} = useMessageScreen();
+  const {user} = useSelector((reducer) => reducer.FirebaseReducer.currentUser);
 
   return (
     <React.Fragment>
@@ -80,9 +53,9 @@ const MessageScreen = () => {
         )}
       </Styled.ContainerHeader>
       <GiftedChat
-        messages={sortMessages()}
+        messages={_sortMessages()}
         messagesContainerStyle={{paddingBottom: 50}}
-        onSend={onSend}
+        onSend={(props) => _onSend(props)}
         renderInputToolbar={(props) => customInputToolbar(props)}
         renderBubble={(props) => customBubble(props)}
         renderSend={(props) => customSend(props)}
