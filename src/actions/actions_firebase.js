@@ -394,20 +394,6 @@ export const action_newMessageOnly = async (
     });
 };
 
-// User online list
-export const action_userOnline = () => {
-  return new Promise((res, rej) => {
-    database()
-      .ref('online/user')
-      .on('value', (snapshot) => {
-        if (!!!snapshot.val()) {
-          rej({message: 'error'});
-        }
-        res(snapshot.val());
-      });
-  });
-};
-
 export const action_checkConnection = (id) => {
   return new Promise((res, rej) => {
     database()

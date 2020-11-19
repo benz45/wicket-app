@@ -1,17 +1,15 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useState} from 'react';
 import {GiftedChat} from 'react-native-gifted-chat';
-
-import database from '@react-native-firebase/database';
 
 // Styled
 import * as Styled from '../styles/screens/Styled_MessageScreen';
 
 // Redux
 import {useSelector} from 'react-redux';
-import {
-  action_setMessages,
-  action_userOnline,
-} from '../src/actions/actions_firebase';
+import {action_setMessages} from '../src/actions/actions_firebase';
+
+// Custom hook
+import useUserOnline from '../src/customHook/useUserOnline';
 
 // Custom input.
 const customInputToolbar = (props) => {
@@ -33,7 +31,7 @@ const customComposer = (props) => {
 };
 
 const MessageScreen = () => {
-  const [isUser, setUser] = useState([]);
+  const [stateUser] = useUserOnline();
   const {user, messagesData} = useSelector((reducer) => {
     return {
       ...reducer.FirebaseReducer.currentUser,
@@ -54,16 +52,6 @@ const MessageScreen = () => {
     }, {});
   }, []);
 
-  const userOnline = async () => {
-    await action_userOnline()
-      .then((x) => {
-        setUser(Object.values(x));
-      })
-      .catch((err) => {
-        console.log('err > ', err);
-      });
-  };
-
   const sortMessages = () => {
     if (messagesData) {
       return messagesData.sort((a, b) => {
@@ -74,26 +62,22 @@ const MessageScreen = () => {
     } else [];
   };
 
-  useEffect(() => {
-    userOnline();
-    database()
-      .ref('online/user')
-      .on('value', () => userOnline());
-  }, []);
-
   return (
     <React.Fragment>
       <Styled.ContainerHeader>
         <Styled.TextHeader>Message Room</Styled.TextHeader>
-        <Styled.ViewListUser>
-          {isUser &&
-            isUser.map((elem) => (
+        {stateUser.isLoading && !stateUser.user.length ? (
+          <Styled.Loading>Loading...</Styled.Loading>
+        ) : (
+          <Styled.ViewListUser>
+            {stateUser.user.map((elem) => (
               <Styled.ViewContainerUser key={elem.uid}>
                 <Styled.ImageUser source={{uri: elem.photoURL}} />
                 <Styled.BadgeUser />
               </Styled.ViewContainerUser>
             ))}
-        </Styled.ViewListUser>
+          </Styled.ViewListUser>
+        )}
       </Styled.ContainerHeader>
       <GiftedChat
         messages={sortMessages()}

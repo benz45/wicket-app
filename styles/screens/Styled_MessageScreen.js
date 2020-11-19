@@ -83,3 +83,5 @@ export const Send = styled(SendGiftedChat).attrs((props) => ({
     height: 30,
   },
 }))``;
+
+export const Loading = styled(TextPaper)``;
