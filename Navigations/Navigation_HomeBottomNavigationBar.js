@@ -168,8 +168,11 @@ const HomeBottomNavigationBar = () => {
   }, []);
   return (
     <BottomNavigation
-      // Custom height bar.
-      barStyle={{height: 70, backgroundColor: tabBackground}}
+      // Custom height bar platform ios.
+      barStyle={{
+        [Platform.OS === 'ios' && 'height']: 70,
+        backgroundColor: tabBackground,
+      }}
       navigationState={state}
       onIndexChange={_handleIndexChange}
       renderScene={_renderScene}

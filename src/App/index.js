@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {StatusBar, useColorScheme} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 // Styled
 import {ThemeProvider} from 'styled-components';
@@ -14,10 +14,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector, useDispatch} from 'react-redux';
 import useApp from './useApp';
 import {SET_THEME} from '../actionsType';
-
-// Message
-import messaging from '@react-native-firebase/messaging';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const Stack = createStackNavigator();
 
@@ -51,28 +47,6 @@ const App = () => {
       dispatch({type: SET_THEME, payload: darkMode ? 'dark' : 'light'});
     }
   }, [sysDefault]);
-
-  // Messaging
-  useEffect(() => {
-    PushNotificationIOS.addEventListener(
-      'localNotification',
-      onRemoteNotification,
-    );
-  }, []);
-
-  const onRemoteNotification = (notification) => {
-    const actionIdentifier = notification.getActionIdentifier();
-
-    if (actionIdentifier === 'open') {
-      // Perform action based on open action
-    }
-
-    if (actionIdentifier === 'text') {
-      // Text that of user input.
-      const userText = notification.getUserText();
-      // Perform action based on textinput action
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
