@@ -1,15 +1,10 @@
 import React, {useCallback, useState, useEffect} from 'react';
-import {GiftedChat, InputToolbar, Send, Bubble} from 'react-native-gifted-chat';
-import {View, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {GiftedChat} from 'react-native-gifted-chat';
 
 import database from '@react-native-firebase/database';
 
-// Paper
-import {Avatar} from 'react-native-paper';
-
-// Styles
-import Styles from '../styles/styles';
+// Styled
+import * as Styled from '../styles/screens/Styled_MessageScreen';
 
 // Redux
 import {useSelector} from 'react-redux';
@@ -19,58 +14,27 @@ import {
 } from '../src/actions/actions_firebase';
 
 // Custom input.
-const customtInputToolbar = (props, colors) => {
-  return (
-    <InputToolbar
-      {...props}
-      primaryStyle={{
-        backgroundColor: colors.tabBackground,
-        borderRadius: 30,
-      }}
-      containerStyle={{
-        paddingVertical: 25,
-        backgroundColor: colors.background,
-        paddingHorizontal: 25,
-        borderTopColor: colors.surface,
-      }}
-    />
-  );
+const customInputToolbar = (props) => {
+  return <Styled.InputToolbar {...props} />;
 };
 
-// Custom Button send.
-const customtSend = (props, colors) => {
-  return (
-    <Send
-      {...props}
-      alwaysShowSend={true}
-      children={
-        <View>
-          <Icon name="send" size={22} color={colors.accent} />
-        </View>
-      }
-      containerStyle={{
-        justifyContent: 'center',
-        backgroundColor: colors.tabBackground,
-        borderRadius: 30,
-        marginRight: 20,
-      }}
-    />
-  );
+// Custom Button send icon.
+const customSend = (props) => {
+  return <Styled.Send {...props} />;
 };
 
-// Custom text
-const customBubble = (props, colors) => {
-  return (
-    <Bubble
-      {...props}
-      wrapperStyle={{right: {backgroundColor: colors.button}}}
-    />
-  );
+// Custom message
+const customBubble = (props) => {
+  return <Styled.Bubble {...props} />;
+};
+
+const customComposer = (props) => {
+  return <Styled.Composer {...props} />;
 };
 
 const MessageScreen = () => {
   const [isUser, setUser] = useState([]);
-  const {user, colors, messagesData} = useSelector((reducer) => {
+  const {user, messagesData} = useSelector((reducer) => {
     return {
       ...reducer.FirebaseReducer.currentUser,
       ...reducer.ThemeReducer.theme,
@@ -116,51 +80,35 @@ const MessageScreen = () => {
       .ref('online/user')
       .on('value', () => userOnline());
   }, []);
+
   return (
-    <>
-      <View
-        style={[
-          Styles.HomeScreen_Header,
-          {
-            flexDirection: 'row',
-            alignItems: 'center',
-          },
-        ]}>
-        <Text style={{fontSize: 20, color: colors.accent}}>Message Room</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          {isUser.map((elem) => (
-            <View key={elem.uid} style={{marginLeft: 8}}>
-              <Avatar.Image size={38} source={{uri: elem.photoURL}} />
-              <Avatar.Text
-                style={{
-                  backgroundColor: '#8AF238',
-                  position: 'absolute',
-                  right: 0,
-                }}
-                size={12}
-              />
-            </View>
-          ))}
-        </View>
-      </View>
+    <React.Fragment>
+      <Styled.ContainerHeader>
+        <Styled.TextHeader>Message Room</Styled.TextHeader>
+        <Styled.ViewListUser>
+          {isUser &&
+            isUser.map((elem) => (
+              <Styled.ViewContainerUser key={elem.uid}>
+                <Styled.ImageUser source={{uri: elem.photoURL}} />
+                <Styled.BadgeUser />
+              </Styled.ViewContainerUser>
+            ))}
+        </Styled.ViewListUser>
+      </Styled.ContainerHeader>
       <GiftedChat
         messages={sortMessages()}
-        placeholder="Aa"
-        messagesContainerStyle={{paddingBottom: 40}}
+        messagesContainerStyle={{paddingBottom: 50}}
         onSend={onSend}
-        renderInputToolbar={(props) => customtInputToolbar(props, colors)}
-        renderBubble={(props) => customBubble(props, colors)}
-        renderSend={(props) => customtSend(props, colors)}
+        renderInputToolbar={(props) => customInputToolbar(props)}
+        renderBubble={(props) => customBubble(props)}
+        renderSend={(props) => customSend(props)}
+        renderComposer={(props) => customComposer(props)}
         user={{
           _id: user.email,
           avatar: user.photoURL,
         }}
       />
-    </>
+    </React.Fragment>
   );
 };
 
