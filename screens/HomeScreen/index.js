@@ -1,5 +1,5 @@
-import React, {useMemo, useRef} from 'react';
-import {ScrollView} from 'react-native';
+import React, {useMemo, useRef, useCallback, useState} from 'react';
+import {ScrollView, RefreshControl, SafeAreaView} from 'react-native';
 import {Text} from 'react-native-paper';
 
 // Components
@@ -56,6 +56,12 @@ const NetWorkDisconnection = () => (
   </>
 );
 
+const wait = (timeout) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+};
+
 const HomeScreen = ({jumpTo}) => {
   const netInfo = useNetInfo();
   const prevState = useRef([]);
@@ -105,6 +111,14 @@ const HomeScreen = ({jumpTo}) => {
     _loopCheckConnection();
   }, []);
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   return (
     <Styled.MainContainer>
       <Styled.ContainerHead>
@@ -117,7 +131,13 @@ const HomeScreen = ({jumpTo}) => {
         </Styled.ContainerHomeBar>
       </Styled.ContainerHead>
       {lengthData && (
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <Styled.RefreshControlStyle
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }>
           {realtimeDatabase.map((elem) => (
             <Styled.ContainerCard key={elem.no}>
               <Styled.Card>

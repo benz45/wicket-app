@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, RefreshControl} from 'react-native';
 import {
   ActivityIndicator as ActivityIndicatorPaper,
   Text,
@@ -125,6 +125,10 @@ export const IconDisConnected = styled(IconConnected).attrs({
   icon: 'alert-circle',
   color: '#CF4127',
 })``;
+
+export const RefreshControlStyle = styled(RefreshControl).attrs((props) => ({
+  tintColor: props.theme.colors.text,
+}))``;
 
 export const TextNetworkDisconnected = styled(Text)``;
 
