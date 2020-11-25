@@ -17,7 +17,9 @@ export const ContainerImage = styled(View)`
   align-items: center;
 `;
 
-export const Image = styled(Avatar.Image).attrs({size: 100})``;
+export const Image = styled(Avatar.Image).attrs({size: 100})`
+  background-color: white;
+`;
 
 export const Title = styled(TitlePaper)`
   text-align: center;

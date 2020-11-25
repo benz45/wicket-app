@@ -4,12 +4,7 @@ import {useSelector} from 'react-redux';
 import {action_setMessages} from '../../src/actions/actions_firebase';
 
 export default function useMessageScreen() {
-  const {user, messagesData} = useSelector((reducer) => {
-    return {
-      ...reducer.FirebaseReducer.currentUser,
-      ...reducer.FirebaseReducer.messages,
-    };
-  });
+  const {user} = useSelector((reducer) => reducer.FirebaseReducer.currentUser);
 
   // Send Messages
   const _onSend = useCallback((newMessages) => {
@@ -22,15 +17,5 @@ export default function useMessageScreen() {
     }, {});
   }, []);
 
-  const _sortMessages = () => {
-    if (messagesData) {
-      return messagesData.sort((a, b) => {
-        if (a.timestamp > b.timestamp) return -1;
-        if (b.timestamp > a.timestamp) return 1;
-        return 0;
-      });
-    } else [];
-  };
-
-  return {_onSend, _sortMessages};
+  return {_onSend};
 }

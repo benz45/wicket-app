@@ -1,9 +1,6 @@
-import React, {useMemo, useEffect, useRef} from 'react';
+import React, {useMemo, useRef} from 'react';
 import {ScrollView} from 'react-native';
 import {Text} from 'react-native-paper';
-
-import database from '@react-native-firebase/database';
-import auth from '@react-native-firebase/auth';
 
 // Components
 import StatusSwitch from '../../components/StatusSwitch';
@@ -28,6 +25,7 @@ import * as Styled from '../../styles/screens/Styled_HomeScreen';
 
 const NetInfoConnection = () => {
   const netInfo = useNetInfo();
+
   return netInfo.isConnected ? (
     <Styled.IconConnected />
   ) : (
@@ -61,26 +59,9 @@ const NetWorkDisconnection = () => (
 const HomeScreen = ({jumpTo}) => {
   const netInfo = useNetInfo();
   const prevState = useRef([]);
-  const {realtimeDatabase, lengthData} = useSelector((reducer) => {
-    return {...reducer.FirebaseReducer, ...reducer.ThemeReducer.theme};
-  });
-
-  // Check user online and set offline if user go out application.
-  useEffect(() => {
-    const userList = auth().currentUser;
-
-    // Set online user
-    const reference = database().ref(`/online/user/${userList.uid}`);
-    reference.set({
-      photoURL: userList.photoURL,
-      email: userList.email,
-      displayName: userList.displayName,
-      uid: userList.uid,
-    });
-
-    // Remove the node whenever the client disconnects.
-    return () => reference.onDisconnect().remove();
-  }, [netInfo]);
+  const {realtimeDatabase, lengthData} = useSelector(
+    (reducer) => reducer.FirebaseReducer,
+  );
 
   useMemo(() => {
     const _setPrev = async () => {
@@ -123,24 +104,6 @@ const HomeScreen = ({jumpTo}) => {
     };
     _loopCheckConnection();
   }, []);
-
-  // useEffect(() => {
-  //   // Assuming user is logged in
-  //   const {uid, photoURL, displayName, email} = auth().currentUser;
-
-  //   const reference = database().ref(`/online/user/${uid}`);
-
-  //   // Set the /users/:userId value to true
-  //   reference.set({
-  //     photoURL,
-  //     email,
-  //     displayName,
-  //     uid,
-  //   });
-
-  //   // Remove the node whenever the client disconnects.
-  //   return reference.onDisconnect().remove();
-  // }, [netInfo]);
 
   return (
     <Styled.MainContainer>
@@ -192,7 +155,6 @@ const HomeScreen = ({jumpTo}) => {
                     ) : null}
                   </Styled.ContainerActionSwitch>
                   <Styled.ContainerShowStatus>
-                    {/* <Styled.TextStatus> Status {`\t`} </Styled.TextStatus> */}
                     <Styled.TextShowStatus>
                       {elem.status ? 'OPEN' : 'CLOSED'}
                     </Styled.TextShowStatus>
@@ -203,6 +165,7 @@ const HomeScreen = ({jumpTo}) => {
           ))}
         </ScrollView>
       )}
+
       {!lengthData && (
         <Styled.ContainerNoData>
           <NoData

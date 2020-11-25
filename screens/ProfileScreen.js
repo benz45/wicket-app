@@ -7,13 +7,16 @@ import * as Styled from '../styles/screens/Styled_ProfileScreen';
 // Actions
 import {logoutUser} from '../src/actions/actions_firebase';
 import {useDispatch, useSelector} from 'react-redux';
+import useUserOnline from '../src/customHook/useUserOnline';
 
 const ProfileScreen = () => {
   const {user} = useSelector((res) => res.FirebaseReducer.currentUser);
   const dispatch = useDispatch();
+  const userOnline = useUserOnline();
   const {navigate} = useNavigation();
 
   const logout = async () => {
+    await userOnline.userDisconnect();
     await dispatch({type: 'LOGOUT'});
     await navigate('Authentication');
     await logoutUser();

@@ -16,15 +16,13 @@ import {SetAllStatus} from './src/actions/actions_firebase';
 const {store, persistor} = configureStore();
 const reduxApp = () => {
   PushNotification.configure({
-    onRegister: function (token) {
-      console.log('TOKEN:', token);
-    },
+    // onRegister: function (token) {
+    //   console.log('TOKEN:', token);
+    // },
     onNotification: (snapshot) => {
       console.log('onNotification Notification:', snapshot);
 
-      if (Platform.OS === 'ios') {
-        snapshot.finish(PushNotificationIOS.FetchResult.NoData);
-      }
+      snapshot.finish(PushNotificationIOS.FetchResult.NoData);
     },
     onAction: function (notification) {
       console.log('ACTION:', notification.action);

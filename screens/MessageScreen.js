@@ -10,6 +10,7 @@ import {useSelector} from 'react-redux';
 // Custom hook
 import useUserOnline from '../src/customHook/useUserOnline';
 import useMessageScreen from '../src/customHook/useMessageScreen';
+import useMessage from '../src/customHook/useMessage';
 
 // Custom input.
 const customInputToolbar = (props) => {
@@ -30,30 +31,39 @@ const customComposer = (props) => {
   return <Styled.Composer {...props} />;
 };
 
+const HeaderMessageScreen = () => {
+  const {state} = useUserOnline();
+
+  return (
+    <Styled.ContainerHeader>
+      <Styled.TextHeader>Message Room</Styled.TextHeader>
+      {state.isLoading && !state.user.length ? (
+        <Styled.Loading>Loading...</Styled.Loading>
+      ) : (
+        <Styled.ViewListUser>
+          {state.user.map((elem) => (
+            <Styled.ViewContainerUser key={elem.uid}>
+              <Styled.ImageUser source={{uri: elem.photoURL}} />
+              <Styled.BadgeUser />
+            </Styled.ViewContainerUser>
+          ))}
+        </Styled.ViewListUser>
+      )}
+    </Styled.ContainerHeader>
+  );
+};
+
 const MessageScreen = () => {
-  const [stateUser] = useUserOnline();
-  const {_onSend, _sortMessages} = useMessageScreen();
-  const {user} = useSelector((reducer) => reducer.FirebaseReducer.currentUser);
+  const {messagesData} = useSelector((store) => store.FirebaseReducer.messages);
+  const {user} = useSelector((store) => store.FirebaseReducer.currentUser);
+  const {_onSend} = useMessageScreen();
+  useMessage();
 
   return (
     <React.Fragment>
-      <Styled.ContainerHeader>
-        <Styled.TextHeader>Message Room</Styled.TextHeader>
-        {stateUser.isLoading && !stateUser.user.length ? (
-          <Styled.Loading>Loading...</Styled.Loading>
-        ) : (
-          <Styled.ViewListUser>
-            {stateUser.user.map((elem) => (
-              <Styled.ViewContainerUser key={elem.uid}>
-                <Styled.ImageUser source={{uri: elem.photoURL}} />
-                <Styled.BadgeUser />
-              </Styled.ViewContainerUser>
-            ))}
-          </Styled.ViewListUser>
-        )}
-      </Styled.ContainerHeader>
+      <HeaderMessageScreen />
       <GiftedChat
-        messages={_sortMessages()}
+        messages={messagesData}
         messagesContainerStyle={{paddingBottom: 50}}
         onSend={(props) => _onSend(props)}
         renderInputToolbar={(props) => customInputToolbar(props)}

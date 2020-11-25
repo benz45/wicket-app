@@ -38,20 +38,29 @@ export default (state = initialState, {type, payload}) => {
     case actions.GET_MESSAGES:
       return {...state, messages: {...state.messages, isFetchingMessage: true}};
     case actions.SET_MESSAGES:
+      const _sortMessages = () => {
+        if (payload) {
+          return payload.sort((a, b) => {
+            if (a.timestamp > b.timestamp) return -1;
+            if (b.timestamp > a.timestamp) return 1;
+            return 0;
+          });
+        } else [];
+      };
       return {
         ...state,
         messages: {
           ...state.messages,
           isFetchingMessage: false,
-          messagesData: payload,
+          messagesData: _sortMessages(),
         },
       };
 
-      // Connection
-      case actions.SET_CONNECTION_CHANGED:
-        return {...state, connections: payload}
-    
-      // Logout
+    // Connection
+    case actions.SET_CONNECTION_CHANGED:
+      return {...state, connections: payload};
+
+    // Logout
     case 'LOGOUT':
       return {...state, currentUser: {isUser: false}, realtimeDatabase: []};
 
