@@ -20,7 +20,7 @@ import {
   action_childRemove_firebase,
 } from '../src/actions/actions_firebase';
 
-export const MenuDoor = ({no, createdBy, name}) => {
+export const MenuDoor = ({id, createdBy, name}) => {
   const {user} = useSelector((store) => store.FirebaseReducer.currentUser);
   const {navigate} = useNavigation();
   const [isShowMenu, setShowMenu] = useState(false);
@@ -33,12 +33,12 @@ export const MenuDoor = ({no, createdBy, name}) => {
 
   const _detail = () => {
     _CloseMenu();
-    navigate('Stack_detailProductScreen', {no});
+    navigate('Stack_detailProductScreen', {id});
   };
 
   // Remove door.
   const _removeDoor = async () => {
-    await action_removeDoor(no);
+    await action_removeDoor(id);
   };
 
   // Cheack child remove.

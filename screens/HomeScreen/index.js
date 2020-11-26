@@ -1,5 +1,5 @@
 import React, {useMemo, useRef, useCallback, useState} from 'react';
-import {ScrollView, RefreshControl, SafeAreaView} from 'react-native';
+import {ScrollView} from 'react-native';
 import {Text} from 'react-native-paper';
 
 // Components
@@ -139,15 +139,15 @@ const HomeScreen = ({jumpTo}) => {
             />
           }>
           {realtimeDatabase.map((elem) => (
-            <Styled.ContainerCard key={elem.no}>
-              <Styled.Card>
+            <Styled.ContainerCard key={elem.key}>
+              <Styled.Card key={elem.key}>
                 <Styled.CardTitle
                   title={`${elem.name}`}
                   subtitle={elem.description}
                   right={() => (
                     <MenuDoor
                       createdBy={elem.createdBy}
-                      no={elem.no}
+                      id={elem.key}
                       name={elem.name}
                     />
                   )}

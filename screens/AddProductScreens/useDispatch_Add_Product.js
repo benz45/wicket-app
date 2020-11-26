@@ -151,7 +151,7 @@ const useReducerAddProduct = (key = '', displayName = '') => {
       .once('value', (snapshot) => {
         const data = snapshot.val();
         const dataToArr = Object.values(data).filter((res) => {
-          return res.no == key;
+          return res.key == key;
         });
 
         if (!!dataToArr[0]) {

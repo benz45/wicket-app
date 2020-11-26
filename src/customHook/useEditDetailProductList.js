@@ -34,7 +34,7 @@ export default function useEditDetailProductList() {
   const {dispatch: dispatchNavigation} = useNavigation();
 
   const {_keyList} = useDetailProductScreen();
-  const {no: key, name, description, image: _image} = Object.assign(
+  const {key, name, description, image: _image} = Object.assign(
     {},
     ..._keyList,
   );

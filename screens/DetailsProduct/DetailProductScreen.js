@@ -22,7 +22,7 @@ const DetailProductScreen = () => {
   return (
     <React.Fragment>
       {_keyList.map((elem) => (
-        <React.Fragment key={elem.no}>
+        <React.Fragment key={elem.key}>
           <Styled.ContainerAvatarImage>
             <Styled.AvatarImage
               source={{
@@ -50,7 +50,7 @@ const DetailProductScreen = () => {
               />
               <List.Item
                 title="Product key"
-                description={elem.no}
+                description={elem.key}
                 left={() => <List.Icon icon="key" />}
               />
               <List.Item

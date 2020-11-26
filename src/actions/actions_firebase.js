@@ -76,6 +76,7 @@ export const action_realtimedb_door_firebase = () => {
       .ref('door/datas')
       .on('value', (data) => {
         let result = data.val();
+        console.log(result);
         if (!!result) {
           let res = Object.values(result);
           dispatch(actions.FETCHING_REALTIMEDB_DOOR_SUCCESS(res));
@@ -109,11 +110,15 @@ export const action_addDoor = async (
   dateString,
 ) => {
   try {
-    db.ref(`door/status/${key}`).set({key, status});
-    db.ref(`door/images/${key}`).set({key, image: imageLink});
-    db.ref(`door/names/${key}`).set({key, name});
-    db.ref(`door/datas/${key}`).set({
-      no: key,
+    await db.ref(`connections/datas/${key}`).update({
+      appConnection: true,
+    });
+
+    await db.ref(`door/status/${key}`).set({key, degree: 1});
+    await db.ref(`door/images/${key}`).set({key, image: imageLink});
+    await db.ref(`door/names/${key}`).set({key, name});
+    await db.ref(`door/datas/${key}`).set({
+      key,
       name,
       description: desc,
       status: status,
@@ -124,15 +129,12 @@ export const action_addDoor = async (
       arduinoConnection: 3,
       createdBy: displayName,
     });
-    db.ref(`door/creates/${key}`).set({
+    await db.ref(`door/creates/${key}`).set({
       key,
       createdDate: dateString,
       createdBy: displayName,
     });
 
-    db.ref(`connections/datas/${key}`).update({
-      appConnection: true,
-    });
     return;
   } catch (error) {
     console.error(' action_addDoor', error);
@@ -154,29 +156,18 @@ export const action_uploadImageDoor = async (uri, key) => {
 // Update.
 
 // Press update value door status.
-export const action_updateDoorStatus = (no, status, displayName) => {
+export const action_updateDoorStatus = (key, status, displayName) => {
   // New date
   const newDate = new Date(Date.now());
   const dateString = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()} | ${newDate.getHours()}:${newDate.getMinutes()}`;
   try {
     return async (dispatch) => {
       dispatch(actions.FETCHING_REALTIMEDB_DOOR_UPDATE());
-      db.ref(`door/status/${no}`)
-        .update({
-          latestStatusBy: displayName,
-          latestStatus: dateString,
-          status: status,
-        })
-        .then(() => {
-          db.ref(`door/datas/${no}`).update({
-            latestStatusBy: displayName,
-            latestStatus: dateString,
-            status: status,
-          });
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
+      await db.ref(`door/datas/${key}`).update({
+        latestStatusBy: displayName,
+        latestStatus: dateString,
+        status: status,
+      });
     };
   } catch (error) {
     console.error('action_updateDoorStatus', error.message);
@@ -207,11 +198,11 @@ export const action_view_updateDoorStatus = () => {
 export const result_updateDoorStatus = async (settingStatusValue) => {
   try {
     await db.ref('door/status').on('child_changed', (response) => {
-      const {key, status, latestStatusBy} = response.val();
+      const {key, degree} = response.val();
       db.ref(`door/datas/${key}`).once('value', (snapshot) => {
-        const {name} = snapshot.val();
+        const {name, latestStatusBy} = snapshot.val();
         let res = `${name} being ${
-          status ? 'open' : 'close'
+          degree < 10 ? 'open' : 'close'
         } by ${latestStatusBy}`;
         if (settingStatusValue === true) {
           PushNotification.localNotification({
@@ -226,14 +217,14 @@ export const result_updateDoorStatus = async (settingStatusValue) => {
 };
 
 // Edit name & dexcription
-export const editProduct = async (no, name, description) => {
+export const editProduct = async (key, name, description) => {
   try {
-    db.ref(`door/names/${no}`)
+    db.ref(`door/names/${key}`)
       .update({
         name,
       })
       .then(() => {
-        db.ref(`door/datas/${no}`).update({
+        db.ref(`door/datas/${key}`).update({
           name: name,
           description: description,
         });
@@ -253,14 +244,14 @@ export const SetAllStatus = (value) => {
   try {
     db.ref(`connections/datas`).once('value', (snapshot) => {
       Object.values(snapshot.val()).map((elem) => {
-        const {appConnection, arduinoConnection, no} = elem;
+        const {appConnection, arduinoConnection, key} = elem;
         if (appConnection && arduinoConnection) {
-          db.ref(`door/datas/${no}`)
+          db.ref(`door/datas/${key}`)
             .update({
               status: value,
             })
             .then(() => {
-              db.ref(`door/status/${no}`).update({
+              db.ref(`door/status/${key}`).update({
                 status: value,
               });
             });
@@ -274,8 +265,8 @@ export const SetAllStatus = (value) => {
 
 export const setStatusAll = async (arrId, boolean) => {
   try {
-    for (let no of arrId) {
-      await database().ref(`door/status/${no}`).update({
+    for (let key of arrId) {
+      await database().ref(`door/status/${key}`).update({
         status: boolean,
       });
     }
