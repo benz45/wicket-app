@@ -1,4 +1,4 @@
-import React, {useMemo, useRef, useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {ScrollView} from 'react-native';
 import {Text} from 'react-native-paper';
 
@@ -15,10 +15,9 @@ import HomebarOptions from '../../Navigations/HomebarOptions';
 
 // Actions
 import {useSelector} from 'react-redux';
-import {
-  action_checkConnection,
-  action_setConnection,
-} from '../../src/actions/actions_firebase';
+
+// Custom hook
+import useCheckDoorConnection from '../../src/customHook/useCheckDoorConnection';
 
 // Styled
 import * as Styled from '../../styles/screens/Styled_HomeScreen';
@@ -64,57 +63,16 @@ const wait = (timeout) => {
 
 const HomeScreen = ({jumpTo}) => {
   const netInfo = useNetInfo();
-  const prevState = useRef([]);
   const {realtimeDatabase, lengthData} = useSelector(
     (reducer) => reducer.FirebaseReducer,
   );
 
-  useMemo(() => {
-    const _setPrev = async () => {
-      await action_checkConnection().then((res) => {
-        const arrState = res.states;
-        prevState.current = Object.values(arrState);
-      });
-    };
-    _setPrev();
-    const _loopCheckConnection = () => {
-      setInterval(() => {
-        action_checkConnection().then(async (res) => {
-          const arrStates = await Object.values(res.states);
-
-          const offline = await arrStates.filter((elem) => {
-            for (let i of prevState.current) {
-              if (elem.state == i.state) {
-                return elem.key;
-              }
-            }
-          });
-
-          // find array if connnection app.
-          const newArrThatConnectApp = await offline.filter((elem) => {
-            for (let i of realtimeDatabase) {
-              if (elem.key == i.key) {
-                return elem.key;
-              }
-            }
-          });
-          console.log(newArrThatConnectApp);
-
-          await newArrThatConnectApp.map((elem) =>
-            action_setConnection(elem.key, false),
-          );
-          prevState.current = arrStates;
-        });
-      }, 10000);
-    };
-    _loopCheckConnection();
-  }, []);
+  // Check a door connections.
+  useCheckDoorConnection();
 
   const [refreshing, setRefreshing] = useState(false);
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-
     wait(2000).then(() => setRefreshing(false));
   }, []);
 

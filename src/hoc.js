@@ -55,7 +55,7 @@ export const hocHeader = (Component) => (props) => {
       <Styled.ContainerView>
         <Component {...props} />
       </Styled.ContainerView>
-      {props.route.key === 'home' && <FloatingAction />}
+      {props.route.key === 'home' && <FloatingAction jumpTo={props.jumpTo} />}
     </Styled.ContainerView>
   );
 };
