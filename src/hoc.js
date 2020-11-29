@@ -1,39 +1,18 @@
 import React from 'react';
-import {Container, ContainerDetail} from '../styles/styled';
-import {View, ScrollView} from 'react-native';
+import {Container} from '../styles/styled';
+import {View} from 'react-native';
 
 // UI
 import {Colors, Avatar, IconButton} from 'react-native-paper';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
-import {FloatingAction} from 'react-native-floating-action';
-
+import FloatingAction from '../components/FloatingAction';
 // Redux
 import {useSelector} from 'react-redux';
 
-const icon = (name) => <Icons name={name} size={20} color="#f5f5f5" />;
-
-const actions = [
-  {
-    text: 'Create new',
-    icon: icon('plus'),
-    name: 'CreateNew',
-    position: 1,
-    color: '#90CAF9',
-    textBackground: '#f5f5f5',
-  },
-  {
-    text: 'Notification',
-    icon: icon('bell'),
-    name: 'Notification',
-    position: 2,
-    color: '#90CAF9',
-    textBackground: '#f5f5f5',
-  },
-];
-
 // Styles
 import styles from '../styles/styles';
+import * as Styled from '../styles/hoc/Styled_hocHeader';
 
 export const HOCform = (Component) => (props) => {
   return (
@@ -56,66 +35,28 @@ const IconOpenDrawer = () => {
   );
 };
 
-export const HOCheader = (Component) => (props) => {
-  const {navigate} = useNavigation();
-  const {accent} = useSelector((reducer) => reducer.ThemeReducer.theme.colors);
-  const {user} = useSelector((res) => res.FirebaseReducer.currentUser);
+export const hocHeader = (Component) => (props) => {
+  const currentUser = useSelector((res) => res.FirebaseReducer.currentUser);
 
-  const linkTo = (val) => {
-    val === 'CreateNew'
-      ? props.jumpTo('product')
-      : val === 'Notification'
-      ? navigate('Stack_Notifications', {
-          title: 'Notifications',
-        })
-      : null;
-  };
   return (
-    <View style={{flex: 1}}>
-      <View style={styles.HomeScreen_Header}>
+    <Styled.ContainerView>
+      <Styled.HeaderView>
         <IconOpenDrawer />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <IconButton icon="bell" color={Colors.grey500} />
-          <Avatar.Image
+        <Styled.ContainerUserView>
+          <Styled.Icon />
+          <Styled.AvatarUserImage
             size={38}
             source={{
-              uri: user.photoURL,
-            }}
-            style={{
-              marginLeft: 10,
+              uri: currentUser.user.photoURL,
             }}
           />
-        </View>
-      </View>
-      <View
-        style={{
-          flex: 1,
-        }}>
+        </Styled.ContainerUserView>
+      </Styled.HeaderView>
+      <Styled.ContainerView>
         <Component {...props} />
-      </View>
-      {props.route.key === 'home' && (
-        <FloatingAction
-          color={accent}
-          overlayColor="rgba(18, 18, 18, 0.33)"
-          shadow={{
-            shadowOpacity: 0,
-          }}
-          showBackground={true}
-          style={{
-            backgroundColor: '#000',
-            position: 'absolute',
-            left: 0,
-            bottom: 0,
-          }}
-          actions={actions}
-          onPressItem={(res) => linkTo(res)}
-        />
-      )}
-    </View>
+      </Styled.ContainerView>
+      {props.route.key === 'home' && <FloatingAction />}
+    </Styled.ContainerView>
   );
 };
 

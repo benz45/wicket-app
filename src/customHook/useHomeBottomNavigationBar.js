@@ -3,7 +3,7 @@ import {Platform} from 'react-native';
 import {BottomNavigation} from 'react-native-paper';
 
 // HOC
-import {HOCheader} from '../../src/hoc';
+import {hocHeader} from '../../src/hoc';
 
 // Screens
 import HomeScreen from '../../screens/HomeScreen';
@@ -13,10 +13,10 @@ import Navigation_AddProduct from '../../screens/AddProductScreens/AddProductScr
 import NotificationList from '../../screens/NotificationList';
 import ProfileScreen from '../../screens/ProfileScreen';
 
-const home = HOCheader(HomeScreen);
+const home = hocHeader(HomeScreen);
 const message = MessageScreen;
 const addProduct = Navigation_AddProduct;
-const notificationList = HOCheader(NotificationList);
+const notificationList = hocHeader(NotificationList);
 const profile = ProfileScreen;
 
 const SET_INDEX = 'SET_INDEX';
