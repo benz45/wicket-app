@@ -3,23 +3,21 @@ import {Switch} from 'react-native-paper';
 import {action_updateDoorStatus} from '../src/actions/actions_firebase';
 import {useDispatch, useSelector} from 'react-redux';
 
-const StatusSwitch = (props) => {
+const StatusSwitch = ({id, status}) => {
   const dispatch = useDispatch();
-  const isEnable = useRef(props.status);
+  const isEnable = useRef(status);
   const {
     user: {displayName},
   } = useSelector((store) => store.FirebaseReducer.currentUser);
 
   const toggleSwitch = async () => {
     isEnable.current = !isEnable.current;
-    await dispatch(
-      action_updateDoorStatus(props.no, isEnable.current, displayName),
-    );
+    await dispatch(action_updateDoorStatus(id, isEnable.current, displayName));
   };
 
   useEffect(() => {
-    isEnable.current = props.status;
-  }, [props.status]);
+    isEnable.current = status;
+  }, [status]);
 
   return <Switch onValueChange={toggleSwitch} value={isEnable.current} />;
 };

@@ -76,7 +76,6 @@ export const action_realtimedb_door_firebase = () => {
       .ref('door/datas')
       .on('value', (data) => {
         let result = data.val();
-        console.log(result);
         if (!!result) {
           let res = Object.values(result);
           dispatch(actions.FETCHING_REALTIMEDB_DOOR_SUCCESS(res));
@@ -126,8 +125,9 @@ export const action_addDoor = async (
       latestStatusBy: displayName,
       latestStatus: dateString,
       createdDate: dateString,
-      arduinoConnection: 3,
+      arduinoConnection: 'WAITING_CONNECTION',
       createdBy: displayName,
+      degree: 1,
     });
     await db.ref(`door/creates/${key}`).set({
       key,
@@ -202,7 +202,7 @@ export const result_updateDoorStatus = async (settingStatusValue) => {
       db.ref(`door/datas/${key}`).once('value', (snapshot) => {
         const {name, latestStatusBy} = snapshot.val();
         let res = `${name} being ${
-          degree < 10 ? 'open' : 'close'
+          degree > 10 ? 'open' : 'close'
         } by ${latestStatusBy}`;
         if (settingStatusValue === true) {
           PushNotification.localNotification({

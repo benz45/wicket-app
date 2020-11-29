@@ -43,7 +43,7 @@ const Disconnected = () => (
 const Loading = () => (
   <>
     <Styled.ActivityIndicator />
-    <Text> Loading... </Text>
+    <Text> Waiting Connection... </Text>
   </>
 );
 
@@ -85,7 +85,7 @@ const HomeScreen = ({jumpTo}) => {
           const offline = await arrStates.filter((elem) => {
             for (let i of prevState.current) {
               if (elem.state == i.state) {
-                return elem.no;
+                return elem.key;
               }
             }
           });
@@ -93,14 +93,14 @@ const HomeScreen = ({jumpTo}) => {
           // find array if connnection app.
           const newArrThatConnectApp = await offline.filter((elem) => {
             for (let i of realtimeDatabase) {
-              if (elem.no == i.no) {
-                return elem.no;
+              if (elem.key == i.key) {
+                return elem.key;
               }
             }
           });
 
           await newArrThatConnectApp.map((elem) =>
-            action_setConnection(elem.no, false),
+            action_setConnection(elem.key, false),
           );
           prevState.current = arrStates;
 
@@ -161,12 +161,17 @@ const HomeScreen = ({jumpTo}) => {
                 </Styled.CardContent>
                 <Styled.CardActions>
                   <Styled.ContainerActionSwitch>
-                    {netInfo.isConnected && elem.arduinoConnection === true ? (
-                      <StatusSwitch {...elem} />
+                    {netInfo.isConnected &&
+                    typeof elem.arduinoConnection === 'boolean' &&
+                    !!elem.arduinoConnection ? (
+                      <StatusSwitch id={elem.key} status={elem.status} />
                     ) : netInfo.isConnected &&
-                      elem.arduinoConnection == false ? (
+                      typeof elem.arduinoConnection === 'boolean' &&
+                      !!!elem.arduinoConnection ? (
                       <Disconnected />
-                    ) : elem.arduinoConnection == 3 && netInfo.isConnected ? (
+                    ) : typeof elem.arduinoConnection == 'string' &&
+                      elem.arduinoConnection == 'WAITING_CONNECTION' &&
+                      netInfo.isConnected ? (
                       <Styled.ContainerLoading>
                         <Loading />
                       </Styled.ContainerLoading>
@@ -176,7 +181,7 @@ const HomeScreen = ({jumpTo}) => {
                   </Styled.ContainerActionSwitch>
                   <Styled.ContainerShowStatus>
                     <Styled.TextShowStatus>
-                      {elem.status ? 'OPEN' : 'CLOSED'}
+                      {elem.degree > 10 ? 'OPEN' : 'CLOSE'}
                     </Styled.TextShowStatus>
                   </Styled.ContainerShowStatus>
                 </Styled.CardActions>
