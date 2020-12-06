@@ -37,10 +37,16 @@ const RegisterUploadProfile = () => {
         error={state.error.name}
         onChange={(e) => _setName(e.nativeEvent.text)}
       />
-      <Styled.BtnUpload onPress={() => _upload()} loading={state.busy}>
+      <Styled.BtnUpload
+        onPress={() => _upload()}
+        loading={state.busy.btnUpload}>
         Upload
       </Styled.BtnUpload>
-      <Styled.BtnSkip onPress={() => _onPressSkip()}>Skip</Styled.BtnSkip>
+      <Styled.BtnSkip
+        loading={state.busy.btnSkip}
+        onPress={() => _onPressSkip()}>
+        Skip
+      </Styled.BtnSkip>
       <DialogSelectImage />
     </React.Fragment>
   );

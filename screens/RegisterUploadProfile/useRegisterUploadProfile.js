@@ -13,12 +13,15 @@ import useSelectImage from '../../src/customHook/useSelectImage';
 
 // Action type
 const SET_NAME = 'SET_NAME';
-const UPLOAD = 'UPLOAD';
 const RESET_STATE = 'RESET_STATE';
 const ERROR_NAME = 'ERROR_NAME';
+const SET_BUSY = 'SET_BUSY';
 
 const initialState = {
-  busy: false,
+  busy: {
+    btnUpload: false,
+    btnSkip: false,
+  },
   name: '',
   error: {
     name: false,
@@ -29,12 +32,18 @@ const reducer = (state, {type, payload}) => {
   switch (type) {
     case SET_NAME:
       return {...state, name: payload, error: {name: false}};
-    case UPLOAD:
-      return {...state, busy: true};
-    case RESET_STATE:
-      return {...state, name: '', busy: false};
     case ERROR_NAME:
-      return {...state, busy: false, error: {name: true}};
+      return {...state, busy: initialState.busy, error: {name: true}};
+    case SET_BUSY:
+      return {
+        ...state,
+        busy: {
+          ...state.busy,
+          [payload.type]: payload.value,
+        },
+      };
+    case RESET_STATE:
+      return initialState;
   }
 };
 
@@ -61,25 +70,27 @@ export default function useRegisterUploadProfile(username) {
 
   // On press skip.
   const _onPressSkip = async () => {
+    await dispatch({type: SET_BUSY, payload: {type: 'btnSkip', value: true}});
     await action_userUpdate(username, false);
-    navigateToRegisterComplate();
+    await dispatch({type: RESET_STATE});
+    await navigateToRegisterComplate();
   };
 
   // On press upload.
   const _upload = async () => {
-    dispatch({type: UPLOAD});
+    await dispatch({type: SET_BUSY, payload: {type: 'btnUpload', value: true}});
 
     // Validate if user get image.
     if (!!!state.name.length) {
-      dispatch({type: ERROR_NAME});
+      await dispatch({type: ERROR_NAME});
       return Toast('Name not specified');
     } else {
       await action_userUpdate(
         state.name,
         stateImage.userGetImage ? stateImage.uri : false,
       );
-      dispatch({type: RESET_STATE});
-      navigateToRegisterComplate();
+      await dispatch({type: RESET_STATE});
+      await navigateToRegisterComplate();
     }
   };
 

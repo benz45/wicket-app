@@ -39,13 +39,13 @@ const RegisterComplate = () => {
               <Text>Email : {email}</Text>
             </View> */}
           <Text style={{marginVertical: 10}}>
-            {'\t\t\t'}Can break usage such as persisting and restoring state.
-            This might happen if you passed non-serializable values such as
-            function, class instances etc. in params.
+            Can break usage such as persisting and restoring state. This might
+            happen if you passed non-serializable values such as function, class
+            instances etc. in params.
           </Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Checkbox
+          <Checkbox.Android
             status={isCheckbox ? 'checked' : 'unchecked'}
             onPress={() => setCheckbox(!isCheckbox)}
           />

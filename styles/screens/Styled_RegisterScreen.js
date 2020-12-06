@@ -65,7 +65,7 @@ export const Username = styled(TextInput).attrs({
 export const Password = styled(Username).attrs({
   label: 'Password',
   secureTextEntry: true,
-  multiline: false,
+  textContentType: 'newPassword',
 })``;
 
 export const CPassword = styled(Password).attrs({

@@ -17,11 +17,11 @@ export const AvatarImage = styled(Avatar.Image).attrs({
 export const AvatarIcon = styled(Avatar.Icon).attrs(
   ({
     theme: {
-      colors: {text},
+      colors: {tabBackground},
     },
   }) => ({
     icon: 'plus',
-    color: text,
+    color: tabBackground,
     size: 30,
   }),
 )`
@@ -29,9 +29,9 @@ export const AvatarIcon = styled(Avatar.Icon).attrs(
   align-self: flex-end;
   background-color: ${({
     theme: {
-      colors: {accent},
+      colors: {primary},
     },
-  }) => `${accent}`};
+  }) => `${primary}`};
 `;
 
 export const ContainerAvatar = styled(View)`
