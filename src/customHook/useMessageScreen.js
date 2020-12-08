@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {action_setMessages} from '../../src/actions/actions_firebase';
 
 export default function useMessageScreen() {
-  const {user} = useSelector((reducer) => reducer.FirebaseReducer.currentUser);
+  const {user} = useSelector((reducer) => reducer.CurrentUserReducer);
 
   // Send Messages
   const _onSend = useCallback((newMessages) => {

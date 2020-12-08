@@ -55,7 +55,7 @@ const HeaderMessageScreen = () => {
 
 const MessageScreen = () => {
   const {messagesData} = useSelector((store) => store.FirebaseReducer.messages);
-  const {user} = useSelector((store) => store.FirebaseReducer.currentUser);
+  const {user} = useSelector((store) => store.CurrentUserReducer);
   const {_onSend} = useMessageScreen();
   useMessage();
 

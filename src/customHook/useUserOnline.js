@@ -11,12 +11,12 @@ import {useNetInfo} from '@react-native-community/netinfo';
 import db from '@react-native-firebase/database';
 
 export default function useUserOnline() {
-  const {currentUser} = useSelector((reducer) => reducer.FirebaseReducer);
+  const {user} = useSelector((reducer) => reducer.CurrentUserReducer);
   const state = useSelector((reducer) => reducer.UserConnectionReducer);
   const netInfo = useNetInfo();
   const dispatch = useDispatch();
 
-  const reference = db().ref(`/online/user/${currentUser.user.uid}`);
+  const reference = db().ref(`/online/user/${user.uid}`);
 
   const _fetch_userOnline = async () => {
     try {
@@ -38,12 +38,12 @@ export default function useUserOnline() {
   // Check user online and set offline if user go out application.
   useEffect(() => {
     // Set the /users/:userId value to true
-    if (!!currentUser.user) {
+    if (!!user) {
       reference.set({
-        photoURL: currentUser.user.photoURL,
-        email: currentUser.user.email,
-        displayName: currentUser.user.displayName,
-        uid: currentUser.user.uid,
+        photoURL: user.photoURL,
+        email: user.email,
+        displayName: user.displayName,
+        uid: user.uid,
       });
     }
 

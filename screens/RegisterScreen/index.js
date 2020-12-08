@@ -8,7 +8,7 @@ import * as Styled from '../../styles/screens/Styled_RegisterScreen';
 import {WelcomeLogo} from '../../components/logos/welcomeLogo';
 
 //Custom Hook.
-import useCustomHook_RegisterScreen from './useCustomHook_RegisterScreen';
+import useRegisterScreen from './useRegisterScreen';
 
 const RegisterScreen = () => {
   const {
@@ -18,7 +18,7 @@ const RegisterScreen = () => {
     _setCPassword,
     _navigateToLogin,
     _register,
-  } = useCustomHook_RegisterScreen();
+  } = useRegisterScreen();
 
   return (
     <Styled.MainContainer>

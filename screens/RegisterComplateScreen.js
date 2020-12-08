@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import {Text, Avatar, Checkbox} from 'react-native-paper';
 import {H1, H4} from '../styles/styled';
@@ -6,19 +6,28 @@ import {useNavigation} from '@react-navigation/native';
 import Button from '../components/CustomButton';
 
 // Actions
-import {action_loadCurrentUser_firebase} from '../src/actions/actions_firebase';
+import useLoadCurrentUser from '../src/customHook/useLoadCurrentUser';
 
 //Redux
 import {useDispatch, useSelector} from 'react-redux';
+import auth from '@react-native-firebase/auth';
+import {LOAD_CURRENT_USER_FIREBASE} from '../src/actionsType';
 
 const RegisterComplate = () => {
-  const dispatch = useDispatch();
   const {accent} = useSelector((reducer) => reducer.ThemeReducer.theme.colors);
   const [isCheckbox, setCheckbox] = useState(false);
   const {navigate} = useNavigation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    auth().onUserChanged((user) => {
+      if (user) {
+        dispatch({type: LOAD_CURRENT_USER_FIREBASE, payload: user});
+      }
+    });
+  }, []);
 
   const submit = async () => {
-    await dispatch(action_loadCurrentUser_firebase());
     navigate('Authenticated');
   };
 

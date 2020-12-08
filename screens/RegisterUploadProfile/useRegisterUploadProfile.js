@@ -6,7 +6,9 @@ import Toast from '../../src/toast-paper';
 import {useNavigation} from '@react-navigation/native';
 
 // Action
-import {action_userUpdate} from '../../src/actions/actions_firebase';
+import {useDispatch, useSelector} from 'react-redux';
+import {action_userUpdate} from '../../src/actions/actions_auth';
+import {action_loadCurrentUser} from '../../src/actions/actions_firebase';
 
 // Custom Hook
 import useSelectImage from '../../src/customHook/useSelectImage';
@@ -47,8 +49,11 @@ const reducer = (state, {type, payload}) => {
   }
 };
 
-export default function useRegisterUploadProfile(username) {
+export default function useRegisterUploadProfile(emailUser) {
+  const dispatchRedux = useDispatch();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const {user} = useSelector((store) => store.CurrentUserReducer);
+  const [username] = emailUser.split('@wicket.com');
 
   // Custom hook image picker.
   const {
@@ -71,7 +76,7 @@ export default function useRegisterUploadProfile(username) {
   // On press skip.
   const _onPressSkip = async () => {
     await dispatch({type: SET_BUSY, payload: {type: 'btnSkip', value: true}});
-    await action_userUpdate(username, false);
+    await action_userUpdate(user.email, username, false);
     await dispatch({type: RESET_STATE});
     await navigateToRegisterComplate();
   };
@@ -86,6 +91,7 @@ export default function useRegisterUploadProfile(username) {
       return Toast('Name not specified');
     } else {
       await action_userUpdate(
+        user.email,
         state.name,
         stateImage.userGetImage ? stateImage.uri : false,
       );

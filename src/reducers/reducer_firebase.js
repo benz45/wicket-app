@@ -16,14 +16,6 @@ const initialState = {
 
 export default (state = initialState, {type, payload}) => {
   switch (type) {
-    // First load Current user.
-    case actions.FIRST_LOAD_CURRENTUSER_FIREBASE:
-      return {...state};
-    case actions.FIRST_LOAD_CURRENTUSER_FIREBASE_SUCCESS:
-      return {...state, currentUser: {isUser: true, user: payload}};
-    case actions.FIRST_LOAD_CURRENTUSER_FIREBASE_FAILRUE:
-      return {...state, currentUser: {isUser: false, error: payload}};
-
     // Realtime Database. (First & Update)
     case actions.FETCHING_REALTIMEDB_DOOR:
       return {...state, isFetching: true};
@@ -61,7 +53,7 @@ export default (state = initialState, {type, payload}) => {
       return {...state, connections: payload};
 
     // Logout
-    case 'LOGOUT':
+    case actions.USER_LOGOUT:
       return {...state, currentUser: {isUser: false}, realtimeDatabase: []};
 
     default:

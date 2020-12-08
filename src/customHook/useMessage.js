@@ -40,7 +40,7 @@ export default function useMessage() {
   // const isFocus = useIsFocused();
   // const [state, dispatch] = useReducer(reducer, initialState);
 
-  const {user} = useSelector((store) => store.FirebaseReducer.currentUser);
+  const {user} = useSelector((store) => store.CurrentUserReducer);
   const {settingMessage} = useSelector((store) => store.NotificationReducer);
 
   const _noti_newMessage = async () => {

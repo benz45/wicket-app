@@ -11,7 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {action_loadCurrentUser_firebase} from '../../src/actions/actions_firebase';
+import useLoadCurrentUser from '../../src/customHook/useLoadCurrentUser';
 import {action_setAllNotification} from '../../src/actions/actions_notification';
 
 const Stack = createStackNavigator();
@@ -19,7 +19,8 @@ const Stack = createStackNavigator();
 export default function useApp() {
   const dispatch = useDispatch();
   const {navigate} = useNavigation();
-  const {isUser} = useSelector((res) => res.FirebaseReducer.currentUser);
+  const {isUser, user} = useSelector((res) => res.CurrentUserReducer);
+  useLoadCurrentUser();
 
   useEffect(() => {
     // Foreground all message.
@@ -40,20 +41,18 @@ export default function useApp() {
           dispatch(action_setAllNotification({snapshot, type: 'GLOBAL'}));
       },
     );
-
-    // Load data current user from firebase.
-    const loadCurrentUser = async () => {
-      await action_loadCurrentUser_firebase();
-    };
-    loadCurrentUser();
-
     return unsubscribe_message;
   }, []);
 
   useEffect(() => {
-    isUser ? navigate('Authenticated') : navigate('Authentication');
+    isUser && !!user.displayName
+      ? navigate('Authenticated')
+      : isUser && !!!user.displayName
+      ? navigate('Authentication', {screen: 'RegisterProfile'})
+      : navigate('Authentication');
     SplashScreen.hide();
   }, [isUser]);
+
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Authenticated" component={Authenticated} />

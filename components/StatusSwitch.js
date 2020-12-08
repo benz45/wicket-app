@@ -8,7 +8,7 @@ const StatusSwitch = ({id, status}) => {
   const isEnable = useRef(status);
   const {
     user: {displayName},
-  } = useSelector((store) => store.FirebaseReducer.currentUser);
+  } = useSelector((store) => store.CurrentUserReducer);
 
   const toggleSwitch = async () => {
     isEnable.current = !isEnable.current;

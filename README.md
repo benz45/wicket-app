@@ -4,7 +4,4 @@
 Final Project Computer science sisaket rajabhat university
 
 ## Operation
-- [ระบบล็อกอิน](#ระบบล็อกอิน)
-- [ระบบสมัครสมาชอก](#ระบบสมัครสมาชิก)
-
-อยู่ระหว่างการดำเนินการ..
+Coming soon...

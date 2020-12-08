@@ -5,6 +5,7 @@ import {
   Caption as CaptionPaper,
   HelperText as HelperTextPaper,
   Subheading,
+  Title as TitlePaper,
   TextInput,
 } from 'react-native-paper';
 
@@ -48,7 +49,11 @@ export const ContainerSubhead = styled(View)`
   margin-top: 20px;
 `;
 
-export const Subhead = styled(Subheading)``;
+export const Title = styled(TitlePaper)`
+  margin: 10px 0px 10px 0px;
+  color: ${(props) => props.theme.colors.primary};
+`;
+export const Subhead = styled(TitlePaper)``;
 export const Caption = styled(CaptionPaper)``;
 
 export const NameText = styled(TextInput).attrs({

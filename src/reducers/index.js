@@ -5,6 +5,7 @@ import FirebaseReducer from './reducer_firebase';
 import NotificationReducer from './reducer_notification';
 import AddProductReducer from './reducer_addProduct';
 import UserConnectionReducer from './reducer_userConnection';
+import CurrentUserReducer from './reducer_currentUser';
 
 export default combineReducers({
   ThemeReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   NotificationReducer,
   AddProductReducer,
   UserConnectionReducer,
+  CurrentUserReducer,
 });

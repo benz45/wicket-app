@@ -36,7 +36,7 @@ const IconOpenDrawer = () => {
 };
 
 export const hocHeader = (Component) => (props) => {
-  const currentUser = useSelector((res) => res.FirebaseReducer.currentUser);
+  const currentUser = useSelector((res) => res.CurrentUserReducer);
 
   return (
     <Styled.ContainerView>

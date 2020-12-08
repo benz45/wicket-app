@@ -1,14 +1,14 @@
 import React from 'react';
 
 import * as Styled from '../../styles/screens/Styled_RegisterUploadProfile';
-import {useRoute} from '@react-navigation/native';
+
+// Redux
+import {useSelector} from 'react-redux';
 
 import useRegisterUploadProfile from './useRegisterUploadProfile';
 
 const RegisterUploadProfile = () => {
-  const {
-    params: {username},
-  } = useRoute();
+  const {user} = useSelector((store) => store.CurrentUserReducer);
 
   const {
     state,
@@ -18,7 +18,7 @@ const RegisterUploadProfile = () => {
     _upload,
     _onShowDialogImagePicker,
     DialogSelectImage,
-  } = useRegisterUploadProfile(username);
+  } = useRegisterUploadProfile(user.email);
 
   return (
     <React.Fragment>
@@ -29,7 +29,8 @@ const RegisterUploadProfile = () => {
         </Styled.TouchableAvatar>
       </Styled.ContainerAvatar>
       <Styled.ContainerSubhead>
-        <Styled.Subhead>Add Profile</Styled.Subhead>
+        <Styled.Subhead>Update Profile</Styled.Subhead>
+        <Styled.Title>{user.email}</Styled.Title>
         <Styled.Caption>You can upload JPG or PNG files</Styled.Caption>
       </Styled.ContainerSubhead>
       <Styled.NameText
@@ -37,9 +38,7 @@ const RegisterUploadProfile = () => {
         error={state.error.name}
         onChange={(e) => _setName(e.nativeEvent.text)}
       />
-      <Styled.BtnUpload
-        onPress={() => _upload()}
-        loading={state.busy.btnUpload}>
+      <Styled.BtnUpload onPress={_upload} loading={state.busy.btnUpload}>
         Upload
       </Styled.BtnUpload>
       <Styled.BtnSkip
