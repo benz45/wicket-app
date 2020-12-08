@@ -19,20 +19,6 @@ const HeadComponent = () => (
   </Styled.HeadComponent>
 );
 
-// Test show information username
-// const UerInfoComponent = () => {
-//   const {user} = useSelector((res) => res.FirebaseReducer.currentUser);
-//   return (
-//     <Styled.UserInfoComponent>
-//       <Styled.AvatarImage source={{uri: user.photoURL}} />
-//       <Styled.Info>
-//         <Styled.DisplayName>{user.displayName}</Styled.DisplayName>
-//         <Styled.Email>{user.email}</Styled.Email>
-//       </Styled.Info>
-//     </Styled.UserInfoComponent>
-//   );
-// };
-
 const ThemeComponent = () => {
   const {theme} = useSelector((res) => res.ThemeReducer);
 

@@ -1,4 +1,7 @@
-import {FETCH_USER_CONNECTION_SUCCESS} from '../actionsType';
+import {
+  FETCH_USER_CONNECTION_SUCCESS,
+  RESET_USER_CONNECTION,
+} from '../actionsType';
 
 const initialState = {
   isLoading: true,
@@ -10,6 +13,8 @@ export default (state = initialState, {type, payload}) => {
   switch (type) {
     case FETCH_USER_CONNECTION_SUCCESS:
       return {...state, isLoading: false, user: Object.values(payload)};
+    case RESET_USER_CONNECTION:
+      return initialState;
     default:
       return state;
   }

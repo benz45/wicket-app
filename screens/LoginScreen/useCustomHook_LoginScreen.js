@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {
   loginUser,
-  action_loadCurrentUser_firebase,
+  action_loadCurrentUser,
 } from '../../src/actions/actions_firebase';
 import Toast from '../../src/toast-paper';
 import {Keyboard} from 'react-native';
@@ -84,7 +84,7 @@ export default function useCustomHookLoginScreen() {
       Toast('There is no user record corresponding to this identifier.');
     } else {
       dispatch({type: LOGIN, payload: false});
-      dispatchRedux(action_loadCurrentUser_firebase());
+      dispatchRedux(action_loadCurrentUser());
       navigate('Authenticated');
     }
   };

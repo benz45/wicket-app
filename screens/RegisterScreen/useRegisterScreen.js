@@ -1,5 +1,9 @@
 import {useReducer} from 'react';
 
+// Redux
+import {useDispatch} from 'react-redux';
+import {LOAD_CURRENT_USER_FIREBASE} from '../../src/actionsType';
+
 // React Navigation
 import {useNavigation} from '@react-navigation/native';
 
@@ -7,7 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import Toast from '../../src/toast-paper';
 
 // Firebase
-import {action_registerUser} from '../../src/actions/actions_firebase';
+import {action_registerUser} from '../../src/actions/actions_auth';
 
 const SET_USERNAME = 'SET_USERNAME';
 const SET_PASSWORD = 'SET_PASSWORD';
@@ -48,9 +52,10 @@ const reducer = (state, {type, payload}) => {
   }
 };
 
-export default function useCustomHook_RegisterScreen() {
+export default function useRegisterScreen() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {navigate} = useNavigation();
+  const dispatchRedux = useDispatch();
 
   const _setUsername = (value) => {
     dispatch({type: SET_USERNAME, payload: value});
@@ -96,11 +101,15 @@ export default function useCustomHook_RegisterScreen() {
     const res = await action_registerUser(state.username, state.password);
 
     if (res.error) {
-      dispatch({type: ERROR_USERNAME, payload: true});
-      Toast(res.message);
+      await dispatch({type: ERROR_USERNAME, payload: true});
+      await Toast(res.message);
     } else {
-      dispatch({type: REGISTER, payload: false});
-      _navigateToRegisterProfile();
+      await dispatch({type: REGISTER, payload: false});
+      await dispatchRedux({
+        type: LOAD_CURRENT_USER_FIREBASE,
+        payload: res.value,
+      });
+      await _navigateToRegisterProfile();
     }
   };
 

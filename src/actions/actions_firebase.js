@@ -4,69 +4,25 @@ import storage from '@react-native-firebase/storage';
 import * as actions from './index';
 import Toast from '../toast-paper';
 import PushNotification from 'react-native-push-notification';
+import {LOAD_CURRENT_USER_FIREBASE} from '../actionsType';
 
 const db = database();
-
-/**********************************************************************/
-// Auth
-
-export const action_registerUser = async (username, password) => {
-  const email = `${username}@wicket.com`;
-  try {
-    await auth().createUserWithEmailAndPassword(email, password);
-    return {error: false, message: 'The email address can be used'};
-  } catch (error) {
-    return {
-      error: true,
-      message: 'The email address is already in use by another account.',
-    };
-  }
-};
-
-//User Update.
-export const action_userUpdate = async (name, ImageProfile) => {
-  try {
-    if (!!!ImageProfile) {
-      const reference = await storage().ref(`user/profile.png`);
-      const imageLink = await reference.getDownloadURL();
-      await auth().onAuthStateChanged((user) => {
-        if (user) {
-          user.updateProfile({
-            displayName: name,
-            photoURL: imageLink,
-          });
-        }
-      });
-    } else {
-      const reference = await storage().ref(`user/${name}`);
-      await reference.putFile(ImageProfile);
-      const imageLink = await reference.getDownloadURL();
-      await auth().onAuthStateChanged((user) => {
-        if (user) {
-          user.updateProfile({
-            displayName: name,
-            photoURL: imageLink,
-          });
-        }
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 /**********************************************************************/
 // First load.
 
 // Action load current user from firebase.
-export const action_loadCurrentUser_firebase = () => {
-  const user = auth().currentUser;
-  return (dispatch) => {
-    dispatch(actions.firstLoadCurrentUser());
-    typeof user !== 'undefined' && !!user
-      ? dispatch(actions.firstLoadCurrentUserSuccess(user))
-      : dispatch(actions.firstLoadCurrentUserFailrue(null));
-  };
+export const action_loadCurrentUser = () => {
+  try {
+    return (dispatch) => {
+      const user = auth().currentUser;
+      if (user) {
+        dispatch({type: LOAD_CURRENT_USER_FIREBASE, payload: user});
+      }
+    };
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // Fetching realtime database door from firebase.
@@ -321,7 +277,11 @@ export const loginUser = async (username, password) => {
 };
 
 export const logoutUser = async () => {
-  await auth().signOut();
+  try {
+    await auth().signOut();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 /**********************************************************************/

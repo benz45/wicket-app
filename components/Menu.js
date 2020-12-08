@@ -21,7 +21,7 @@ import {
 } from '../src/actions/actions_firebase';
 
 export const MenuDoor = ({id, createdBy, name}) => {
-  const {user} = useSelector((store) => store.FirebaseReducer.currentUser);
+  const {user} = useSelector((store) => store.CurrentUserReducer);
   const {navigate} = useNavigation();
   const [isShowMenu, setShowMenu] = useState(false);
   const [isShowDialog, setShowDialog] = useState(false);
