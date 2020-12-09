@@ -25,7 +25,9 @@ const ProfileScreen = () => {
   };
 
   const dateValue = new Date(user.metadata.creationTime);
-  const time = `${dateValue.getDate()}-${dateValue.getMonth()}-${dateValue.getFullYear()} ${dateValue.getHours()}:${dateValue.getUTCMinutes()}`;
+  const time = `${dateValue.getDate()}-${
+    dateValue.getMonth() + 1
+  }-${dateValue.getFullYear()} ${dateValue.getHours()}:${dateValue.getUTCMinutes()}`;
 
   return (
     <Styled.MainContainer>

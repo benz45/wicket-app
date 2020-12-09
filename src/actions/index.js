@@ -1,19 +1,4 @@
 import * as Type from '../actionsType';
-/**************************************************************************/
-
-// First load Current user from firebase.
-export const firstLoadCurrentUser = () => ({
-  type: Type.FIRST_LOAD_CURRENTUSER_FIREBASE,
-});
-export const firstLoadCurrentUserSuccess = (data) => ({
-  type: Type.FIRST_LOAD_CURRENTUSER_FIREBASE_SUCCESS,
-  payload: data,
-});
-export const firstLoadCurrentUserFailrue = (error) => ({
-  type: Type.FIRST_LOAD_CURRENTUSER_FIREBASE_FAILRUE,
-  payload: error,
-});
-/**************************************************************************/
 
 // Fetching realtime database door from firebase. (First)
 export const FETCHING_REALTIMEDB_DOOR_SUCCESS = (data) => ({
