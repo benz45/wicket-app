@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {View} from 'react-native';
 import {
   Text,
+  Title,
   TextInput,
   HelperText as HelperTextPaper,
 } from 'react-native-paper';
@@ -18,6 +19,7 @@ export const Container = styled(View)`
 
 export const HeadIconContainer = styled(View)`
   align-items: center;
+  margin-bottom: 12px;
 `;
 export const HeadIcon = styled(Icon).attrs((props) => ({
   name: 'shape-rectangle-plus',
@@ -27,25 +29,25 @@ export const HeadIcon = styled(Icon).attrs((props) => ({
   align-items: center;
 `;
 
-export const HeadText = styled(Text)`
-  margin-bottom: 6px;
+export const HeadText = styled(Title)`
+  margin-bottom: 24px;
   font-size: 24px;
   color: ${(props) => `${props.theme.colors.text}`};
-  /* text-transform: uppercase; */
   text-align: center;
+`;
+
+export const SubText = styled(Title)`
+  margin-bottom: 6px;
+  font-size: 16px;
+  color: ${(props) => `${props.theme.colors.text}`};
 `;
 
 export const DetailText = styled(Text)`
-  margin-bottom: 26px;
+  margin-bottom: 24px;
   color: ${(props) => `${props.theme.colors.subText}`};
-  text-align: center;
 `;
 
-export const ProductKeyText = styled(Text)`
-  color: ${(props) => `${props.theme.colors.text}`};
-  font-size: 16px;
-  margin: 4px 0px;
-`;
+export const ProductKeyText = styled(SubText)``;
 
 export const InputKeyContainer = styled(View)``;
 export const InputKey = styled(TextInput).attrs({
