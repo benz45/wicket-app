@@ -47,7 +47,11 @@ export const DetailText = styled(Text)`
   color: ${(props) => `${props.theme.colors.subText}`};
 `;
 
-export const ProductKeyText = styled(SubText)``;
+export const ProductKeyText = styled(Title)`
+  color: ${(props) => `${props.theme.colors.text}`};
+  font-size: 16px;
+  margin-bottom: 6px;
+`;
 
 export const InputKeyContainer = styled(View)``;
 export const InputKey = styled(TextInput).attrs({
