@@ -4,7 +4,11 @@ import storage from '@react-native-firebase/storage';
 import * as actions from './index';
 import Toast from '../toast-paper';
 import PushNotification from 'react-native-push-notification';
-import {LOAD_CURRENT_USER_FIREBASE} from '../actionsType';
+import {
+  FETCHING_REALTIMEDB_DOOR_FAILRUE,
+  FETCHING_REALTIMEDB_DOOR_SUCCESS,
+  LOAD_CURRENT_USER_FIREBASE,
+} from '../actionsType';
 
 const db = database();
 
@@ -27,28 +31,21 @@ export const action_loadCurrentUser = () => {
 
 // Fetching realtime database door from firebase.
 export const action_realtimedb_door_firebase = () => {
-  return async (dispatch) => {
-    await database()
+  return (dispatch) => {
+    database()
       .ref('door/datas')
       .on('value', (data) => {
-        let result = data.val();
-        if (!!result) {
-          let res = Object.values(result);
-          dispatch(actions.FETCHING_REALTIMEDB_DOOR_SUCCESS(res));
+        let res = data.val();
+        if (!!res) {
+          let result = Object.values(res);
+          let numChildren = !!data.numChildren();
+          dispatch({
+            type: FETCHING_REALTIMEDB_DOOR_SUCCESS,
+            payload: {value: result, lengthData: numChildren},
+          });
         } else {
-          dispatch(actions.FETCHING_REALTIMEDB_DOOR_FAILRUE());
+          dispatch({type: FETCHING_REALTIMEDB_DOOR_FAILRUE});
         }
-      });
-  };
-};
-
-export const action_realtimedb_door_firebase_lengthData = () => {
-  return async (dispatch) => {
-    await database()
-      .ref('door/datas')
-      .on('value', (data) => {
-        let numChildren = !!data.numChildren();
-        dispatch(actions.FETCHING_REALTIMEDB_DOOR_LENGTHDATA(numChildren));
       });
   };
 };
@@ -127,26 +124,6 @@ export const action_updateDoorStatus = (key, status, displayName) => {
     };
   } catch (error) {
     console.error('action_updateDoorStatus', error.message);
-  }
-};
-
-// Not used.!!
-// Fetching (update) realtime database door from firebase.
-export const action_view_updateDoorStatus = () => {
-  try {
-    return async (dispatch) => {
-      await database()
-        .ref('door/datas')
-        .on('value', (data) => {
-          let result = data.val();
-          let res = Object.values(result);
-          typeof result !== 'undefined'
-            ? dispatch(actions.FETCHING_REALTIMEDB_DOOR_UPDATE_SUCCESS(res))
-            : dispatch(actions.FETCHING_REALTIMEDB_DOOR_UPDATE_FAILRUE(null));
-        });
-    };
-  } catch (error) {
-    console.error('action_view_updateDoorStatus', error.message);
   }
 };
 

@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware, compose} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import thunk from 'redux-thunk';
 
@@ -11,17 +11,6 @@ import rootReducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: [
-    'currentUser',
-    'notificationData',
-    'settingNotification',
-    'settingStatus',
-    'settingMessage',
-    'messages',
-    'connections',
-    'allNotification',
-    'UserConnectionReducer',
-  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

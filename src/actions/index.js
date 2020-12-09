@@ -1,32 +1,8 @@
 import * as Type from '../actionsType';
 
-// Fetching realtime database door from firebase. (First)
-export const FETCHING_REALTIMEDB_DOOR_SUCCESS = (data) => ({
-  type: Type.FETCHING_REALTIMEDB_DOOR_SUCCESS,
-  payload: data,
-});
 export const FETCHING_REALTIMEDB_DOOR_LENGTHDATA = (lengthData) => ({
   type: Type.FETCHING_REALTIMEDB_DOOR_LENGTHDATA,
   payload: lengthData,
-});
-export const FETCHING_REALTIMEDB_DOOR_FAILRUE = (error) => ({
-  type: Type.FETCHING_REALTIMEDB_DOOR_FAILRUE,
-  payload: error,
-});
-
-/**************************************************************************/
-
-// Fetching realtime database door from firebase. (Update)
-export const FETCHING_REALTIMEDB_DOOR_UPDATE = () => ({
-  type: Type.FETCHING_REALTIMEDB_DOOR_UPDATE,
-});
-export const FETCHING_REALTIMEDB_DOOR_UPDATE_SUCCESS = (data) => ({
-  type: Type.FETCHING_REALTIMEDB_DOOR_UPDATE_SUCCESS,
-  payload: data,
-});
-export const FETCHING_REALTIMEDB_DOOR_UPDATE_FAILRUE = (error) => ({
-  type: Type.FETCHING_REALTIMEDB_DOOR_UPDATE_FAILRUE,
-  payload: error,
 });
 
 /**************************************************************************/
@@ -78,11 +54,4 @@ export const modeONMessageOnly = () => ({
 });
 export const modeOFFMessageOnly = () => ({
   type: Type.MODE_OFFMESSAGEONLY,
-});
-
-/**************************************************************************/
-// Connection arduino & app
-export const setConnectionChacnge = (data) => ({
-  type: Type.SET_CONNECTION_CHANGED,
-  payload: data,
 });

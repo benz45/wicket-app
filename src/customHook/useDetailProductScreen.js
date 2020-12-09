@@ -8,12 +8,10 @@ export default function useDetailProductScreen() {
     params: {no},
   } = useRoute();
 
+  const {realtimeDatabase} = useSelector((store) => store.FirebaseReducer);
   const {
-    realtimeDatabase,
-    currentUser: {
-      user: {displayName: _displayName},
-    },
-  } = useSelector((store) => store.FirebaseReducer);
+    user: {displayName: _displayName},
+  } = useSelector((store) => store.CurrentUserReducer);
 
   // Validate data.
   const _keyList = realtimeDatabase.filter((find) => {

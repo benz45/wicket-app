@@ -19,10 +19,8 @@ export default function AddProduct_NameAndDescription({
   },
 }) {
   const {
-    currentUser: {
-      user: {displayName},
-    },
-  } = useSelector((reducer) => reducer.FirebaseReducer);
+    user: {displayName},
+  } = useSelector((reducer) => reducer.CurrentUserReducer);
 
   // Custom hook.
   const {

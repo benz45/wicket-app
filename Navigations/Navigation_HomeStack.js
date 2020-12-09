@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 // Navigations
 import {createStackNavigator} from '@react-navigation/stack';
@@ -8,25 +8,9 @@ import Navigation_HomeDrawer from './Navigation_HomeDrawer';
 import Notifications from './Notifications';
 import AddProduct_NameAndDescriptionScreen from '../screens/AddProductScreens/AddProduct_NameAndDescriptionScreen';
 
-// Actions
-import {
-  action_realtimedb_door_firebase,
-  action_realtimedb_door_firebase_lengthData,
-} from '../src/actions/actions_firebase';
-import {useDispatch} from 'react-redux';
-
 const Stack = createStackNavigator();
 
 const Navigation_HomeStack = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const loadData = async () => {
-      await dispatch(action_realtimedb_door_firebase());
-      await dispatch(action_realtimedb_door_firebase_lengthData());
-    };
-    loadData();
-  }, []);
-
   return (
     <Stack.Navigator>
       <Stack.Screen

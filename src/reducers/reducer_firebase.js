@@ -1,13 +1,8 @@
 import * as actions from '../actionsType';
 
 const initialState = {
-  connections: [],
   lengthData: false,
   realtimeDatabase: [],
-  isFetching: false,
-  currentUser: {
-    isUser: false,
-  },
   messages: {
     isFetchingMessage: false,
     messagesData: [],
@@ -17,14 +12,18 @@ const initialState = {
 export default (state = initialState, {type, payload}) => {
   switch (type) {
     // Realtime Database. (First & Update)
-    case actions.FETCHING_REALTIMEDB_DOOR:
-      return {...state, isFetching: true};
-    case actions.FETCHING_REALTIMEDB_DOOR_LENGTHDATA:
-      return {...state, lengthData: payload};
     case actions.FETCHING_REALTIMEDB_DOOR_SUCCESS:
-      return {...state, realtimeDatabase: payload, isFetching: false};
+      return {
+        ...state,
+        realtimeDatabase: payload.value,
+        lengthData: payload.lengthData,
+      };
     case actions.FETCHING_REALTIMEDB_DOOR_FAILRUE:
-      return {...state, isFetching: false};
+      return {
+        ...state,
+        realtimeDatabase: [],
+        lengthData: false,
+      };
 
     // Messages
     case actions.GET_MESSAGES:
@@ -47,10 +46,6 @@ export default (state = initialState, {type, payload}) => {
           messagesData: _sortMessages(),
         },
       };
-
-    // Connection
-    case actions.SET_CONNECTION_CHANGED:
-      return {...state, connections: payload};
 
     // Logout
     case actions.USER_LOGOUT:

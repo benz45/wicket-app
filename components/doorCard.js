@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import {Text, Card} from 'react-native-paper';
 
@@ -7,20 +7,13 @@ import StatusSwitch from './StatusSwitch';
 import {MenuDoor} from '../components/Menu';
 
 // Redux
-import {useSelector, useDispatch} from 'react-redux';
-import {action_realtimedb_door_firebase_lengthData} from '../src/actions/actions_firebase';
+import {useSelector} from 'react-redux';
 
 const doorCard = () => {
-  const dispatch = useDispatch;
   const {realtimeDatabase, colors} = useSelector((reducer) => {
     return {...reducer.FirebaseReducer, ...reducer.ThemeReducer.theme};
   });
 
-  useEffect(() => {
-    return () => {
-      dispatch(action_realtimedb_door_firebase_lengthData());
-    };
-  }, []);
   return (
     <>
       {realtimeDatabase.map((elem) => (
@@ -42,13 +35,13 @@ const doorCard = () => {
               style={{justifyContent: 'space-between', padding: 17}}>
               <View>
                 <Text>
-                <StatusSwitch {...elem} />{'\t'}|{'\t'}
+                  <StatusSwitch {...elem} />
+                  {'\t'}|{'\t'}
                   <Text style={{color: colors.accent}}>
                     {elem.status ? 'Turn on' : 'Turn off'}
                   </Text>
                 </Text>
               </View>
-              
             </Card.Actions>
           </Card>
         </View>

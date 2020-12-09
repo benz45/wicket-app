@@ -7,14 +7,11 @@ import Notifications from './Notifications';
 import Settings from './Settings';
 import addProduct_informations from '../screens/AddProductScreens/AddProduct_NameAndDescriptionScreen';
 
-// Actions
-import {
-  action_realtimedb_door_firebase,
-  action_realtimedb_door_firebase_lengthData,
-} from '../src/actions/actions_firebase';
-
 // Actions`
-import {result_updateDoorStatus} from '../src/actions/actions_firebase';
+import {
+  result_updateDoorStatus,
+  action_realtimedb_door_firebase,
+} from '../src/actions/actions_firebase';
 
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
@@ -22,16 +19,15 @@ import {useSelector, useDispatch} from 'react-redux';
 const Stack = createStackNavigator();
 
 const Authenticated = () => {
+  const dispatch = useDispatch();
   const {isUser} = useSelector((store) => store.CurrentUserReducer);
   const {settingStatus} = useSelector((store) => store.NotificationReducer);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const loadData = async () => {
-      await dispatch(action_realtimedb_door_firebase());
-      await dispatch(action_realtimedb_door_firebase_lengthData());
-    };
+  const loadData = () => {
+    dispatch(action_realtimedb_door_firebase());
+  };
 
+  useEffect(() => {
     if (isUser) loadData();
   }, [isUser]);
 
