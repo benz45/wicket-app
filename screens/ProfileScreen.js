@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 // Styled
@@ -11,17 +11,20 @@ import useUserOnline from '../src/customHook/useUserOnline';
 import {RESET_USER_CONNECTION, USER_LOGOUT} from '../src/actionsType';
 
 const ProfileScreen = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const {user} = useSelector((res) => res.CurrentUserReducer);
   const dispatch = useDispatch();
   const userOnline = useUserOnline();
   const {navigate} = useNavigation();
 
   const logout = async () => {
+    await setIsLoading(true);
     await userOnline.userDisconnect();
     await dispatch({type: USER_LOGOUT});
     await dispatch({type: RESET_USER_CONNECTION});
     await navigate('Authentication');
     await logoutUser();
+    await setIsLoading(false);
   };
 
   const dateValue = new Date(user.metadata.creationTime);
@@ -46,7 +49,9 @@ const ProfileScreen = () => {
           <Styled.ListCreation title="Creation" description={time} />
         </Styled.Card.Content>
       </Styled.Card>
-      <Styled.BtnLogout onPress={logout}>Sign out</Styled.BtnLogout>
+      <Styled.BtnLogout loading={isLoading} onPress={logout}>
+        Sign out
+      </Styled.BtnLogout>
     </Styled.MainContainer>
   );
 };

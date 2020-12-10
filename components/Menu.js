@@ -25,6 +25,7 @@ export const MenuDoor = ({id, createdBy, name}) => {
   const {navigate} = useNavigation();
   const [isShowMenu, setShowMenu] = useState(false);
   const [isShowDialog, setShowDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const _OpenMenu = () => setShowMenu(true);
   const _CloseMenu = () => setShowMenu(false);
@@ -38,7 +39,9 @@ export const MenuDoor = ({id, createdBy, name}) => {
 
   // Remove door.
   const _removeDoor = async () => {
+    await setIsLoading(true);
     await action_removeDoor(id);
+    await setIsLoading(false);
   };
 
   // Cheack child remove.
@@ -72,7 +75,9 @@ export const MenuDoor = ({id, createdBy, name}) => {
             <Button color={Colors.red400} onPress={_CloseDialog}>
               Cancel
             </Button>
-            <Button onPress={_removeDoor}>Agree</Button>
+            <Button loading={isLoading} onPress={_removeDoor}>
+              Agree
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
