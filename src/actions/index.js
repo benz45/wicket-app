@@ -8,10 +8,6 @@ export const FETCHING_REALTIMEDB_DOOR_LENGTHDATA = (lengthData) => ({
 /**************************************************************************/
 
 // Navigation
-export const setNavigation = (data) => ({
-  type: Type.SET_NAVIGATION,
-  payload: data,
-});
 export const deleteNotification = (data) => ({
   type: Type.DELETE_NOTIFICATION,
   payload: data,

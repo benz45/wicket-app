@@ -106,7 +106,7 @@ const Notification_Screen = ({navigation, route}) => {
                   <Styled.InCard>
                     <Styled.CardDetail>
                       <Styled.DateText>
-                        {_replace_dateInCard(elem.fireDate)}
+                        {_replace_dateInCard(elem.date)}
                       </Styled.DateText>
                       <Styled.TimeText>{elem.time}</Styled.TimeText>
                       <Styled.DescriptionText>

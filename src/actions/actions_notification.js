@@ -1,6 +1,6 @@
 // Type
+import {SET_NOTIFICATION} from '../actionsType';
 import {
-  setNotification,
   deleteNotification,
   settingNotification,
   settingStatus,
@@ -18,7 +18,7 @@ export const action_setAllNotification = (data) => {
 // ********************************************************
 export const action_setNotification = (data) => {
   return (dispatch) => {
-    dispatch(setNotification(data));
+    dispatch({type: SET_NOTIFICATION, payload: data});
   };
 };
 
