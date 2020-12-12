@@ -1,5 +1,5 @@
 import {useEffect, useReducer} from 'react';
-import {Keyboard, Platform} from 'react-native';
+import {Keyboard} from 'react-native';
 
 // Image picker
 import useSelectImage from '../../src/customHook/useSelectImage';
@@ -207,20 +207,24 @@ const useReducerAddProduct = (key = '', displayName = '') => {
     const dateString = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()} | ${newDate.getHours()}:${newDate.getMinutes()}`;
 
     // Upload image to firebase storage and get link.
-    const imageLink = await action_uploadImageDoor(stateImage.uri, key);
+    await action_uploadImageDoor(stateImage.uri, key).then(async (res) => {
+      if (!res) {
+        return Toast("Can't upload the image from camera");
+      }
+      await action_addDoor(
+        key,
+        state.name,
+        state.desc,
+        state.status,
+        res,
+        displayName,
+        dateString,
+      )
+        .then(() => _showDialog())
+        .catch((error) => alert(error.message));
+    });
 
     // Create new door.
-    await action_addDoor(
-      key,
-      state.name,
-      state.desc,
-      state.status,
-      imageLink,
-      displayName,
-      dateString,
-    )
-      .then(() => _showDialog())
-      .catch((error) => alert(error.message));
 
     Keyboard.dismiss();
     dispatch({type: RESET_ISKEY});

@@ -105,7 +105,11 @@ export default function AddProduct_NameAndDescription({
             </Styled.DialogSuccessfulContainer>
           </Dialog.Content>
           <Styled.DialogActions>
-            <Styled.BtnGoHome onPress={() => navigate('Stack_HomeDrawer')}>
+            <Styled.BtnGoHome
+              onPress={async () => {
+                await _hideDialog();
+                await navigate('Stack_HomeDrawer');
+              }}>
               Go home
             </Styled.BtnGoHome>
           </Styled.DialogActions>

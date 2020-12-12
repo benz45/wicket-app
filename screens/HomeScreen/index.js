@@ -14,7 +14,8 @@ import {useNetInfo} from '@react-native-community/netinfo';
 import HomebarOptions from '../../Navigations/HomebarOptions';
 
 // Actions
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {action_realtimedb_door_firebase} from './../../src/actions/actions_firebase';
 
 // Custom hook
 import useCheckDoorConnection from '../../src/customHook/useCheckDoorConnection';
@@ -62,6 +63,7 @@ const wait = (timeout) => {
 };
 
 const HomeScreen = ({jumpTo}) => {
+  const dispatch = useDispatch();
   const netInfo = useNetInfo();
   const {realtimeDatabase, lengthData} = useSelector(
     (reducer) => reducer.FirebaseReducer,
@@ -73,7 +75,10 @@ const HomeScreen = ({jumpTo}) => {
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
+    wait(1000).then(() => {
+      dispatch(action_realtimedb_door_firebase());
+      setRefreshing(false);
+    });
   }, []);
 
   return (

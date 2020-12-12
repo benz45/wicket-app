@@ -1,4 +1,5 @@
 import database from '@react-native-firebase/database';
+import {Platform} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import * as actions from './index';
@@ -31,8 +32,8 @@ export const action_loadCurrentUser = () => {
 
 // Fetching realtime database door from firebase.
 export const action_realtimedb_door_firebase = () => {
-  return (dispatch) => {
-    database()
+  return async (dispatch) => {
+    await database()
       .ref('door/datas')
       .on('value', (data) => {
         let res = data.val();
@@ -96,10 +97,22 @@ export const action_addDoor = async (
 
 export const action_uploadImageDoor = async (uri, key) => {
   try {
-    const reference = storage().ref().child(`door/${key}`);
-    await reference.putFile(uri);
-    const imageLink = await reference.getDownloadURL();
-    return imageLink;
+    if (Platform.OS === 'android') {
+      const reference = storage().ref().child(`door/${key}`);
+      await reference.putFile(uri, {
+        cacheControl: 'no-store', // disable caching
+      });
+      const imageLink = await reference.getDownloadURL();
+      return imageLink;
+    } else if (Platform.OS === 'ios') {
+      const reference = storage().ref(`door/${key}`);
+      const path = `${uri}`;
+      await reference.putFile(path, {
+        cacheControl: 'no-store', // disable caching
+      });
+      const imageLink = await reference.getDownloadURL();
+      return imageLink;
+    }
   } catch (error) {
     console.error(error.message);
   }
@@ -109,19 +122,16 @@ export const action_uploadImageDoor = async (uri, key) => {
 // Update.
 
 // Press update value door status.
-export const action_updateDoorStatus = (key, status, displayName) => {
+export const action_updateDoorStatus = async (key, status, displayName) => {
   // New date
   const newDate = new Date(Date.now());
   const dateString = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()} | ${newDate.getHours()}:${newDate.getMinutes()}`;
   try {
-    return async (dispatch) => {
-      dispatch(actions.FETCHING_REALTIMEDB_DOOR_UPDATE());
-      await db.ref(`door/datas/${key}`).update({
-        latestStatusBy: displayName,
-        latestStatus: dateString,
-        status: status,
-      });
-    };
+    await db.ref(`door/datas/${key}`).update({
+      latestStatusBy: displayName,
+      latestStatus: dateString,
+      status: status,
+    });
   } catch (error) {
     console.error('action_updateDoorStatus', error.message);
   }
