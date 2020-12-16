@@ -83,6 +83,12 @@ export const action_addDoor = async (
       createdBy: displayName,
       degree: 1,
     });
+    await db.ref(`door/historys/${key}`).push({
+      key,
+      status: status,
+      latestStatusBy: displayName,
+      latestStatus: dateString,
+    });
     await db.ref(`door/creates/${key}`).set({
       key,
       createdDate: dateString,
@@ -131,6 +137,12 @@ export const action_updateDoorStatus = async (key, status, displayName) => {
       latestStatusBy: displayName,
       latestStatus: dateString,
       status: status,
+    });
+    await db.ref(`door/historys/${key}`).push({
+      key,
+      status: status,
+      latestStatusBy: displayName,
+      latestStatus: dateString,
     });
   } catch (error) {
     console.error('action_updateDoorStatus', error.message);
@@ -235,6 +247,7 @@ export const action_removeDoor = async (key) => {
     await doorPath.child(`/datas/${key}`).remove();
     await doorPath.child(`/creates/${key}`).remove();
     await doorPath.child(`/status/${key}`).remove();
+    await doorPath.child(`/historys/${key}`).remove();
 
     await storage().ref().child(`door/${key}`).delete();
   } catch (err) {

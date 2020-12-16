@@ -33,7 +33,10 @@ const DetailProductScreen = () => {
           <Styled.ContainerInfo>
             <Styled.Title>{elem.name}</Styled.Title>
             <Styled.ContainerBtn>
-              <Styled.BtnHistory>History</Styled.BtnHistory>
+              <Styled.BtnHistory
+                onPress={() => navigate('Stack_History', elem.key)}>
+                History
+              </Styled.BtnHistory>
               {elem.createdBy == _displayName && (
                 <Styled.BtnEdit
                   onPress={() => navigate('DetailProductEditScreen')}>

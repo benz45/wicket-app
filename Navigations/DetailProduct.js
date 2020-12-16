@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 // Screen
 import DetailProductScreen from '../screens/DetailsProduct/DetailProductScreen';
 import DetailProductEditScreen from '../screens/DetailsProduct/DetailProductEditScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 
 // Toptabs
 const Stack = createStackNavigator();
@@ -24,6 +25,11 @@ const DetailProduct = ({route: {params}}) => {
         component={DetailProductEditScreen}
         initialParams={params}
         options={{title: 'Edit'}}
+      />
+      <Stack.Screen
+        name="Stack_History"
+        component={HistoryScreen}
+        options={{title: 'History'}}
       />
     </Stack.Navigator>
   );

@@ -5,7 +5,7 @@ import {useRoute} from '@react-navigation/native';
 
 export default function useDetailProductScreen() {
   const {
-    params: {no},
+    params: {id},
   } = useRoute();
 
   const {realtimeDatabase} = useSelector((store) => store.FirebaseReducer);
@@ -15,7 +15,7 @@ export default function useDetailProductScreen() {
 
   // Validate data.
   const _keyList = realtimeDatabase.filter((find) => {
-    return find.no == no;
+    return find.key == id;
   });
 
   return {_keyList, _displayName};
