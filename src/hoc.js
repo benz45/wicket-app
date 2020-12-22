@@ -37,6 +37,7 @@ const IconOpenDrawer = () => {
 
 export const hocHeader = (Component) => (props) => {
   const currentUser = useSelector((res) => res.CurrentUserReducer);
+  const {realtimeDatabase} = useSelector((res) => res.FirebaseReducer);
 
   return (
     <Styled.ContainerView>
@@ -55,7 +56,9 @@ export const hocHeader = (Component) => (props) => {
       <Styled.ContainerView>
         <Component {...props} />
       </Styled.ContainerView>
-      {props.route.key === 'home' && <FloatingAction jumpTo={props.jumpTo} />}
+      {props.route.key === 'home' && realtimeDatabase.length < 2 && (
+        <FloatingAction jumpTo={props.jumpTo} />
+      )}
     </Styled.ContainerView>
   );
 };

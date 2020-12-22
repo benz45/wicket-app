@@ -35,14 +35,14 @@ export const action_realtimedb_door_firebase = () => {
   return async (dispatch) => {
     await database()
       .ref('door/datas')
-      .on('value', (data) => {
-        let res = data.val();
-        if (!!res) {
-          let result = Object.values(res);
-          let numChildren = !!data.numChildren();
+      .on('value', (datas) => {
+        if (!!datas) {
+          let resultArr = [];
+          datas.forEach((res) => resultArr.push(res.val()));
+          let numChildren = !!datas.numChildren();
           dispatch({
             type: FETCHING_REALTIMEDB_DOOR_SUCCESS,
-            payload: {value: result, lengthData: numChildren},
+            payload: {value: resultArr, lengthData: numChildren},
           });
         } else {
           dispatch({type: FETCHING_REALTIMEDB_DOOR_FAILRUE});
@@ -157,9 +157,9 @@ export const result_updateDoorStatus = async (settingStatusValue) => {
       db.ref(`door/datas/${key}`).once('value', (snapshot) => {
         const {name, latestStatusBy} = snapshot.val();
         let res = `${name} being ${
-          degree < 10 ? 'open' : 'close'
+          degree > 10 ? 'open' : 'close'
         } by ${latestStatusBy}`;
-        if (settingStatusValue === true) {
+        if (settingStatusValue) {
           PushNotification.localNotification({
             message: res,
           });
@@ -348,12 +348,14 @@ export const action_newMessageOnly = async (
 export const action_checkConnection = (id) => {
   return new Promise((res, rej) => {
     database()
-      .ref(`connections`)
+      .ref(`connections/states`)
       .once('value', (snapshot) => {
         if (!!!snapshot.val()) {
           rej({message: 'error'});
         }
-        res(snapshot.val());
+        let newArr = [];
+        snapshot.forEach((res) => newArr.push(res.val()));
+        res(newArr);
       });
   });
 };

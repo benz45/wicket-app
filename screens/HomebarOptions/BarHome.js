@@ -12,6 +12,7 @@ const CustomChip = (props) => {
       icon={props.icon}
       mode="contained"
       style={{
+        padding: 6,
         borderRadius: 40,
         alignSelf: 'flex-start',
         marginRight: 8,
@@ -27,7 +28,8 @@ const barHome = () => {
     return reducer.FirebaseReducer;
   });
   return (
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View
+      style={{flexDirection: 'row', alignItems: 'center', marginVertical: 10}}>
       {lengthData && (
         <>
           <CustomChip

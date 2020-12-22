@@ -14,6 +14,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector, useDispatch} from 'react-redux';
 import useApp from './useApp';
 import {SET_THEME} from '../actionsType';
+import PushNotification from 'react-native-push-notification';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,8 @@ const App = () => {
       dispatch({type: SET_THEME, payload: darkMode ? 'dark' : 'light'});
     }
   }, [sysDefault]);
+
+  PushNotification.localNotification({title: 'rerewr', message: 'asdasd'});
 
   return (
     <ThemeProvider theme={theme}>

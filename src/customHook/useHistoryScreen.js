@@ -24,6 +24,7 @@ export default function useHistoryScreen(key) {
     dispatch({type: FETCH_DATA});
     const req = db()
       .ref(`door/historys/${key}`)
+      .limitToLast(13)
       .on('value', (snap) => {
         let newArr = [];
         snap.forEach((res) => {

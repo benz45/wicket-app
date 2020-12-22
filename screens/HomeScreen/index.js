@@ -85,7 +85,7 @@ const HomeScreen = ({jumpTo}) => {
     <Styled.MainContainer>
       <Styled.ContainerHead>
         <Styled.HeadLayer>
-          <Styled.HomeName>House-name</Styled.HomeName>
+          <Styled.HomeName>Demo House</Styled.HomeName>
           <NetInfoConnection />
         </Styled.HeadLayer>
         <Styled.ContainerHomeBar>
@@ -143,7 +143,7 @@ const HomeScreen = ({jumpTo}) => {
                   </Styled.ContainerActionSwitch>
                   <Styled.ContainerShowStatus>
                     <Styled.TextShowStatus>
-                      {elem.degree < 10 ? 'OPEN' : 'CLOSE'}
+                      {elem.degree > 10 ? 'OPEN' : 'CLOSE'}
                     </Styled.TextShowStatus>
                   </Styled.ContainerShowStatus>
                 </Styled.CardActions>

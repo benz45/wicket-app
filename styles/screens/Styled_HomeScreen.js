@@ -56,9 +56,9 @@ export const ContainerHomeBar = styled(ScrollView)`
 `;
 
 export const Card = styled(CardPaper)`
-  border-radius: 30px;
+  border-radius: 55px;
   margin-bottom: 20px;
-  padding: 10px 14px 10px 14px;
+  padding: 16px 24px 16px 24px;
 `;
 
 export const CardTitle = styled(CardPaper.Title)``;

@@ -12,18 +12,15 @@ export default function useCheckDoorConnection() {
 
   useMemo(() => {
     const _setPrev = async () => {
-      await action_checkConnection().then((res) => {
-        const arrState = res.states;
-        prevState.current = Object.values(arrState);
+      await action_checkConnection().then((snap) => {
+        prevState.current = snap;
       });
     };
     _setPrev();
     const _loopCheckConnection = () => {
       setInterval(() => {
-        action_checkConnection().then(async (res) => {
-          const resConnectionStates = await Object.values(res.states);
-
-          const compareConnection_StatesAndPrevState = await resConnectionStates.filter(
+        action_checkConnection().then(async (snap) => {
+          const compareConnection_StatesAndPrevState = await snap.filter(
             (elemStates) => {
               for (let {state} of prevState.current) {
                 if (elemStates.state === state) {

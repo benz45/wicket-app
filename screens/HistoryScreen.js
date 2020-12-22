@@ -2,7 +2,7 @@ import React from 'react';
 import * as Styled from '../styles/screens/Styled_HistoryScreen';
 import {DataTable} from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
-import {Text} from 'react-native';
+import {Text, ScrollView} from 'react-native';
 
 // Custom Hook
 import useHistoryScreen from '../src/customHook/useHistoryScreen';
@@ -12,6 +12,7 @@ export default function HistoryScreen() {
   const [state] = useHistoryScreen(params);
   return (
     <React.Fragment>
+      {/* <ScrollView> */}
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>User</DataTable.Title>
@@ -34,7 +35,7 @@ export default function HistoryScreen() {
         )}
 
         <DataTable.Pagination
-          page={1}
+          page={0}
           numberOfPages={3}
           onPageChange={(page) => {
             console.log(page);
@@ -42,6 +43,7 @@ export default function HistoryScreen() {
           label="1-2 of 6"
         />
       </DataTable>
+      {/* </ScrollView> */}
     </React.Fragment>
   );
 }
