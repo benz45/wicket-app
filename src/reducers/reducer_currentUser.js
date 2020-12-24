@@ -1,4 +1,4 @@
-import {LOAD_CURRENT_USER_FIREBASE, USER_LOGOUT} from '../actionsType';
+import {LOAD_CURRENT_USER_FIREBASE, USER_LOGOUT} from 'root/src/actionsType';
 
 const initialState = {
   isUser: false,

@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {
   action_checkConnection,
   action_setConnection,
-} from '../../src/actions/actions_firebase';
+} from 'root/src/actions/actions_firebase';
 
 export default function useCheckDoorConnection() {
   const prevState = useRef([]);

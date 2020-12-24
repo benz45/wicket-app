@@ -3,15 +3,15 @@ import {Platform} from 'react-native';
 import {BottomNavigation} from 'react-native-paper';
 
 // HOC
-import {hocHeader} from '../../src/hoc';
+import {hocHeader} from 'root/src/hoc';
 
 // Screens
-import HomeScreen from '../../screens/HomeScreen';
-import MessageScreen from '../../screens/MessageScreen';
+import HomeScreen from 'root/src/screens/HomeScreen';
+import MessageScreen from 'root/src/screens/MessageScreen';
 // AddProductScreen have a two screen is add picture and key, add name and descriptions.
-import Navigation_AddProduct from '../../screens/AddProductScreens/AddProductScreen';
-import NotificationList from '../../screens/NotificationList';
-import ProfileScreen from '../../screens/ProfileScreen';
+import Navigation_AddProduct from 'root/src/screens/AddProductScreens/AddProductScreen';
+import NotificationList from 'root/src/screens/NotificationList';
+import ProfileScreen from 'root/src/screens/ProfileScreen';
 
 const home = hocHeader(HomeScreen);
 const message = MessageScreen;

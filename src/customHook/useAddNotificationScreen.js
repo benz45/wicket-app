@@ -2,14 +2,13 @@ import React, {useReducer} from 'react';
 import {Portal, Dialog, RadioButton} from 'react-native-paper';
 import {Platform} from 'react-native';
 import 'react-native-get-random-values';
-import {nanoid} from 'nanoid';
 
 // Push Notification
 import PushNotification from 'react-native-push-notification';
 
 // Redux
 import {useDispatch} from 'react-redux';
-import {action_setNotification} from '../../src/actions/actions_notification';
+import {action_setNotification} from 'root/src/actions/actions_notification';
 
 const TURNON_RADIO_REPEAT = 'TURNON_RADIO_REPEAT';
 const TURNOFF_RADIO_REPEAT = 'TURNOFF_RADIO_REPEAT';

@@ -1,5 +1,5 @@
 import React, {useReducer} from 'react';
-import * as Styled from '../../styles/custom_hook/Styled_useDialog';
+import * as Styled from 'root/src/styles/custom_hook/Styled_useDialog';
 
 // Navigations
 import {useNavigation, TabActions} from '@react-navigation/native';

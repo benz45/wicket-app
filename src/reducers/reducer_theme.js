@@ -1,6 +1,6 @@
 // SRC
-import * as Type from '../actionsType';
-import dataTheme from '../actions/actions_theme';
+import * as Type from 'root/src/actionsType';
+import dataTheme from 'root/src/actions/actions_theme';
 
 const initialState = {
   sysDefault: true,

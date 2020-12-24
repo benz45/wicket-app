@@ -1,7 +1,7 @@
 import {
   FETCH_USER_CONNECTION_SUCCESS,
   RESET_USER_CONNECTION,
-} from '../actionsType';
+} from 'root/src/actionsType';
 
 const initialState = {
   isLoading: true,

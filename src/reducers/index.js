@@ -1,11 +1,11 @@
 // import fetchReducer from './fetchReducer';
 import {combineReducers} from 'redux';
-import ThemeReducer from './reducer_theme';
-import FirebaseReducer from './reducer_firebase';
-import NotificationReducer from './reducer_notification';
-import AddProductReducer from './reducer_addProduct';
-import UserConnectionReducer from './reducer_userConnection';
-import CurrentUserReducer from './reducer_currentUser';
+import ThemeReducer from 'root/src/reducers/reducer_theme';
+import FirebaseReducer from 'root/src/reducers/reducer_firebase';
+import NotificationReducer from 'root/src/reducers/reducer_notification';
+import AddProductReducer from 'root/src/reducers/reducer_addProduct';
+import UserConnectionReducer from 'root/src/reducers/reducer_userConnection';
+import CurrentUserReducer from 'root/src/reducers/reducer_currentUser';
 
 export default combineReducers({
   ThemeReducer,

@@ -12,8 +12,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
-import useApp from './useApp';
-import {SET_THEME} from '../actionsType';
+import useApp from 'root/src/App/useApp';
+import {SET_THEME} from 'root/src/actionsType';
 
 const Stack = createStackNavigator();
 

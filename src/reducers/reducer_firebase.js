@@ -1,4 +1,4 @@
-import * as actions from '../actionsType';
+import * as actions from 'root/src/actionsType';
 
 const initialState = {
   lengthData: false,

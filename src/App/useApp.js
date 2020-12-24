@@ -5,14 +5,14 @@ import SplashScreen from 'react-native-splash-screen';
 // Firebase message
 import messaging from '@react-native-firebase/messaging';
 // Components
-import Authentication from '../../Navigations/Authentication';
-import Authenticated from '../../Navigations/Authenticated';
+import Authentication from 'root/src/Navigations/Authentication';
+import Authenticated from 'root/src/Navigations/Authenticated';
 import {useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {useSelector, useDispatch} from 'react-redux';
-import useLoadCurrentUser from '../../src/customHook/useLoadCurrentUser';
-import {action_setAllNotification} from '../../src/actions/actions_notification';
+import useLoadCurrentUser from 'root/src/customHook/useLoadCurrentUser';
+import {action_setAllNotification} from 'root/src/actions/actions_notification';
 
 const Stack = createStackNavigator();
 

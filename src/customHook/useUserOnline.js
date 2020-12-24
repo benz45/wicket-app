@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
-import {FETCH_USER_CONNECTION_SUCCESS} from '../../src/actionsType';
+import {FETCH_USER_CONNECTION_SUCCESS} from 'root/src/actionsType';
 
 // Netinfo
 import {useNetInfo} from '@react-native-community/netinfo';

@@ -7,7 +7,7 @@ import {
   SETTING_MESSAGE,
   SETALLNOTIFICATION_TOSTORE,
   VALIDATION_DATE_NOTIFICATION,
-} from '../actionsType';
+} from 'root/src/actionsType';
 
 const initialState = {
   settingNotification: true,

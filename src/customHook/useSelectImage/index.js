@@ -4,10 +4,10 @@ import {Platform} from 'react-native';
 // Image picker
 import ImagePicker from 'react-native-image-picker';
 
-import Toast from '../../toast-paper';
+import Toast from 'root/src/toast-paper';
 
 // Styled
-import * as Styled from '../../../styles/custom_hook/Styled_useSelectImage';
+import * as Styled from 'root/src/styles/custom_hook/Styled_useSelectImage';
 
 // Action type
 const SET_IMAGE = 'SET_IMAGE';
