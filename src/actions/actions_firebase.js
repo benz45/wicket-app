@@ -13,11 +13,7 @@ import {
 
 const db = database();
 
-/**********************************************************************/
-// First load.
-
-// Action load current user from firebase.
-export const action_loadCurrentUser = () => {
+const action_loadCurrentUser = () => {
   try {
     return (dispatch) => {
       const user = auth().currentUser;
@@ -30,8 +26,7 @@ export const action_loadCurrentUser = () => {
   }
 };
 
-// Fetching realtime database door from firebase.
-export const action_realtimedb_door_firebase = () => {
+const action_realtimedb_door_firebase = () => {
   return async (dispatch) => {
     await database()
       .ref('door/datas')
@@ -51,9 +46,7 @@ export const action_realtimedb_door_firebase = () => {
   };
 };
 
-/**********************************************************************/
-// Create & upload.
-export const action_addDoor = async (
+const action_addDoor = async (
   key,
   name,
   desc,
@@ -101,7 +94,7 @@ export const action_addDoor = async (
   }
 };
 
-export const action_uploadImageDoor = async (uri, key) => {
+const action_uploadImageDoor = async (uri, key) => {
   try {
     if (Platform.OS === 'android') {
       const reference = storage().ref().child(`door/${key}`);
@@ -124,11 +117,7 @@ export const action_uploadImageDoor = async (uri, key) => {
   }
 };
 
-/**********************************************************************/
-// Update.
-
-// Press update value door status.
-export const action_updateDoorStatus = async (key, status, displayName) => {
+const action_updateDoorStatus = async (key, status, displayName) => {
   // New date
   const newDate = new Date(Date.now());
   const dateString = `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()} | ${newDate.getHours()}:${newDate.getMinutes()}`;
@@ -150,19 +139,16 @@ export const action_updateDoorStatus = async (key, status, displayName) => {
 };
 
 // View value befor update door status. call by authenticated file.
-export const result_updateDoorStatus = async (settingStatusValue) => {
+const result_updateDoorStatus = async (settingStatusValue) => {
   try {
     await db.ref('door/status').on('child_changed', (response) => {
       const {key, degree} = response.val();
       db.ref(`door/datas/${key}`).once('value', (snapshot) => {
         const {name, latestStatusBy} = snapshot.val();
-        let res = `${name} being ${
-          degree > 10 ? 'open' : 'close'
-        } by ${latestStatusBy}`;
+        let valiDegree = degree > 10 ? 'open' : 'close';
+        let message = `${name} being ${valiDegree} by ${latestStatusBy}`;
         if (settingStatusValue) {
-          PushNotification.localNotification({
-            message: res,
-          });
+          PushNotification.localNotification({message});
         }
       });
     });
@@ -172,7 +158,7 @@ export const result_updateDoorStatus = async (settingStatusValue) => {
 };
 
 // Edit name & dexcription
-export const editProduct = async (key, name, description) => {
+const editProduct = async (key, name, description) => {
   try {
     db.ref(`door/names/${key}`)
       .update({
@@ -195,13 +181,14 @@ export const editProduct = async (key, name, description) => {
   }
 };
 
-export const SetAllStatus = (value) => {
+const SetAllStatus = (value) => {
   try {
     db.ref(`connections/datas`).once('value', (snapshot) => {
-      Object.values(snapshot.val()).map((elem) => {
+      Object.values(snapshot.val()).map(async (elem) => {
         const {appConnection, arduinoConnection, key} = elem;
         if (appConnection && arduinoConnection) {
-          db.ref(`door/datas/${key}`)
+          await db
+            .ref(`door/datas/${key}`)
             .update({
               status: value,
             })
@@ -218,22 +205,7 @@ export const SetAllStatus = (value) => {
   }
 };
 
-export const setStatusAll = async (arrId, boolean) => {
-  try {
-    for (let key of arrId) {
-      await database().ref(`door/status/${key}`).update({
-        status: boolean,
-      });
-    }
-  } catch (error) {
-    console.log('setStatusAll', error);
-  }
-};
-
-/**********************************************************************/
-// Remove
-
-export const action_removeDoor = async (key) => {
+const action_removeDoor = async (key) => {
   try {
     const doorPath = db.ref(`door`);
     await db.ref(`connections/datas/${key}`).update({
@@ -255,8 +227,7 @@ export const action_removeDoor = async (key) => {
   }
 };
 
-// Check child remove.
-export const action_childRemove_firebase = async () => {
+const action_childRemove_firebase = async () => {
   await database()
     .ref('door/datas')
     .on('child_removed', (snapshot) => {
@@ -265,10 +236,7 @@ export const action_childRemove_firebase = async () => {
     });
 };
 
-/**********************************************************************/
-// Login & Logout
-
-export const loginUser = async (username, password) => {
+const loginUser = async (username, password) => {
   const email = `${username}@wicket.com`;
   let result = await auth()
     .signInWithEmailAndPassword(email, password)
@@ -276,7 +244,7 @@ export const loginUser = async (username, password) => {
   return result;
 };
 
-export const logoutUser = async () => {
+const logoutUser = async () => {
   try {
     await auth().signOut();
   } catch (err) {
@@ -284,31 +252,7 @@ export const logoutUser = async () => {
   }
 };
 
-/**********************************************************************/
-// Message
-
-// Get message
-// export const action_getMessages = () => {
-//   try {
-//     return (dispatch) => {
-//       database()
-//         .ref('messages')
-//         .orderByValue()
-//         .on('value', (snapshot) => {
-//           const value = snapshot.val();
-//           if (!!value) {
-//             console.log(JSON.stringify(value, 0, 2));
-//             dispatch(actions.setMessages(value));
-//           }
-//         });
-//     };
-//   } catch (error) {
-//     console.log('action_getMessages -> error', error);
-//   }
-// };
-
-// Set message
-export const action_setMessages = async (message) => {
+const action_setMessages = async (message) => {
   try {
     const pushData = await database().ref('messages').push();
     pushData.key;
@@ -318,8 +262,7 @@ export const action_setMessages = async (message) => {
   }
 };
 
-// New messages only.
-export const action_newMessageOnly = async (
+const action_newMessageOnly = async (
   mount, // mount = useRef fetching start component.
   mountSettingMessage, // mountSettingMessage = value setting from messages settings notification.
   email, // email = use email represent id to check message user id
@@ -345,7 +288,7 @@ export const action_newMessageOnly = async (
     });
 };
 
-export const action_checkConnection = (id) => {
+const action_checkConnection = (id) => {
   return new Promise((res, rej) => {
     database()
       .ref(`connections/states`)
@@ -360,7 +303,7 @@ export const action_checkConnection = (id) => {
   });
 };
 
-export const action_setConnection = async (key, value) => {
+const action_setConnection = async (key, value) => {
   try {
     const connections = db.ref(`connections/datas/${key}/`);
     connections
@@ -378,7 +321,7 @@ export const action_setConnection = async (key, value) => {
   }
 };
 
-export const action_connectionChanged = () => {
+const action_connectionChanged = () => {
   return async (dispatch) => {
     await database()
       .ref(`connections/datas`)
@@ -390,4 +333,24 @@ export const action_connectionChanged = () => {
         dispatch(actions.setConnectionChacnge(Object.values(datas)));
       });
   };
+};
+
+export {
+  action_loadCurrentUser,
+  action_realtimedb_door_firebase,
+  action_addDoor,
+  action_uploadImageDoor,
+  action_updateDoorStatus,
+  result_updateDoorStatus,
+  editProduct,
+  SetAllStatus,
+  action_removeDoor,
+  action_childRemove_firebase,
+  loginUser,
+  logoutUser,
+  action_setMessages,
+  action_newMessageOnly,
+  action_checkConnection,
+  action_setConnection,
+  action_connectionChanged,
 };

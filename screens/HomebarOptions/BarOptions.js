@@ -2,13 +2,11 @@ import React, {useState, useRef, useEffect} from 'react';
 import {View} from 'react-native';
 import {Text, RadioButton, IconButton} from 'react-native-paper';
 
-import database from '@react-native-firebase/database';
-
 // Redux
 import {useSelector} from 'react-redux';
 
 // Action
-import {setStatusAll, SetAllStatus} from '../../src/actions/actions_firebase';
+import {SetAllStatus} from '../../src/actions/actions_firebase';
 
 const barOptions = () => {
   const lengthStatus = useRef(0);
