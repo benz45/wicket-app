@@ -1,6 +1,8 @@
 import React, {useReducer} from 'react';
 import {Portal, Dialog, RadioButton} from 'react-native-paper';
 import {Platform} from 'react-native';
+import 'react-native-get-random-values';
+import {nanoid} from 'nanoid';
 
 // Push Notification
 import PushNotification from 'react-native-push-notification';
@@ -68,11 +70,10 @@ export default function useAddNotificationScreen() {
   const _addNoti = async ({fullTime, hour, minute}) => {
     try {
       const OS = (value) => Platform.OS === value;
-      const date = new Date(Date.now());
       const objNoti = {
-        id: `${date.getMilliseconds()}${date.getMinutes()}${date.getHours()}${date.getMonth()}`,
-        foreground: true, // BOOLEAN: If the notification was received in foreground or not
-        userInteraction: true,
+        // id: `${nanoid(3)}`,
+        // foreground: true, // BOOLEAN: If the notification was received in foreground or not
+        // userInteraction: true,
         [Platform.OS === 'android' ? 'ticker' : 'title']: 'Wicket',
         message: state.name,
         date: fullTime,

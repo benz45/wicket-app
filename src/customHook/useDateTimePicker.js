@@ -45,7 +45,7 @@ export default function useDateTimePicker() {
 
   // Data time change
   const _onChange = (_, timeValue) => {
-    const resualtTime = timeValue || time;
+    const resualtTime = timeValue || new Date(Date.now());
     if (Platform.OS === 'android') {
       _submit();
       dispatch({type: SET_TIME, payload: resualtTime});

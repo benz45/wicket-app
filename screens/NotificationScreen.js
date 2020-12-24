@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {BackHandler} from 'react-native';
+import {BackHandler, Platform} from 'react-native';
 
 // Styled
 import * as Styled from '../styles/screens/Styled_NotificationScreen';
@@ -43,20 +43,20 @@ const Notification_Screen = ({navigation, route}) => {
 
   // Update a date if original date < date now and dispatch to store.
   useEffect(() => {
-    if (notificationData.length) {
-      const validationDate = notificationData.map((elem) => {
-        if (elem.fireDate < new Date(Date.now())) {
-          const date = new Date(elem.fireDate).getTime() + 60 * 60 * 24 * 1000;
-          elem.fireDate = date;
-        }
-        return elem;
-      });
+    // if (notificationData.length) {
+    //   const validationDate = notificationData.map((elem) => {
+    //     if (elem.fireDate < new Date(Date.now())) {
+    //       const date = new Date(elem.fireDate).getTime() + 60 * 60 * 24 * 1000;
+    //       elem.fireDate = date;
+    //     }
+    //     return elem;
+    //   });
 
-      dispatch({
-        type: VALIDATION_DATE_NOTIFICATION,
-        payload: validationDate,
-      });
-    }
+    //   dispatch({
+    //     type: VALIDATION_DATE_NOTIFICATION,
+    //     payload: validationDate,
+    //   });
+    // }
 
     return () => backHandler.remove();
   }, []);
@@ -106,7 +106,11 @@ const Notification_Screen = ({navigation, route}) => {
                   <Styled.InCard>
                     <Styled.CardDetail>
                       <Styled.DateText>
-                        {_replace_dateInCard(elem.date)}
+                        {Platform.OS == 'ios'
+                          ? _replace_dateInCard(elem.date)
+                          : Platform.OS == 'android'
+                          ? _replace_dateInCard(elem.fireDate)
+                          : null}
                       </Styled.DateText>
                       <Styled.TimeText>{elem.time}</Styled.TimeText>
                       <Styled.DescriptionText>

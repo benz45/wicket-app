@@ -5,6 +5,8 @@ import {Provider} from 'react-redux';
 import App from './src/App';
 import {PersistGate} from 'redux-persist/integration/react';
 import configureStore from './src/configureStore';
+// import useNotifications from './src/customHook/useNotifications';
+
 import useNotifications from './src/customHook/useNotifications';
 
 const {store, persistor} = configureStore();
