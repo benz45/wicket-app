@@ -7,7 +7,7 @@ const initialState = {
 export default (state = initialState, {type, payload}) => {
   switch (type) {
     case LOAD_CURRENT_USER_FIREBASE:
-      return {...state, user: payload, isUser: !!payload && true};
+      return {...state, user: !!payload && payload, isUser: !!payload && true};
     case USER_LOGOUT:
       return initialState;
 

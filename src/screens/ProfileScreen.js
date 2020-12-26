@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 // Styled
@@ -24,13 +24,23 @@ const ProfileScreen = () => {
     await dispatch({type: RESET_USER_CONNECTION});
     await navigate('Authentication');
     await logoutUser();
-    await setIsLoading(false);
   };
 
   const dateValue = new Date(user.metadata.creationTime);
   const time = `${dateValue.getDate()}-${
     dateValue.getMonth() + 1
-  }-${dateValue.getFullYear()} ${dateValue.getHours()}:${dateValue.getUTCMinutes()}`;
+  }-${dateValue.getFullYear()} ${dateValue.getHours()}:${
+    dateValue.getUTCMinutes().toString().length < 2
+      ? `0${dateValue.getUTCMinutes()}`
+      : dateValue.getUTCMinutes()
+  }`;
+
+  useEffect(
+    () => () => {
+      setIsLoading(false);
+    },
+    [logoutUser],
+  );
 
   return (
     <Styled.MainContainer>

@@ -3,10 +3,7 @@ import {useReducer, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 // Navigation
 import {useNavigation} from '@react-navigation/native';
-import {
-  loginUser,
-  action_loadCurrentUser,
-} from 'root/src/actions/actions_firebase';
+import {loginUser} from 'root/src/actions/actions_firebase';
 import Toast from 'root/src/toast-paper';
 import {Keyboard} from 'react-native';
 
@@ -58,7 +55,6 @@ export default function useCustomHookLoginScreen() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {navigate} = useNavigation();
-  const dispatchRedux = useDispatch();
 
   // user on press login button.
   const _Submit = async () => {
@@ -84,7 +80,6 @@ export default function useCustomHookLoginScreen() {
       Toast('There is no user record corresponding to this identifier.');
     } else {
       dispatch({type: LOGIN, payload: false});
-      dispatchRedux(action_loadCurrentUser());
       navigate('Authenticated');
     }
   };
