@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
 import {Text, Avatar, Checkbox} from 'react-native-paper';
 import {H1, H4} from 'root/src/styles/styled';
@@ -6,26 +6,16 @@ import {useNavigation} from '@react-navigation/native';
 import Button from 'root/src/components/CustomButton';
 
 //Redux
-import {useDispatch, useSelector} from 'react-redux';
-import auth from '@react-native-firebase/auth';
-import {LOAD_CURRENT_USER_FIREBASE} from 'root/src/actionsType';
+import {useSelector} from 'react-redux';
 
 const RegisterComplate = () => {
   const {accent} = useSelector((reducer) => reducer.ThemeReducer.theme.colors);
+  const {user} = useSelector((reducer) => reducer.CurrentUserReducer);
   const [isCheckbox, setCheckbox] = useState(false);
   const {navigate} = useNavigation();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    auth().onUserChanged((user) => {
-      if (user) {
-        dispatch({type: LOAD_CURRENT_USER_FIREBASE, payload: user});
-      }
-    });
-  }, []);
 
   const submit = async () => {
-    navigate('Authenticated');
+    navigate('Authenticated', {screen: 'Stack_HomeDrawer'});
   };
 
   return (
@@ -40,10 +30,14 @@ const RegisterComplate = () => {
         <H1>Register complate</H1>
         <H4>Welcomde to my app Wicket List</H4>
         <View>
-          {/* <View style={{marginVertical: 10}}>
-              <Text>Name : {name}</Text>
-              <Text>Email : {email}</Text>
-            </View> */}
+          {user && user.displayName && user.email ? (
+            <View style={{marginVertical: 10}}>
+              <Text>Name : {user.displayName}</Text>
+              <Text>Email : {user.email}</Text>
+            </View>
+          ) : (
+            <Text>Loading ...</Text>
+          )}
           <Text style={{marginVertical: 10}}>
             Can break usage such as persisting and restoring state. This might
             happen if you passed non-serializable values such as function, class
@@ -63,7 +57,7 @@ const RegisterComplate = () => {
           mode="contained"
           icon="check-bold"
           dark={true}
-          onPress={submit}>
+          onPress={() => submit()}>
           Successful
         </Button>
       </View>

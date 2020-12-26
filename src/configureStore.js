@@ -11,6 +11,7 @@ import rootReducer from 'root/src/reducers';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  blacklist: ['CurrentUserReducer, UserConnectionReducer'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

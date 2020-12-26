@@ -16,10 +16,11 @@ const db = database();
 const action_loadCurrentUser = () => {
   try {
     return (dispatch) => {
-      const user = auth().currentUser;
-      if (user) {
-        dispatch({type: LOAD_CURRENT_USER_FIREBASE, payload: user});
-      }
+      auth().onUserChanged((user) => {
+        if (user) {
+          dispatch({type: LOAD_CURRENT_USER_FIREBASE, payload: user});
+        }
+      });
     };
   } catch (err) {
     console.log(err);
