@@ -8,7 +8,7 @@ import PushNotification from 'react-native-push-notification';
 
 // Redux
 import {useDispatch} from 'react-redux';
-import {action_setNotification} from 'root/src/actions/actions_notification';
+import {action_setNotification} from 'root/src/Actions/actions_notification';
 
 const TURNON_RADIO_REPEAT = 'TURNON_RADIO_REPEAT';
 const TURNOFF_RADIO_REPEAT = 'TURNOFF_RADIO_REPEAT';

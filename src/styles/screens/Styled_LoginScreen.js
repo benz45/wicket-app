@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 
-import {Button} from 'root/src/components/CustomBtn';
+import {Button} from 'root/src/Components/CustomBtn';
 
 export const Container = styled(View)`
   flex: 1;

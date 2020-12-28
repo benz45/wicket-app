@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native-paper';
 
-import {Button} from 'root/src/components/CustomBtn';
+import {Button} from 'root/src/Components/CustomBtn';
 
 export const AvatarImage = styled(Avatar.Image).attrs({
   size: 120,

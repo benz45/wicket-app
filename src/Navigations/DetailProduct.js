@@ -4,9 +4,9 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // Screen
-import DetailProductScreen from '../screens/DetailsProduct/DetailProductScreen';
-import DetailProductEditScreen from '../screens/DetailsProduct/DetailProductEditScreen';
-import HistoryScreen from '../screens/HistoryScreen';
+import DetailProductScreen from 'root/src/Screens/DetailsProduct/DetailProductScreen';
+import DetailProductEditScreen from 'root/src/Screens/DetailsProduct/DetailProductEditScreen';
+import HistoryScreen from 'root/src/Screens/HistoryScreen';
 
 // Toptabs
 const Stack = createStackNavigator();

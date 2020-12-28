@@ -3,10 +3,10 @@ import {TouchableOpacity} from 'react-native';
 import {Portal, Dialog} from 'react-native-paper';
 
 // Styled
-import * as Styled from 'root/src/styles/screens/AddProductScreens/Styled_AddProduct_NameAndDescription';
+import * as Styled from 'root/src/Styles/Screens/AddProductScreens/Styled_AddProduct_NameAndDescription';
 
 // Custom hook.
-import useDispatch_Add_Product from 'root/src/screens/AddProductScreens/useDispatch_Add_Product';
+import useDispatch_Add_Product from 'root/src/Screens/AddProductScreens/useDispatch_Add_Product';
 
 // Redux
 import {useSelector} from 'react-redux';

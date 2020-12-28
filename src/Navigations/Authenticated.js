@@ -5,8 +5,8 @@ import DetailProduct from 'root/src/Navigations/DetailProduct';
 import Navigation_HomeDrawer from 'root/src/Navigations/Navigation_HomeDrawer';
 import Notifications from 'root/src/Navigations/Notifications';
 import Settings from 'root/src/Navigations/Settings';
-import addProduct_informations from 'root/src/screens/AddProductScreens/AddProduct_NameAndDescriptionScreen';
-import RegisterUploadProfile from 'root/src/screens/RegisterUploadProfile';
+import addProduct_informations from 'root/src/Screens/AddProductScreens/AddProduct_NameAndDescriptionScreen';
+import RegisterUploadProfile from 'root/src/Screens/RegisterUploadProfile';
 import auth from '@react-native-firebase/auth';
 import {LOAD_CURRENT_USER_FIREBASE} from 'root/src/actionsType';
 
@@ -17,7 +17,7 @@ import {HOCform} from 'root/src/hoc';
 import {
   result_updateDoorStatus,
   action_realtimedb_door_firebase,
-} from 'root/src/actions/actions_firebase';
+} from 'root/src/Actions/actions_firebase';
 
 // Redux
 import {useSelector, useDispatch} from 'react-redux';

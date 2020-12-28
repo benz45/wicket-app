@@ -2,15 +2,15 @@ import React from 'react';
 import {GiftedChat} from 'react-native-gifted-chat';
 
 // Styled
-import * as Styled from 'root/src/styles/screens/Styled_MessageScreen';
+import * as Styled from 'root/src/Styles/Screens/Styled_MessageScreen';
 
 // Redux
 import {useSelector} from 'react-redux';
 
 // Custom hook
-import useUserOnline from 'root/src/customHook/useUserOnline';
-import useMessageScreen from 'root/src/customHook/useMessageScreen';
-import useMessage from 'root/src/customHook/useMessage';
+import useUserOnline from 'root/src/Hook/useUserOnline';
+import useMessageScreen from 'root/src/Hook/useMessageScreen';
+import useMessage from 'root/src/Hook/useMessage';
 
 // Custom input.
 const customInputToolbar = (props) => {

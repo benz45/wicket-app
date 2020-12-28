@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 
 // Styled
-import * as Styled from '../styles/Navigations/Styled_Notifications_Navigations';
+import * as Styled from 'root/src/Styles/Navigations/Styled_Notifications_Navigations';
 
 // Cloud messaging
 import PushNotification from 'react-native-push-notification/';
@@ -13,8 +13,8 @@ import {useSelector} from 'react-redux';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 // Screens
-import NotificationScreen from '../screens/NotificationScreen';
-import AddNotificationScreen from '../screens/AddNotificationScreen';
+import NotificationScreen from 'root/src/Screens/NotificationScreen';
+import AddNotificationScreen from 'root/src/Screens/AddNotificationScreen';
 
 const TabTop = createMaterialTopTabNavigator();
 

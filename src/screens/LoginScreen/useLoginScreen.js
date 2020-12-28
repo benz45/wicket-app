@@ -3,7 +3,7 @@ import {useReducer, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 // Navigation
 import {useNavigation} from '@react-navigation/native';
-import {loginUser} from 'root/src/actions/actions_firebase';
+import {loginUser} from 'root/src/Actions/actions_firebase';
 import Toast from 'root/src/toast-paper';
 import {Keyboard} from 'react-native';
 
@@ -51,7 +51,7 @@ const reducer = (state, {type, payload}) => {
   }
 };
 
-export default function useCustomHookLoginScreen() {
+export default function useHookLoginScreen() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {navigate} = useNavigation();

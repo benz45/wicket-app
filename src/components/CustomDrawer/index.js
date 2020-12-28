@@ -6,11 +6,11 @@ import {Divider} from 'react-native-paper';
 import {DrawerItemList} from '@react-navigation/drawer';
 
 // Styled
-import * as Styled from 'root/src/styles/components/Styled_CustomDrawer';
+import * as Styled from 'root/src/Styles/components/Styled_CustomDrawer';
 
 // Actions
 import {useSelector} from 'react-redux';
-import SwitchDarkMode from 'root/src/components/SwitchDarkMode';
+import SwitchDarkMode from 'root/src/Components/SwitchDarkMode';
 
 const HeadComponent = () => (
   <Styled.HeadComponent>

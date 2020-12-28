@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {List, Card} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 // Component
-import Switch from 'root/src/components/CustomSwitch';
+import Switch from 'root/src/Components/CustomSwitch';
 import {
   SETTING_MESSAGE,
   SETTING_NOTIFICATION,

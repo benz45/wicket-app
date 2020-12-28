@@ -2,9 +2,9 @@ import React from 'react';
 import {SET_THEME_SYSDEFAULT} from 'root/src/actionsType';
 
 // Styled
-import * as Styled from 'root/src/styles/screens/Settings/Styled_Setting_Theme';
+import * as Styled from 'root/src/Styles/Screens/Settings/Styled_Setting_Theme';
 import {useSelector, useDispatch} from 'react-redux';
-import SwitchDarkMode from 'root/src/components/SwitchDarkMode';
+import SwitchDarkMode from 'root/src/Components/SwitchDarkMode';
 
 const SwitchThemeSysDefault = () => {
   const {sysDefault} = useSelector((store) => store.ThemeReducer);

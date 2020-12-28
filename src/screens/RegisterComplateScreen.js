@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import {Text, Avatar, Checkbox} from 'react-native-paper';
-import {H1, H4} from 'root/src/styles/styled';
+import {H1, H4} from 'root/src/Styles/styled';
 import {useNavigation} from '@react-navigation/native';
-import Button from 'root/src/components/CustomButton';
+import Button from 'root/src/Components/CustomButton';
 
 //Redux
 import {useSelector} from 'react-redux';

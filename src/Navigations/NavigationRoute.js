@@ -1,15 +1,15 @@
 // Routes
 import authenticated from './Authenticated';
 import authentication from './Authentication';
-import loginScreen from '../screens/LoginScreen';
-import registerScreen from '../screens/RegisterScreen';
-import registerUploadProfileScreen from '../screens/RegisterUploadProfile';
-import registerComplateScreen from '../screens/RegisterComplateScreen';
+import loginScreen from 'root/src/Screens/LoginScreen';
+import registerScreen from 'root/src/Screens/RegisterScreen';
+import registerUploadProfileScreen from 'root/src/Screens/RegisterUploadProfile';
+import registerComplateScreen from 'root/src/Screens/RegisterComplateScreen';
 import navigation_homeDrawer from './Navigation_HomeDrawer';
 import navigation_notifications from './Notifications';
 import navigation_settings from './Settings';
 import navigation_detailProduct from './DetailProduct';
-import addProduct_informations from '../screens/AddProductScreens/AddProduct_NameAndDescriptionScreen';
+import addProduct_informations from 'root/src/Screens/AddProductScreens/AddProduct_NameAndDescriptionScreen';
 
 export default function NavigationRoute() {
   const routes = {

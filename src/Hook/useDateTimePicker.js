@@ -2,7 +2,7 @@ import React, {useReducer} from 'react';
 import {Platform} from 'react-native';
 
 // Styled
-import * as Styled from 'root/src/styles/custom_hook/Styled_useDateTimePicker';
+import * as Styled from 'root/src/Styles/custom_hook/Styled_useDateTimePicker';
 
 const SET_TIME = 'SET_TIME';
 const SET_SHOWN = 'SET_SHOWN';

@@ -6,7 +6,7 @@ import Settings from './Settings';
 import DetailProduct from './DetailProduct';
 import Navigation_HomeDrawer from './Navigation_HomeDrawer';
 import Notifications from './Notifications';
-import AddProduct_NameAndDescriptionScreen from '../screens/AddProductScreens/AddProduct_NameAndDescriptionScreen';
+import AddProduct_NameAndDescriptionScreen from 'root/src/Screens/AddProductScreens/AddProduct_NameAndDescriptionScreen';
 
 const Stack = createStackNavigator();
 

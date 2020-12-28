@@ -5,10 +5,10 @@ import db from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 
 import Toast from '../toast-paper';
-import useDetailProductScreen from 'root/src/customHook/useDetailProductScreen';
+import useDetailProductScreen from 'root/src/Hook/useDetailProductScreen';
 
 // Custom hook
-import useSelectImage from 'root/src/customHook/useSelectImage';
+import useSelectImage from 'root/src/Hook/useSelectImage';
 
 const SET_NAME = 'SET_NAME';
 const SET_DESCRIPTION = 'SET_DESCRIPTION';

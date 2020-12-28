@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 
-import {action_setMessages} from 'root/src/actions/actions_firebase';
+import {action_setMessages} from 'root/src/Actions/actions_firebase';
 
 export default function useMessageScreen() {
   const {user} = useSelector((reducer) => reducer.CurrentUserReducer);

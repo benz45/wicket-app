@@ -6,7 +6,7 @@ import {Text, RadioButton, IconButton} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 
 // Action
-import {SetAllStatus} from 'root/src/actions/actions_firebase';
+import {SetAllStatus} from 'root/src/Actions/actions_firebase';
 
 const barOptions = () => {
   const lengthStatus = useRef(0);

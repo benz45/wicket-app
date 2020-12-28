@@ -1,11 +1,11 @@
 import React from 'react';
-import * as Styled from 'root/src/styles/screens/Styled_HistoryScreen';
+import * as Styled from 'root/src/Styles/Screens/Styled_HistoryScreen';
 import {DataTable} from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
 import {Text} from 'react-native';
 
 // Custom Hook
-import useHistoryScreen from 'root/src/customHook/useHistoryScreen';
+import useHistoryScreen from 'root/src/Hook/useHistoryScreen';
 
 export default function HistoryScreen() {
   const {params} = useRoute();

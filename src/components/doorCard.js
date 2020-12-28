@@ -3,8 +3,8 @@ import {View} from 'react-native';
 import {Text, Card} from 'react-native-paper';
 
 // Components
-import StatusSwitch from 'root/src/components/StatusSwitch';
-import {MenuDoor} from 'root/src/components/Menu';
+import StatusSwitch from 'root/src/Components/StatusSwitch';
+import {MenuDoor} from 'root/src/Components/Menu';
 
 // Redux
 import {useSelector} from 'react-redux';

@@ -2,13 +2,13 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 
 // Styles
-import * as Styled from 'root/src/styles/screens/Styled_RegisterScreen';
+import * as Styled from 'root/src/Styles/Screens/Styled_RegisterScreen';
 
 // Components
-import {WelcomeLogo} from 'root/src/components/logos/welcomeLogo';
+import {WelcomeLogo} from 'root/src/Components/logos/welcomeLogo';
 
 //Custom Hook.
-import useRegisterScreen from 'root/src/screens/RegisterScreen/useRegisterScreen';
+import useRegisterScreen from 'root/src/Screens/RegisterScreen/useRegisterScreen';
 
 const RegisterScreen = () => {
   const {

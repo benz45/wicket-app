@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {View, TouchableOpacity} from 'react-native';
 import {Text, TextInput as TextInputPaper} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Button} from 'root/src/components/CustomBtn';
+import {Button} from 'root/src/Components/CustomBtn';
 
 export const MainContainer = styled(View)`
   padding: 80px 65px 0px 65px;

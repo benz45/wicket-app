@@ -13,8 +13,8 @@ import {
 } from 'react-native-paper';
 
 //Component
-import {Button} from 'root/src/components/CustomBtn';
-import {HeadText, SubHeadText} from 'root/src/styles/styled';
+import {Button} from 'root/src/Components/CustomBtn';
+import {HeadText, SubHeadText} from 'root/src/Styles/styled';
 
 export const AvatarIamge = styled(Avatar.Image).attrs({size: 160})``;
 

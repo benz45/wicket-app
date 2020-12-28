@@ -4,8 +4,8 @@ import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 // Screens
-import barOptions from '../screens/HomebarOptions/BarOptions';
-import barHome from '../screens/HomebarOptions/BarHome';
+import barOptions from 'root/src/Screens/HomebarOptions/BarOptions';
+import barHome from 'root/src/Screens/HomebarOptions/BarHome';
 
 // Crate navigation
 const TabTop = createMaterialTopTabNavigator();

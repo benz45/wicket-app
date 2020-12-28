@@ -7,15 +7,13 @@ import messaging from '@react-native-firebase/messaging';
 // Components
 import Authentication from 'root/src/Navigations/Authentication';
 import Authenticated from 'root/src/Navigations/Authenticated';
-import {useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {useSelector, useDispatch} from 'react-redux';
-// import useLoadCurrentUser from 'root/src/customHook/useLoadCurrentUser';
-import {action_setAllNotification} from 'root/src/actions/actions_notification';
+import {action_setAllNotification} from 'root/src/Actions/actions_notification';
 import {LOAD_CURRENT_USER_FIREBASE} from 'root/src/actionsType';
 
-import RegisterComplateScreen from 'root/src/screens/RegisterComplateScreen';
+import RegisterComplateScreen from 'root/src/Screens/RegisterComplateScreen';
 
 // HOC
 import {HOCform} from 'root/src/hoc';
@@ -24,8 +22,7 @@ const Stack = createStackNavigator();
 export default function useApp() {
   const [initializing, setInitializing] = useState(true);
   const dispatch = useDispatch();
-  const {navigate} = useNavigation();
-  const {isUser, user} = useSelector((res) => res.CurrentUserReducer);
+  const {isUser} = useSelector((res) => res.CurrentUserReducer);
   // useLoadCurrentUser();
 
   useEffect(() => {
@@ -50,10 +47,10 @@ export default function useApp() {
     return unsubscribe_message;
   }, []);
 
-  const onAuthStateChanged = (user) => {
+  const onAuthStateChanged = (snapUser) => {
     if (initializing) setInitializing(false);
-    if (user) {
-      dispatch({type: LOAD_CURRENT_USER_FIREBASE, payload: user});
+    if (snapUser) {
+      dispatch({type: LOAD_CURRENT_USER_FIREBASE, payload: snapUser});
     }
   };
 

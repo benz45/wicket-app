@@ -3,10 +3,10 @@ import {View} from 'react-native';
 import {IconButton, Colors, Dialog, Portal} from 'react-native-paper';
 
 // Components
-import Button from 'root/src/components/CustomButton';
+import Button from 'root/src/Components/CustomButton';
 
 // Styles
-import {H4, H2} from 'root/src/styles/styled';
+import {H4, H2} from 'root/src/Styles/styled';
 
 export const DialogAddSuccess = ({visible, jumpTo, callback}) => {
   const [dialog, setDialog] = useState(false);

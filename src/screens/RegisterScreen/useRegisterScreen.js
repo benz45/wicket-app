@@ -11,7 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import Toast from 'root/src/toast-paper';
 
 // Firebase
-import {action_registerUser} from 'root/src/actions/actions_auth';
+import {action_registerUser} from 'root/src/Actions/actions_auth';
 
 const SET_USERNAME = 'SET_USERNAME';
 const SET_PASSWORD = 'SET_PASSWORD';

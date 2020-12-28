@@ -4,14 +4,14 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // Screen setting.
-import Setting_Settings from 'root/src/screens/Settings/Setting_Settings';
-import Setting_AboutApp from 'root/src/screens/Settings/Setting_AboutApp';
-import Setting_Update from 'root/src/screens/Settings/Setting_Update';
-import Setting_Notification from 'root/src/screens/Settings/Setting_Notification';
-import Setting_Theme from 'root/src/screens/Settings/Setting_Theme';
-import Setting_AdditionalSetting from 'root/src/screens/Settings/Setting_AdditionalSetting';
-import Setting_Privacy from 'root/src/screens/Settings/Setting_Privacy';
-import Setting_Feedback from 'root/src/screens/Settings/Setting_Feedback';
+import Setting_Settings from 'root/src/Screens/Settings/Setting_Settings';
+import Setting_AboutApp from 'root/src/Screens/Settings/Setting_AboutApp';
+import Setting_Update from 'root/src/Screens/Settings/Setting_Update';
+import Setting_Notification from 'root/src/Screens/Settings/Setting_Notification';
+import Setting_Theme from 'root/src/Screens/Settings/Setting_Theme';
+import Setting_AdditionalSetting from 'root/src/Screens/Settings/Setting_AdditionalSetting';
+import Setting_Privacy from 'root/src/Screens/Settings/Setting_Privacy';
+import Setting_Feedback from 'root/src/Screens/Settings/Setting_Feedback';
 
 // hoc
 import {hocSettings as hoc} from 'root/src/hoc';

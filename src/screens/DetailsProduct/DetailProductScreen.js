@@ -9,9 +9,9 @@ import {useNavigation} from '@react-navigation/native';
 // Redux
 import {useSelector} from 'react-redux';
 
-import * as Styled from 'root/src/styles/screens/DetailsProduct/Styled_DetailsProductScreen';
+import * as Styled from 'root/src/Styles/Screens/DetailsProduct/Styled_DetailsProductScreen';
 
-import useDetailProductScreen from 'root/src/customHook/useDetailProductScreen';
+import useDetailProductScreen from 'root/src/Hook/useDetailProductScreen';
 
 const DetailProductScreen = () => {
   const {navigate} = useNavigation();

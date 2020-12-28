@@ -1,12 +1,12 @@
 import React from 'react';
 
 // Styles
-import * as Styled from 'root/src/styles/screens/Styled_LoginScreen';
+import * as Styled from 'root/src/Styles/Screens/Styled_LoginScreen';
 
 // Components
-import {WelcomeLogo} from 'root/src/components/logos/welcomeLogo';
+import {WelcomeLogo} from 'root/src/Components/logos/welcomeLogo';
 
-import useCustomHook_LoginScreen from 'root/src/screens/LoginScreen/useLoginScreen';
+import useHook_LoginScreen from 'root/src/Screens/LoginScreen/useLoginScreen';
 
 const LoginScreen = () => {
   const {
@@ -15,7 +15,7 @@ const LoginScreen = () => {
     _setPassword,
     _Submit,
     _navigateToRegister,
-  } = useCustomHook_LoginScreen();
+  } = useHook_LoginScreen();
 
   return (
     <Styled.Container>

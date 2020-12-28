@@ -7,7 +7,7 @@ import Stack_Setting from './Settings';
 import Notifications from './Notifications';
 
 // Components
-import CustomDrawer from '../components/CustomDrawer';
+import CustomDrawer from 'root/src/Components/CustomDrawer';
 
 const PaperDrawer = createDrawerNavigator();
 

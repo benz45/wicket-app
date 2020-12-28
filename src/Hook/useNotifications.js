@@ -2,7 +2,7 @@ import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 // Redux action.
-import {SetAllStatus} from 'root/src/actions/actions_firebase';
+import {SetAllStatus} from 'root/src/Actions/actions_firebase';
 
 export default function useNotifications() {
   PushNotification.configure({

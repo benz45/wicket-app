@@ -1,6 +1,6 @@
 import React, {useRef, useEffect} from 'react';
 import {Switch} from 'react-native-paper';
-import {action_updateDoorStatus} from 'root/src/actions/actions_firebase';
+import {action_updateDoorStatus} from 'root/src/Actions/actions_firebase';
 import {useSelector} from 'react-redux';
 
 const StatusSwitch = ({id, status}) => {

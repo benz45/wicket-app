@@ -1,13 +1,13 @@
 import React from 'react';
 
 // Styled
-import * as Styled from 'root/src/styles/screens/DetailsProduct/Styled_DetailProductEditScreen';
+import * as Styled from 'root/src/Styles/Screens/DetailsProduct/Styled_DetailProductEditScreen';
 
-import {Button} from 'root/src/components/CustomBtn';
+import {Button} from 'root/src/Components/CustomBtn';
 
 // Custom Hook
 
-import useEditDetailProductList from 'root/src/customHook/useEditDetailProductList';
+import useEditDetailProductList from 'root/src/Hook/useEditDetailProductList';
 
 export default function DetailProductEditScreen(props) {
   const {

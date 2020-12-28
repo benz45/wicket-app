@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {BackHandler, Platform} from 'react-native';
 
 // Styled
-import * as Styled from 'root/src/styles/screens/Styled_NotificationScreen';
+import * as Styled from 'root/src/Styles/Screens/Styled_NotificationScreen';
 
 // Cloud messaging
 import PushNotification from 'react-native-push-notification/';
@@ -12,7 +12,7 @@ import {useIsFocused, CommonActions} from '@react-navigation/native';
 
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
-import {action_deleteNotification} from 'root/src/actions/actions_notification';
+import {action_deleteNotification} from 'root/src/Actions/actions_notification';
 
 const Notification_Screen = ({navigation, route}) => {
   const dispatch = useDispatch();

@@ -6,7 +6,7 @@ import {
   IconButton,
   Text,
 } from 'react-native-paper';
-import {Button} from 'root/src/components/CustomBtn';
+import {Button} from 'root/src/Components/CustomBtn';
 
 export const Portals = styled(PortalPaper)``;
 

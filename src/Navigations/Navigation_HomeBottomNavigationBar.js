@@ -3,14 +3,14 @@ import React, {useState, useEffect, useRef} from 'react';
 import {useIsFocused} from '@react-navigation/native';
 
 // Styled
-import * as Styled from 'root/src/styles/Navigations/Styled_Notifications_HomeBottomNavigationBar';
+import * as Styled from 'root/src/Styles/Navigations/Styled_Notifications_HomeBottomNavigationBar';
 
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
 
 // Custom hook
-import useHomeBottomNavigationBar from 'root/src/customHook/useHomeBottomNavigationBar';
-import useUserOnline from 'root/src/customHook/useUserOnline';
+import useHomeBottomNavigationBar from 'root/src/Hook/useHomeBottomNavigationBar';
+import useUserOnline from 'root/src/Hook/useUserOnline';
 
 const HomeBottomNavigationBar = () => {
   const {

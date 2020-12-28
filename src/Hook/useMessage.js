@@ -3,7 +3,7 @@ import db from '@react-native-firebase/database';
 // import {useIsFocused} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {SET_MESSAGES} from 'root/src/actionsType';
-import usePushNotification from 'root/src/customHook/usePushNotification';
+import usePushNotification from 'root/src/Hook/usePushNotification';
 
 const SET_BADGE = 'SET_BADGE';
 const RESET_BADGE = 'RESET_BADGE';

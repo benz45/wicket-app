@@ -1,12 +1,12 @@
 import React from 'react';
 
 // Styled
-import * as Styled from 'root/src/styles/screens/Styled_AddNotificationScreen';
+import * as Styled from 'root/src/Styles/Screens/Styled_AddNotificationScreen';
 
 // Custom hook
-import useAddNotificationScreen from 'root/src/customHook/useAddNotificationScreen';
-import useDateTimePicker from 'root/src/customHook/useDateTimePicker';
-import useDialog from 'root/src/customHook/useDialog';
+import useAddNotificationScreen from 'root/src/Hook/useAddNotificationScreen';
+import useDateTimePicker from 'root/src/Hook/useDateTimePicker';
+import useDialog from 'root/src/Hook/useDialog';
 
 const AddNotificationScreen = () => {
   const {

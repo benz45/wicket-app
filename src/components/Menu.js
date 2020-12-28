@@ -18,7 +18,7 @@ import {useSelector} from 'react-redux';
 import {
   action_removeDoor,
   action_childRemove_firebase,
-} from 'root/src/actions/actions_firebase';
+} from 'root/src/Actions/actions_firebase';
 
 export const MenuDoor = ({id, createdBy, name}) => {
   const {user} = useSelector((store) => store.CurrentUserReducer);

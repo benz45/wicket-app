@@ -3,7 +3,7 @@ import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 
 // Styled
-import * as Styled from 'root/src/styles/components/Styled_FloatingAction';
+import * as Styled from 'root/src/Styles/components/Styled_FloatingAction';
 const icon = (name) => <Icons name={name} size={20} color="#f5f5f5" />;
 const actions = [
   {

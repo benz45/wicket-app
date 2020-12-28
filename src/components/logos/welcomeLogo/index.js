@@ -5,7 +5,7 @@ import {
   HeadText,
   SubText,
   Logo,
-} from 'root/src/styles/components/Styled_welcomeLogo';
+} from 'root/src/Styles/components/Styled_welcomeLogo';
 
 export const WelcomeLogo = () => {
   return (

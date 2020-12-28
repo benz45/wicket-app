@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 // Styled
-import * as Styled from 'root/src/styles/screens/Styled_ProfileScreen';
+import * as Styled from 'root/src/Styles/Screens/Styled_ProfileScreen';
 
 // Actions
-import {logoutUser} from 'root/src/actions/actions_firebase';
+import {logoutUser} from 'root/src/Actions/actions_firebase';
 import {useDispatch, useSelector} from 'react-redux';
-import useUserOnline from 'root/src/customHook/useUserOnline';
+import useUserOnline from 'root/src/Hook/useUserOnline';
 import {RESET_USER_CONNECTION, USER_LOGOUT} from 'root/src/actionsType';
 
 const ProfileScreen = () => {

@@ -2,7 +2,7 @@ import {useEffect, useReducer} from 'react';
 import {Keyboard} from 'react-native';
 
 // Image picker
-import useSelectImage from 'root/src/customHook/useSelectImage';
+import useSelectImage from 'root/src/Hook/useSelectImage';
 
 // Components
 import Toast from 'root/src/toast-paper';
@@ -12,7 +12,7 @@ import db from '@react-native-firebase/database';
 import {
   action_uploadImageDoor,
   action_addDoor,
-} from 'root/src/actions/actions_firebase';
+} from 'root/src/Actions/actions_firebase';
 
 const KEY_CAN_CONNECTED = 'KEY_CAN_CONNECTED';
 const KEY_NOT_FOUND = 'KEY_NOT_FOUND';

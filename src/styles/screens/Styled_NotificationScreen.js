@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {View, Text, ScrollView as Scroll, TouchableOpacity} from 'react-native';
 
 // Component
-import NoData from 'root/src/components/noData';
+import NoData from 'root/src/Components/noData';
 
 // React native paper
 import {Card as CardPaper, Avatar} from 'react-native-paper';

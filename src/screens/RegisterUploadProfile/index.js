@@ -1,11 +1,11 @@
 import React from 'react';
 
-import * as Styled from 'root/src/styles/screens/Styled_RegisterUploadProfile';
+import * as Styled from 'root/src/Styles/Screens/Styled_RegisterUploadProfile';
 
 // Redux
 import {useSelector} from 'react-redux';
 
-import useRegisterUploadProfile from 'root/src/screens/RegisterUploadProfile/useRegisterUploadProfile';
+import useRegisterUploadProfile from 'root/src/Screens/RegisterUploadProfile/useRegisterUploadProfile';
 
 const RegisterUploadProfile = () => {
   const {user} = useSelector((store) => store.CurrentUserReducer);

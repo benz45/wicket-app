@@ -3,9 +3,9 @@ import {ScrollView} from 'react-native';
 import {Text} from 'react-native-paper';
 
 // Components
-import StatusSwitch from 'root/src/components/StatusSwitch';
-import {MenuDoor} from 'root/src/components/Menu';
-import NoData from 'root/src/components/noData';
+import StatusSwitch from 'root/src/Components/StatusSwitch';
+import {MenuDoor} from 'root/src/Components/Menu';
+import NoData from 'root/src/Components/noData';
 
 // Netinfo
 import {useNetInfo} from '@react-native-community/netinfo';
@@ -15,13 +15,13 @@ import HomebarOptions from 'root/src/Navigations/HomebarOptions';
 
 // Actions
 import {useSelector, useDispatch} from 'react-redux';
-import {action_realtimedb_door_firebase} from 'root/src/actions/actions_firebase';
+import {action_realtimedb_door_firebase} from 'root/src/Actions/actions_firebase';
 
 // Custom hook
-import useCheckDoorConnection from 'root/src/customHook/useCheckDoorConnection';
+import useCheckDoorConnection from 'root/src/Hook/useCheckDoorConnection';
 
 // Styled
-import * as Styled from 'root/src/styles/screens/Styled_HomeScreen';
+import * as Styled from 'root/src/Styles/Screens/Styled_HomeScreen';
 
 const NetInfoConnection = () => {
   const netInfo = useNetInfo();

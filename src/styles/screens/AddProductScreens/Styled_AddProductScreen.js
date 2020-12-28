@@ -9,7 +9,7 @@ import {
 } from 'react-native-paper';
 
 //Component
-import {Button} from 'root/src/components/CustomBtn';
+import {Button} from 'root/src/Components/CustomBtn';
 
 export const Container = styled(View)`
   flex: 1;

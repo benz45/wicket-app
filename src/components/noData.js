@@ -3,10 +3,10 @@ import {View} from 'react-native';
 import {Colors, Text, IconButton, Paragraph} from 'react-native-paper';
 
 // Component
-import {Button} from 'root/src/components/CustomBtn';
+import {Button} from 'root/src/Components/CustomBtn';
 
 // Styles
-import styles from 'root/src/styles/styles';
+import styles from 'root/src/Styles/styles';
 
 const noData = ({
   icon,

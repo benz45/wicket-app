@@ -1,13 +1,13 @@
 import React from 'react';
 
 // Styled
-import * as Styled from 'root/src/styles/screens/AddProductScreens/Styled_AddProductScreen';
+import * as Styled from 'root/src/Styles/Screens/AddProductScreens/Styled_AddProductScreen';
 
 // Navigation
 import {useNavigation} from '@react-navigation/native';
 
 // Custom hook.
-import useReducerAddProduct from 'root/src/screens/AddProductScreens/useDispatch_Add_Product';
+import useReducerAddProduct from 'root/src/Screens/AddProductScreens/useDispatch_Add_Product';
 
 const AddProductScreen = ({jumpTo}) => {
   const {navigate} = useNavigation();

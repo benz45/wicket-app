@@ -7,10 +7,10 @@ import {useNavigation} from '@react-navigation/native';
 
 // Action
 import {useSelector, useDispatch} from 'react-redux';
-import {action_userUpdate} from 'root/src/actions/actions_auth';
+import {action_userUpdate} from 'root/src/Actions/actions_auth';
 
 // Custom Hook
-import useSelectImage from 'root/src/customHook/useSelectImage';
+import useSelectImage from 'root/src/Hook/useSelectImage';
 
 // Action type
 const SET_NAME = 'SET_NAME';

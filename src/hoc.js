@@ -1,17 +1,17 @@
 import React from 'react';
-import {Container} from 'root/src/styles/styled';
+import {Container} from 'root/src/Styles/styled';
 import {View} from 'react-native';
 
 // UI
 import {Colors} from 'react-native-paper';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
-import FloatingAction from 'root/src/components/FloatingAction';
+import FloatingAction from 'root/src/Components/FloatingAction';
 // Redux
 import {useSelector} from 'react-redux';
 
 // Styles
-import * as Styled from 'root/src/styles/hoc/Styled_hocHeader';
+import * as Styled from 'root/src/Styles/hoc/Styled_hocHeader';
 
 export const HOCform = (Component) => (props) => {
   return (

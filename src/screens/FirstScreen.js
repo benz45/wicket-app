@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import {useNavigation} from '@react-navigation/native';
 
 // Component
-import Button from '../components/CustomButton';
+import Button from 'root/src/Components/CustomButton';
 
 const Container = styled.View`
   flex: 1;
