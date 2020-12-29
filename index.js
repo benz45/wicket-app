@@ -10,6 +10,7 @@ import useNotifications from 'root/src/Hook/useNotifications';
 const {store, persistor} = configureStore();
 const reduxApp = () => {
   useNotifications();
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

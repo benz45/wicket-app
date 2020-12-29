@@ -7,9 +7,6 @@ import StatusSwitch from 'root/src/Components/StatusSwitch';
 import {MenuDoor} from 'root/src/Components/Menu';
 import NoData from 'root/src/Components/noData';
 
-// Netinfo
-import {useNetInfo} from '@react-native-community/netinfo';
-
 // Navigation
 import HomebarOptions from 'root/src/Navigations/HomebarOptions';
 
@@ -24,13 +21,9 @@ import useCheckDoorConnection from 'root/src/Hook/useCheckDoorConnection';
 import * as Styled from 'root/src/Styles/Screens/Styled_HomeScreen';
 
 const NetInfoConnection = () => {
-  const netInfo = useNetInfo();
+  const {isNetInfo} = useSelector(({NetInfoReducer}) => NetInfoReducer);
 
-  return netInfo.isConnected ? (
-    <Styled.IconConnected />
-  ) : (
-    <Styled.IconDisConnected />
-  );
+  return isNetInfo ? <Styled.IconConnected /> : <Styled.IconDisConnected />;
 };
 
 const Disconnected = () => (
@@ -64,7 +57,7 @@ const wait = (timeout) => {
 
 const HomeScreen = ({jumpTo}) => {
   const dispatch = useDispatch();
-  const netInfo = useNetInfo();
+  const {isNetInfo} = useSelector(({NetInfoReducer}) => NetInfoReducer);
   const {realtimeDatabase, lengthData} = useSelector(
     (reducer) => reducer.FirebaseReducer,
   );
@@ -123,21 +116,21 @@ const HomeScreen = ({jumpTo}) => {
                 </Styled.CardContent>
                 <Styled.CardActions>
                   <Styled.ContainerActionSwitch>
-                    {netInfo.isConnected &&
+                    {isNetInfo &&
                     typeof elem.arduinoConnection === 'boolean' &&
                     !!elem.arduinoConnection ? (
                       <StatusSwitch id={elem.key} status={elem.status} />
-                    ) : netInfo.isConnected &&
+                    ) : isNetInfo &&
                       typeof elem.arduinoConnection === 'boolean' &&
                       !!!elem.arduinoConnection ? (
                       <Disconnected />
                     ) : typeof elem.arduinoConnection == 'string' &&
                       elem.arduinoConnection == 'WAITING_CONNECTION' &&
-                      netInfo.isConnected ? (
+                      isNetInfo ? (
                       <Styled.ContainerLoading>
                         <Loading />
                       </Styled.ContainerLoading>
-                    ) : !netInfo.isConnected ? (
+                    ) : !isNetInfo ? (
                       <NetWorkDisconnection />
                     ) : null}
                   </Styled.ContainerActionSwitch>
