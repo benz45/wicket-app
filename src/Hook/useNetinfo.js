@@ -13,8 +13,8 @@ const useNetinfo = () => {
     NetInfo.configure({
       reachabilityUrl: 'https://www.google.co.th/',
       reachabilityTest: async (response) => response.status === 204,
-      reachabilityLongTimeout: 10 * 1000, // 60s
-      reachabilityShortTimeout: 3 * 1000, // 5s
+      reachabilityLongTimeout: 10 * 1000, // 10s
+      reachabilityShortTimeout: 3 * 1000, // 3s
       reachabilityRequestTimeout: 15 * 1000, // 15s
     });
     const unsubscribe = NetInfo.addEventListener(({isConnected}) => {

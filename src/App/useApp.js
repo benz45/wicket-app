@@ -18,16 +18,12 @@ import RegisterComplateScreen from 'root/src/Screens/RegisterComplateScreen';
 // HOC
 import {HOCform} from 'root/src/hoc';
 
-// NetInfo
-import useNetInfo from 'root/src/Hook/useNetinfo';
-
 const Stack = createStackNavigator();
 
 export default function useApp() {
   const [initializing, setInitializing] = useState(true);
   const dispatch = useDispatch();
   const {isUser} = useSelector((res) => res.CurrentUserReducer);
-  useNetInfo();
 
   useEffect(() => {
     // Foreground all message.
