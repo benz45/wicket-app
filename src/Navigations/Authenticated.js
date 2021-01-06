@@ -22,16 +22,20 @@ import {
 // Redux
 import {useSelector, useDispatch} from 'react-redux';
 
-const Stack = createStackNavigator();
+// NetInfo
+import useNetInfo from 'root/src/Hook/useNetinfo';
 
 // Navaigations
 import {useNavigation} from '@react-navigation/native';
+
+const Stack = createStackNavigator();
 
 const Authenticated = () => {
   const {navigate} = useNavigation();
   const dispatch = useDispatch();
   const {isUser, user} = useSelector((store) => store.CurrentUserReducer);
   const {settingStatus} = useSelector((store) => store.NotificationReducer);
+  useNetInfo();
 
   const loadData = () => {
     dispatch(action_realtimedb_door_firebase());
