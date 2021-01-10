@@ -1,0 +1,6 @@
+module Pods_Wicket_WicketTests {
+  umbrella header "Pods-Wicket-WicketTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

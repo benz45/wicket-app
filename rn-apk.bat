@@ -1,1 +1,0 @@
-npm cache clean --force && npm rebuild && cd android && gradlew clean && gradlew assembleDebug && gradlew assembleRelease && start %windir%\explorer.exe "C:\Users\Benz4\final_project\wicket\android\app\build\outputs\apk\release"

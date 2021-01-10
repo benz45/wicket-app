@@ -1,0 +1,6 @@
+module Pods_Wicket {
+  umbrella header "Pods-Wicket-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,1 +1,0 @@
-npm cache clean --force && npm rebuild && cd android && gradle clean && cd ..
